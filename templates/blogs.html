@@ -1,0 +1,698 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Blog/News - Anila & Jawad Iqbal Foundation</title>
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/fonts/fonts.css' %}">
+        <style>
+        .font-archivo { font-family: 'Archivo Black', sans-serif; }
+        .font-quattro { font-family: 'Quattrocento', serif; }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mobile menu transitions */
+        #mobile-menu {
+            max-height: 0;
+            transition: max-height 0.4s ease-out;
+            overflow: hidden;
+            background: #1a1a1a;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        #mobile-menu.active {
+            max-height: 600px;
+            transition: max-height 0.6s ease-in;
+            padding: 10px 0;
+        }
+
+        /* Ensure the menu is hidden by default on larger screens */
+        @media (min-width: 1024px) {
+            #mobile-menu {
+                display: none !important;
+            }
+        }
+
+        /* Enhanced navbar - Professional Black */
+        .navbar-gradient {
+            background: #000000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Logo container - Clean & Aligned */
+        .logo-container {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+        }
+        .logo-container:hover {
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        /* Logo image */
+        .logo-img {
+            transition: transform 0.4s ease;
+            flex-shrink: 0;
+        }
+        .logo-container:hover .logo-img {
+            transform: rotate(360deg);
+        }
+
+        /* Foundation name */
+        .foundation-name {
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+        .logo-container:hover .foundation-name {
+            color: #14b8a6;
+        }
+
+        /* Nav links - Consistent */
+        .nav-link {
+            position: relative;
+            color: rgba(255, 255, 255, 0.9);
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #14b8a6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #14b8a6;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .mobile-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Mobile menu link hover */
+        .mobile-nav-link {
+            transition: all 0.3s ease;
+            border-radius: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .mobile-nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, #fbbf24, #f59e0b);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        .mobile-nav-link:hover::before {
+            transform: scaleY(1);
+        }
+        .mobile-nav-link:hover {
+            transform: translateX(12px);
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.2), rgba(20, 184, 166, 0.1));
+            padding-left: 1.5rem;
+        }
+
+        /* Prevent horizontal overflow */
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Enhanced Blog card animations */
+        .blog-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .blog-card.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Image zoom effect on hover */
+        .blog-card img {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.1);
+        }
+
+        /* News card animations */
+        .news-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .news-card.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .news-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .news-card img {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .news-card:hover img {
+            transform: scale(1.15);
+        }
+
+        /* Category filter pills */
+        .category-pill {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .category-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+        }
+
+        .category-pill.active {
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+            color: white;
+            box-shadow: 0 6px 16px rgba(13, 148, 136, 0.4);
+        }
+
+        /* Search bar enhancement */
+        .search-input {
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+            transform: scale(1.02);
+        }
+
+        /* Stagger animation delays */
+        .blog-card:nth-child(1) { transition-delay: 0.1s; }
+        .blog-card:nth-child(2) { transition-delay: 0.2s; }
+        .blog-card:nth-child(3) { transition-delay: 0.3s; }
+
+        .news-card:nth-child(1) { transition-delay: 0.1s; }
+        .news-card:nth-child(2) { transition-delay: 0.15s; }
+        .news-card:nth-child(3) { transition-delay: 0.2s; }
+
+        /* Pulse animation for featured badge */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(13, 148, 136, 0);
+            }
+        }
+
+        .featured-badge {
+            animation: pulse-glow 2s infinite;
+        }
+
+        /* Pagination slider enhancement */
+        #gallery-prev, #gallery-next {
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        #gallery-prev:hover, #gallery-next:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        #gallery-prev:active, #gallery-next:active {
+            transform: scale(0.95);
+        }
+
+        #gallery-progress {
+            transition: width 0.5s ease;
+            background: linear-gradient(90deg, #0d9488 0%, #14b8a6 100%);
+            box-shadow: 0 2px 8px rgba(20, 184, 166, 0.5);
+        }
+
+        /* Footer enhancement */
+        .footer-gradient {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0a0a0a 100%);
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer link styling */
+        .footer-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #14b8a6;
+            transition: width 0.3s ease;
+        }
+
+        .footer-link:hover::after {
+            width: 100%;
+        }
+        </style>
+    </head>
+    <body class="font-quattro bg-white text-black overflow-x-hidden">
+        <!-- Navbar -->
+        <nav class="navbar-gradient text-white sticky top-0 z-50 ">
+            <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-[78px]">
+                <div class="flex items-center justify-between h-14 sm:h-16 md:h-16 lg:h-20 ">
+
+                    <!-- LEFT: Logo and Foundation Name -->
+                    <div class="flex items-center">
+                        <a href="{% url 'home' %}" class="logo-container flex items-center">
+                            <img src="{% static 'assets/logo.png' %}" alt="AJIF Logo" class="logo-img h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10" loading="lazy">
+                            <span class="foundation-name font-archivo text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base ml-3">Anila & Jawad Iqbal Foundation</span>
+                        </a>
+                    </div>
+
+                    <!-- CENTER: Navigation Links -->
+                    <nav class="hidden lg:flex items-center space-x-6 md:space-x-8 lg:space-x-10 xl:space-x-12 absolute left-1/2 transform -translate-x-1/2">
+                        <a href="{% url 'about' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">About Us</a>
+                        <a href="{% url 'our_mission' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Our Mission</a>
+                        <a href="{% url 'our_partners' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Our Partners</a>
+                        <a href="{% url 'testimonials' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Testimonials</a>
+                        <a href="{% url 'home' %}#blog" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Blog/News</a>
+                    </nav>
+
+                    <!-- Mobile/Tablet Menu Button -->
+                    <div class="lg:hidden flex items-center">
+                        <button id="menu-btn" class="mobile-menu-btn focus:outline-none" aria-label="Toggle menu">
+                        <svg
+                            id="menu-icon"
+                            class="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
+                        </svg>
+                        <svg
+                            id="close-icon"
+                            class="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7 hidden"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile/Tablet Menu -->
+            <div id="mobile-menu" class="lg:hidden px-4 sm:px-6 space-y-4 sm:space-y-5 font-archivo">
+                <a href="{% url 'about' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">About Us</a>
+                <a href="{% url 'our_mission' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Our Mission</a>
+                <a href="{% url 'our_partners' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Our Partners</a>
+                <a href="{% url 'testimonials' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Testimonials</a>
+                <a href="{% url 'home' %}#blog" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Blog/News</a>
+            </div>
+        </div>
+        </nav>
+
+        <!-- Main -->
+        <!-- Current News in Pakistan Section -->
+        <div class="bg-white py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-[22px] sm:text-2xl font-semibold text-black leading-tight mb-6 sm:mb-8">Current News in Pakistan</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    {% for news in news_posts %}
+                    <!-- News Article {{ forloop.counter }} -->
+                    <article class="news-card bg-gray-300 relative flex flex-col justify-end h-[180px] sm:h-[225px] cursor-pointer rounded-lg overflow-hidden group" onclick="window.location.href='{% url 'blogpost_detail' news.slug %}'">
+                        <img src="{% static news.image %}" alt="{{ news.title }}" class="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none">
+                        <!-- Gradient overlay on hover -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="p-4 sm:p-6 relative z-10">
+                            <span class="inline-block px-2 py-1 bg-red-600 text-white text-xs font-semibold rounded mb-2">NEWS</span>
+                            <p class="text-xs sm:text-sm mb-1 sm:mb-2 text-black group-hover:text-white transition-colors duration-300">{{ news.date }}</p>
+                            <h3 class="text-base sm:text-lg md:text-xl text-black group-hover:text-white line-clamp-2 transition-colors duration-300">{{ news.title }}</h3>
+                            <span class="text-teal-600 group-hover:text-teal-300 text-sm mt-2 inline-block font-semibold transition-colors duration-300">Read More →</span>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog -->
+        <section id="blog-posts">
+            <div class="max-w-[1440px] mx-auto px-8">
+                <h2 class="text-[22px] font-semibold text-black leading-tight mb-4">Our Blog Posts</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="blog-grid">
+                    {% for post in blog_posts %}
+                    <!-- Blog Post {{ forloop.counter }} -->
+                    <article class="blog-card bg-gray-300 h-[220px] flex flex-col md:h-[400px] relative group rounded-xl overflow-hidden cursor-pointer" onclick="window.location.href='{% url 'blogpost_detail' post.slug %}'">
+                        <img src="{% static post.image %}" alt="{{ post.title }}" class="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none">
+                        <!-- Gradient overlay on hover -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="pt-4 px-4 relative z-10">
+                            <span class="inline-block px-3 py-1 bg-teal-600 text-white text-xs font-semibold rounded-full mb-2 shadow-lg">{{ post.category }}</span>
+                            <h3 class="text-[16px] text-black group-hover:text-white font-bold transition-colors duration-300">{{ post.title }}</h3>
+                            <p class="text-sm text-gray-700 group-hover:text-gray-200 mt-2 line-clamp-2 transition-colors duration-300">{{ post.excerpt }}</p>
+                            <span class="text-teal-600 group-hover:text-teal-300 text-sm mt-2 inline-block font-semibold transition-colors duration-300">Read More →</span>
+                        </div>
+                    </article>
+                    {% empty %}
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-gray-500 text-lg">No blog posts available at the moment.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Pagination Slider -->
+        <section class="w-full px-4 md:px-8 py-8">
+            <div class="relative w-full max-w-[1248px] mx-auto h-10">
+                <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[92%] md:w-[88%] relative">
+                    <div class="w-full h-px bg-black"></div>
+                    <div id="gallery-progress" class="absolute left-0 top-1/2 -translate-y-1/2 h-[6px] bg-black"></div>
+                    <button id="gallery-prev" class="absolute left-0 top-1/2 -translate-y-1/2 mt-2 md:mt-3 z-10 cursor-pointer disabled:opacity-40">
+                        <img src="{% static 'assets/left-arrow.png' %}" alt="Previous" class="w-5 h-5 md:w-6 md:h-6">
+                    </button>
+                    <button id="gallery-next" class="absolute right-0 top-1/2 -translate-y-1/2 mt-2 md:mt-3 z-10 cursor-pointer disabled:opacity-40">
+                        <img src="{% static 'assets/right-arrow.png' %}" alt="Next" class="w-5 h-5 md:w-6 md:h-6">
+                    </button>
+                </div>
+                <span id="gallery-page" class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2 mt-2 md:mt-3 text-[10px] md:text-xs text-black/80">
+                    PAGE <span id="current-page">1</span>/<span id="total-pages">{{ total_pages|default:3 }}</span>
+                </span>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer-gradient text-white pt-8 sm:pt-10 pb-4 sm:pb-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    <!-- About Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">About AJIF</h3>
+                        <p class="text-gray-300 text-base leading-relaxed">Empowering Pakistan's vulnerable communities through health, education, legal aid, and opportunity-building initiatives.</p>
+                    </div>
+                    <!-- Quick Links Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">Quick Links</h3>
+                        <ul class="space-y-2 text-base">
+                            <li><a href="{% url 'about' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">About Us</a></li>
+                            <li><a href="{% url 'our_mission' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Mission</a></li>
+                            <li><a href="{% url 'our_partners' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Partners</a></li>
+                            <li><a href="{% url 'testimonials' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Testimonials</a></li>
+                            <li><a href="{% url 'blogs' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Blog</a></li>
+                        </ul>
+                    </div>
+                    <!-- Contact Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">Connect With Us</h3>
+                        <p class="text-gray-300 text-base mb-4">Stay updated with our latest news and initiatives</p>
+                        <div class="flex space-x-4">
+                            <!-- Facebook -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-600/50 relative overflow-hidden group" aria-label="Facebook">
+                                <span class="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                            <!-- Twitter/X -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-sky-500 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-500/50 relative overflow-hidden group" aria-label="Twitter">
+                                <span class="absolute inset-0 bg-gradient-to-br from-sky-400 to-sky-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                            <!-- LinkedIn -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-700/50 relative overflow-hidden group" aria-label="LinkedIn">
+                                <span class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 pt-8 text-center">
+                    <p class="text-base text-gray-400">&copy; 2025 Anila & Jawad Iqbal Foundation. All rights reserved.</p>
+                    <p class="text-sm text-gray-500 mt-2">Made with ❤️ for a better Pakistan</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            // Mobile menu toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            if (menuBtn) {
+                menuBtn.setAttribute('aria-expanded', 'false');
+
+                menuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                    mobileMenu.classList.toggle('active', !isExpanded);
+                    menuIcon.classList.toggle('hidden', !isExpanded);
+                    closeIcon.classList.toggle('hidden', isExpanded);
+                    menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+                });
+
+                document.querySelectorAll('#mobile-menu a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.remove('active');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                        mobileMenu.classList.remove('active');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            // Dynamic Pagination - Wait for DOM to be ready
+            document.addEventListener('DOMContentLoaded', function() {
+                const blogGrid = document.getElementById('blog-grid');
+                const prevBtn = document.getElementById('gallery-prev');
+                const nextBtn = document.getElementById('gallery-next');
+                const progressBar = document.getElementById('gallery-progress');
+                const currentPageSpan = document.getElementById('current-page');
+                const totalPagesSpan = document.getElementById('total-pages');
+
+                // Check if elements exist
+                if (!blogGrid || !prevBtn || !nextBtn || !progressBar || !currentPageSpan || !totalPagesSpan) {
+                    console.error('Pagination elements not found');
+                    return;
+                }
+
+                // Get all blog posts
+                const allPosts = Array.from(blogGrid.querySelectorAll('.blog-card'));
+                const postsPerPage = 3;
+                const totalPosts = allPosts.length;
+                const totalPages = Math.ceil(totalPosts / postsPerPage);
+                let currentPage = 1;
+
+                console.log('Total blog posts:', totalPosts);
+                console.log('Total pages:', totalPages);
+
+                // Update total pages display
+                totalPagesSpan.textContent = totalPages;
+
+                function showPage(page) {
+                    console.log('Showing page:', page);
+
+                    // Hide all posts first
+                    allPosts.forEach(post => {
+                        post.style.display = 'none';
+                    });
+
+                    // Calculate which posts to show
+                    const startIndex = (page - 1) * postsPerPage;
+                    const endIndex = startIndex + postsPerPage;
+
+                    console.log('Showing posts from index', startIndex, 'to', endIndex);
+
+                    // Show posts for current page - use empty string to reset to default display
+                    for (let i = startIndex; i < endIndex && i < totalPosts; i++) {
+                        allPosts[i].style.display = '';
+                        console.log('Showing post', i);
+                    }
+
+                    // Update current page display
+                    currentPageSpan.textContent = page;
+
+                    // Update progress bar
+                    const progressWidth = (page / totalPages) * 100;
+                    progressBar.style.width = progressWidth + '%';
+
+                    // Update button states
+                    prevBtn.disabled = page === 1;
+                    nextBtn.disabled = page === totalPages;
+
+                    // Scroll to top of blog section
+                    const blogSection = document.getElementById('blog-posts');
+                    if (blogSection && page > 1) {
+                        blogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+
+                // Previous button click
+                prevBtn.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        showPage(currentPage);
+                    }
+                });
+
+                // Next button click
+                nextBtn.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        showPage(currentPage);
+                    }
+                });
+
+                // Initialize first page
+                showPage(1);
+            });
+
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Add active class to current page in navigation
+            document.addEventListener('DOMContentLoaded', function() {
+                const currentPage = window.location.pathname;
+                const navLinks = document.querySelectorAll('nav a');
+
+                navLinks.forEach(link => {
+                    const linkHref = link.getAttribute('href');
+                    if (linkHref && currentPage.includes(linkHref)) {
+                        link.classList.add('text-white', 'font-bold');
+                    }
+                });
+            });
+
+            // ===== SCROLL-TRIGGERED ANIMATIONS =====
+            // Intersection Observer for fade-in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const fadeInObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all blog cards and news cards
+            document.addEventListener('DOMContentLoaded', () => {
+                const blogCards = document.querySelectorAll('.blog-card');
+                const newsCards = document.querySelectorAll('.news-card');
+
+                blogCards.forEach(card => fadeInObserver.observe(card));
+                newsCards.forEach(card => fadeInObserver.observe(card));
+            });
+
+            // ===== ENHANCED SEARCH FUNCTIONALITY =====
+            const searchInputs = document.querySelectorAll('input[type="search"]');
+            searchInputs.forEach(input => {
+                input.classList.add('search-input');
+
+                // Add placeholder animation
+                let placeholderIndex = 0;
+                const placeholders = [
+                    'Search blog posts...',
+                    'Find articles...',
+                    'Explore topics...'
+                ];
+
+                // Rotate placeholders every 3 seconds
+                setInterval(() => {
+                    placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+                    input.setAttribute('placeholder', placeholders[placeholderIndex]);
+                }, 3000);
+            });
+        </script>
+    </body>
+</html>

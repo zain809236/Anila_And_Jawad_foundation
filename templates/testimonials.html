@@ -1,0 +1,1190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tailwind Converted</title>
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+        <!-- Google Fonts -->
+        <link rel="stylesheet" href="{% static 'assets/fonts/fonts.css' %}">
+        <style>
+        .font-archivo { font-family: 'Archivo Black', sans-serif; }
+        .font-quattro { font-family: 'Quattrocento', serif; }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mobile menu transitions */
+        #mobile-menu {
+            max-height: 0;
+            transition: max-height 0.4s ease-out;
+            overflow: hidden;
+            background: #1a1a1a;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        #mobile-menu.active {
+            max-height: 600px;
+            transition: max-height 0.6s ease-in;
+            padding: 10px 0;
+        }
+
+        @media (min-width: 1024px) {
+            #mobile-menu {
+                display: none !important;
+            }
+        }
+
+        /* Enhanced navbar */
+        .navbar-gradient {
+            background: #000000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-container {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+        }
+        .logo-container:hover {
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .logo-img {
+            transition: transform 0.4s ease;
+            flex-shrink: 0;
+        }
+        .logo-container:hover .logo-img {
+            transform: rotate(360deg);
+        }
+
+        .foundation-name {
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+        .logo-container:hover .foundation-name {
+            color: #14b8a6;
+        }
+
+        .nav-link {
+            position: relative;
+            color: rgba(255, 255, 255, 0.9);
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #14b8a6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #14b8a6;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .mobile-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-nav-link {
+            transition: all 0.3s ease;
+            border-radius: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .mobile-nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, #fbbf24, #f59e0b);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        .mobile-nav-link:hover::before {
+            transform: scaleY(1);
+        }
+        .mobile-nav-link:hover {
+            transform: translateX(12px);
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.2), rgba(20, 184, 166, 0.1));
+            padding-left: 1.5rem;
+        }
+
+        .footer-gradient {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0a0a0a 100%);
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Testimonial Interactive Effects */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .testimonial-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .testimonial-card:hover::before {
+            left: 100%;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(20, 184, 166, 0.3);
+        }
+
+        .instagram-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .instagram-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .parallax-element {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+
+        .glow-on-hover:hover {
+            box-shadow: 0 0 20px rgba(20, 184, 166, 0.5),
+                        0 0 40px rgba(20, 184, 166, 0.3),
+                        inset 0 0 20px rgba(20, 184, 166, 0.1);
+        }
+
+        /* Donate Button Enhanced */
+        .donate-btn-enhanced {
+            position: relative;
+            display: inline-block;
+        }
+
+        .donate-btn-enhanced::before,
+        .donate-btn-enhanced::after {
+            content: '';
+            position: absolute;
+            inset: -15px;
+            border-radius: 50%;
+            border: 2px solid rgba(251, 191, 36, 0.5);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .donate-btn-enhanced:hover::before {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        .donate-btn-enhanced:hover::after {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            animation-delay: 1s;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.9);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+        }
+
+        /* Ripple effect for button click */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced Submit Testimonial Button */
+        .submit-testimonial-btn {
+            position: relative;
+        }
+
+        .submit-testimonial-btn::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, #14b8a6, #0d9488) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .submit-testimonial-btn:hover::before {
+            opacity: 0.6;
+            animation: rotate-border 3s linear infinite;
+        }
+
+        @keyframes rotate-border {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes icon-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .submit-testimonial-btn:hover .btn-icon {
+            animation: icon-bounce 0.6s ease-in-out infinite;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Footer link styling */
+        .footer-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #14b8a6;
+            transition: width 0.3s ease;
+        }
+
+        .footer-link:hover::after {
+            width: 100%;
+        }
+        </style>
+    </head>
+    <body class="font-quattro bg-white text-black overflow-x-hidden">
+      <!-- Navbar -->
+        <nav class="navbar-gradient text-white sticky top-0 z-50 ">
+            <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-[78px]">
+                <div class="flex items-center justify-between h-14 sm:h-16 md:h-16 lg:h-20 ">
+
+                    <!-- LEFT: Logo and Foundation Name -->
+                    <div class="flex items-center">
+                        <a href="{% url 'home' %}" class="logo-container flex items-center">
+                            <img src="{% static 'assets/logo.png' %}" alt="AJIF Logo" class="logo-img h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10" loading="lazy">
+                            <span class="foundation-name font-archivo text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base ml-3">Anila & Jawad Iqbal Foundation</span>
+                        </a>
+                    </div>
+
+                    <!-- CENTER: Navigation Links -->
+                    <nav class="hidden lg:flex items-center space-x-6 md:space-x-8 lg:space-x-10 xl:space-x-12 absolute left-1/2 transform -translate-x-1/2">
+                        <a href="{% url 'about' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">About Us</a>
+                        <a href="{% url 'our_mission' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Our Mission</a>
+                        <a href="{% url 'our_partners' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Our Partners</a>
+                        <a href="{% url 'testimonials' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Testimonials</a>
+                        <a href="{% url 'home' %}#blog" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Blog/News</a>
+                    </nav>
+
+                    <!-- Mobile/Tablet Menu Button -->
+                    <div class="lg:hidden flex items-center">
+                        <button id="menu-btn" class="mobile-menu-btn focus:outline-none" aria-label="Toggle menu">
+                        <svg
+                            id="menu-icon"
+                            class="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
+                        </svg>
+                        <svg
+                            id="close-icon"
+                            class="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7 hidden"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile/Tablet Menu -->
+            <div id="mobile-menu" class="lg:hidden px-4 sm:px-6 space-y-4 sm:space-y-5 font-archivo">
+                <a href="{% url 'about' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">About Us</a>
+                <a href="{% url 'our_mission' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Our Mission</a>
+                <a href="{% url 'our_partners' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Our Partners</a>
+                <a href="{% url 'testimonials' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Testimonials</a>
+                <a href="{% url 'home' %}#blog" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Blog/News</a>
+            </div>
+        </div>
+        </nav>
+
+        <!-- Section Wrapper -->
+        <div class="relative pb-8 md:pb-12 lg:pb-16">
+            <img src="{% static 'assets/bg.png' %}" alt="background pattern" class="absolute inset-0 w-full h-full object-cover -z-10">
+           
+            <section class="relative pt-6 md:pt-10 lg:pt-12 pb-6 md:pb-8 lg:pb-10 scroll-reveal">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Mobile: Simple centered layout -->
+                    <div class="lg:hidden flex flex-col items-center text-center mb-6 md:mb-8">
+                        <div class="jafa-logo-container mb-4 cursor-pointer group">
+                            <img src="{% static 'assets/jafa-logo.jpg' %}" alt="JAFA Logo" class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 shadow-lg group-hover:shadow-2xl glow-on-hover">
+                        </div>
+                        <h1 class="text-xl sm:text-2xl md:text-3xl font-archivo bg-gradient-to-r from-teal-600 via-teal-700 to-teal-800 bg-clip-text text-transparent leading-tight hover:scale-105 transition-transform duration-300 cursor-default">JAFA Girls Soccer Team</h1>
+                    </div>
+
+                    <!-- Desktop: Grid layout with balanced columns -->
+                    <div class="hidden lg:grid grid-cols-[auto_1fr_auto] items-center gap-4 lg:gap-6 mb-8">
+                        <div class="col-start-1 jafa-logo-container cursor-pointer group">
+                            <img src="{% static 'assets/jafa-logo.jpg' %}" alt="JAFA Logo" class="w-20 h-20 xl:w-28 xl:h-28 rounded-full transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 shadow-lg group-hover:shadow-2xl glow-on-hover">
+                        </div>
+                        <div class="col-start-2 text-center">
+                            <h1 class="text-3xl xl:text-4xl 2xl:text-5xl font-archivo bg-gradient-to-r from-teal-600 via-teal-700 to-teal-800 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-default">JAFA Girls Soccer Team</h1>
+                        </div>
+                        <div class="col-start-3"></div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="max-w-4xl mx-auto text-center mb-6 md:mb-8 lg:mb-10 parallax-element">
+                        <p class="text-sm sm:text-base lg:text-lg leading-relaxed lg:leading-loose text-gray-700 px-2 sm:px-0 hover:text-gray-900 transition-colors duration-300">
+                            Jafa is a recognised and awarded academy promoting football and girls empowerment. They received an award in <span class="font-bold text-teal-600">May 2025</span> from the Director Sports of Habib Bank, to show recognition of Jafa's continuous efforts to uplift the youth — especially young girls through sports.
+                        </p>
+                    </div>
+
+                    <!-- Content Grid -->
+                    <div class="grid xl:grid-cols-[1.5fr_1fr] gap-6 md:gap-8 lg:gap-10 items-start">
+                        <!-- Left: Text content -->
+                        <div class="space-y-4 md:space-y-5 lg:space-y-6 text-justify parallax-element">
+                            <p class="jafa-quote italic text-gray-800 text-sm sm:text-base lg:text-lg leading-relaxed bg-gradient-to-r from-teal-50 to-teal-100 p-4 rounded-lg border-l-4 border-teal-600 hover:shadow-lg transition-all duration-300 cursor-default">
+                                "At JAFA, we believe in equal fields, equal dreams, and unstoppable passion. Proud to keep pushing boundaries!"
+                            </p>
+                            <p class="text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transform">
+                                JAFA Football Academy has over <span class="font-bold text-teal-600">200 members</span> and <span class="font-bold text-teal-600">8 teams</span> which includes U10, U12, U14, U16, and Senior Team Girls based in Lyari, Pakistan which is also known as <span class="font-bold text-teal-600">Mini Brazil</span>.
+                            </p>
+                            <p class="text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transform">
+                                They have been operating as a football academy for over <span class="font-bold text-teal-600">10 years</span>, and have a great local supporter base, including players, parents, volunteers, administrators and coaches like <span class="font-bold text-teal-600">Javed Arab</span> who is a professional football player and coach. He played with international teams and he is a former player of Pakistan football team and <span class="font-bold text-teal-600">Nasir Arab</span> who played for famous and professional club of Oman known as Al-Seeb FC.
+                            </p>
+                        </div>
+
+                        <!-- Right: Image and social links -->
+                        <div class="flex flex-col items-center xl:items-end space-y-4 md:space-y-5 lg:space-y-6">
+                            <!-- Image placeholder -->
+                            <div class="jafa-main-image w-full max-w-sm lg:max-w-md xl:w-full xl:max-w-none h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 bg-gray-200 rounded-lg shadow-lg overflow-hidden group cursor-pointer glow-on-hover">
+                                <img src="{% static 'assets/jafa1.jpg' %}" alt="Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"></div>
+
+                            <!-- Social links and donate button -->
+                            <div class="w-full max-w-sm lg:max-w-md xl:w-full">
+                                <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 md:gap-5">
+                                    <!-- Social links -->
+                                    <div class="flex-1 space-y-3 md:space-y-4 text-sm sm:text-base text-gray-700">
+                                        <div class="social-link-item flex items-start gap-2 md:gap-3 p-2 rounded-lg hover:bg-teal-50 transition-all duration-300 cursor-pointer group">
+                                            <span class="text-red-600 mt-0.5 md:mt-1 flex-shrink-0 group-hover:scale-125 transition-transform duration-300">▶️</span>
+                                            <div class="min-w-0">
+                                                <span class="break-words">Subscribe </span><a href="#" class="text-blue-600 hover:underline break-words font-semibold hover:text-blue-800">here</a>
+                                                <div class="text-xs sm:text-sm text-gray-500 mt-1 group-hover:text-gray-700">@JAFASoccerAcademy</div>
+                                            </div>
+                                        </div>
+                                        <div class="social-link-item flex items-start gap-2 md:gap-3 p-2 rounded-lg hover:bg-teal-50 transition-all duration-300 cursor-pointer group">
+                                            <span class="text-gray-700 mt-0.5 md:mt-1 flex-shrink-0 group-hover:scale-125 transition-transform duration-300">🌐</span>
+                                            <div class="min-w-0">
+                                                <span class="break-words">Find more about JAFA Soccer Academy </span><a href="#" class="text-blue-600 hover:underline break-words font-semibold hover:text-blue-800">here</a>
+                                            </div>
+                                        </div>
+                                        <div class="social-link-item flex items-start gap-2 md:gap-3 p-2 rounded-lg hover:bg-teal-50 transition-all duration-300 cursor-pointer group">
+                                            <span class="text-pink-500 mt-0.5 md:mt-1 flex-shrink-0 group-hover:scale-125 transition-transform duration-300">📸</span>
+                                            <div class="min-w-0">
+                                                <span class="break-words">Follow them </span><a href="#" class="text-blue-600 hover:underline break-words font-semibold hover:text-blue-800">here</a>
+                                                <div class="text-xs sm:text-sm text-gray-500 mt-1 group-hover:text-gray-700">@jafasocceracademy</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Donate button -->
+                                    <div class="flex-shrink-0 flex justify-center lg:justify-end">
+                                        <a href="#donate" class="donate-btn-enhanced inline-block group/btn">
+                                            <div class="relative">
+                                                <!-- Outer Pulsing Glow -->
+                                                <div class="absolute -inset-4 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-400 rounded-full blur-xl opacity-40 group-hover/btn:opacity-70 transition-all duration-500 group-hover/btn:animate-pulse"></div>
+
+                                                <!-- Inner Glow -->
+                                                <div class="absolute inset-0 bg-yellow-400 rounded-full blur-lg opacity-50 group-hover/btn:opacity-90 transition-opacity duration-500"></div>
+
+                                                <!-- Button -->
+                                                <div class="relative bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-full shadow-lg text-sm sm:text-base lg:text-lg w-full lg:w-auto min-h-[44px] flex items-center justify-center transform transition-all duration-500 group-hover/btn:scale-110 group-hover/btn:rotate-2 overflow-hidden">
+                                                    <span class="relative z-10">Donate here</span>
+
+                                                    <!-- Shimmer Effect -->
+                                                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
+
+                                                    <!-- Sparkles -->
+                                                    <div class="absolute top-1 left-1/4 w-1 h-1 bg-white rounded-full opacity-0 group-hover/btn:opacity-100 group-hover/btn:animate-ping"></div>
+                                                    <div class="absolute bottom-1 right-1/4 w-1 h-1 bg-white rounded-full opacity-0 group-hover/btn:opacity-100 group-hover/btn:animate-ping" style="animation-delay: 0.2s;"></div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Instagram Section -->
+            <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10 lg:py-12 relative scroll-reveal">
+                <div class="bg-gray-100 rounded-xl md:rounded-2xl shadow-lg flex flex-col p-4 md:p-6 lg:p-8 glow-on-hover">
+                    <!-- Instagram Header -->
+                    <div class="flex flex-col sm:flex-row items-center gap-4 md:gap-6 mb-4 md:mb-6 lg:mb-8">
+                        <div class="flex items-center gap-3 md:gap-4">
+                            <img src="{% static 'assets/jafa-logo.jpg' %}" alt="avatar" class="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full border-2 border-gray-300">
+                            <span class="text-base md:text-lg lg:text-xl font-semibold text-gray-900">@jafasocceracademy</span>
+                        </div>
+                        <div class="flex gap-4 md:gap-6 lg:gap-8 text-sm md:text-base lg:text-lg font-medium justify-center sm:justify-end w-full">
+                            <span class="text-center"><strong class="text-gray-900">345</strong><br class="sm:hidden"><span class="text-gray-600"> Posts</span></span>
+                            <span class="text-center"><strong class="text-gray-900">2,449</strong><br class="sm:hidden"><span class="text-gray-600"> Followers</span></span>
+                            <span class="text-center"><strong class="text-gray-900">99</strong><br class="sm:hidden"><span class="text-gray-600"> Following</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Instagram Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6">
+                        <!-- Card 1 -->
+                        <div class="instagram-card relative rounded-lg md:rounded-xl overflow-hidden border border-gray-200 aspect-square min-h-[200px] sm:min-h-[250px] lg:min-h-[300px] group cursor-pointer shadow-md hover:shadow-2xl">
+                            <img src="{% static 'assets/jafa2.jpeg' %}" alt="post1" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                            <div class="absolute inset-0 flex items-end justify-end p-2 md:p-3">
+                                <div class="w-10 h-10 md:w-12 md:h-12 bg-black/70 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-black/80 group-hover:scale-110">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="20" height="20" class="md:w-6 md:h-6">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="instagram-card relative rounded-lg md:rounded-xl overflow-hidden border border-gray-200 aspect-square min-h-[200px] sm:min-h-[250px] lg:min-h-[300px] group cursor-pointer shadow-md hover:shadow-2xl">
+                            <img src="{% static 'assets/jafa5.jpeg' %}" alt="post2" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                            <div class="absolute inset-0 flex items-end justify-end p-2 md:p-3">
+                                <div class="w-10 h-10 md:w-12 md:h-12 bg-black/70 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-black/80 group-hover:scale-110">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="20" height="20" class="md:w-6 md:h-6">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="instagram-card relative rounded-lg md:rounded-xl overflow-hidden border border-gray-200 aspect-square min-h-[200px] sm:min-h-[250px] lg:min-h-[300px] group cursor-pointer shadow-md hover:shadow-2xl">
+                            <img src="{% static 'assets/jafa4.jpg' %}" alt="post3" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                            <div class="absolute inset-0 flex items-end justify-end p-2 md:p-3">
+                                <div class="w-10 h-10 md:w-12 md:h-12 bg-black/70 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-black/80 group-hover:scale-110">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="20" height="20" class="md:w-6 md:h-6">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- All Testimonials Section -->
+        <section class="bg-gray-50 py-12 md:py-16 px-4 sm:px-6 lg:px-8 scroll-reveal">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="font-archivo text-2xl sm:text-3xl text-teal-600 mb-8 text-center bg-gradient-to-r from-teal-600 to-teal-800 bg-clip-text text-transparent">More Testimonials</h2>
+                {% if testimonials %}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for testimonial in testimonials %}
+                    <div class="testimonial-card bg-white p-6 rounded-lg shadow hover:shadow-lg transition cursor-pointer">
+                        {% if testimonial.image %}
+                        <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}" class="w-16 h-16 rounded-full mx-auto mb-4 object-cover border-2 border-teal-200">
+                        {% endif %}
+                        <p class="text-gray-700 italic mb-4">"{{ testimonial.content }}"</p>
+                        <div class="text-center">
+                            <p class="font-bold">{{ testimonial.name }}</p>
+                            {% if testimonial.organization %}
+                            <p class="text-sm text-gray-600">{{ testimonial.organization }}</p>
+                            {% endif %}
+                            <p class="text-xs text-teal-600 mt-1">{{ testimonial.get_testimonial_type_display }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-center text-gray-600">No testimonials yet. Be the first to share your experience!</p>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Share Your Experience Section -->
+        <section class="bg-white py-12 md:py-16 px-4 sm:px-6 lg:px-8 scroll-reveal">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="font-archivo text-2xl sm:text-3xl text-teal-600 mb-4 bg-gradient-to-r from-teal-600 to-teal-800 bg-clip-text text-transparent">Share Your Experience</h2>
+                <p class="text-gray-600 mb-8 text-base sm:text-lg">Have you been impacted by our work? We'd love to hear from you!</p>
+
+                <!-- Submit Testimonial Button -->
+                <a href="{% url 'submit_testimonial' %}" class="submit-testimonial-btn inline-block group relative">
+                    <div class="relative">
+                        <!-- Outer Glow -->
+                        <div class="absolute -inset-4 bg-gradient-to-r from-teal-400 via-teal-600 to-teal-400 rounded-full blur-xl opacity-40 group-hover:opacity-80 transition-all duration-500 group-hover:animate-pulse"></div>
+
+                        <!-- Inner Glow -->
+                        <div class="absolute inset-0 bg-teal-500 rounded-full blur-lg opacity-50 group-hover:opacity-90 transition-opacity duration-500"></div>
+
+                        <!-- Rotating Ring -->
+                        <div class="absolute -inset-2 border-2 border-teal-400 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-500 group-hover:animate-spin" style="animation-duration: 4s;"></div>
+
+                        <!-- Button -->
+                        <div class="relative bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-bold px-8 py-4 rounded-full shadow-xl text-base sm:text-lg transform transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl overflow-hidden">
+                            <span class="relative z-10 flex items-center gap-2 justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="btn-icon h-5 w-5 sm:h-6 sm:w-6 transition-transform duration-300 group-hover:rotate-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                <span class="group-hover:tracking-wide transition-all duration-300">Submit Your Testimonial</span>
+                            </span>
+
+                            <!-- Shimmer Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+
+                            <!-- Sparkles -->
+                            <div class="absolute top-2 left-1/4 w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"></div>
+                            <div class="absolute bottom-2 right-1/4 w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" style="animation-delay: 0.2s;"></div>
+                            <div class="absolute top-1/2 left-1/3 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" style="animation-delay: 0.4s;"></div>
+                        </div>
+                    </div>
+                </a>
+
+                <p class="text-xs sm:text-sm text-gray-500 mt-6">
+                    Your testimonial will be reviewed by our team before being published.
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="donate" class="footer-gradient text-white pt-8 sm:pt-10 pb-4 sm:pb-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    <!-- About Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">About AJIF</h3>
+                        <p class="text-gray-300 text-base leading-relaxed">Empowering Pakistan's vulnerable communities through health, education, legal aid, and opportunity-building initiatives.</p>
+                    </div>
+                    <!-- Quick Links Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">Quick Links</h3>
+                        <ul class="space-y-2 text-base">
+                            <li><a href="{% url 'about' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">About Us</a></li>
+                            <li><a href="{% url 'our_mission' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Mission</a></li>
+                            <li><a href="{% url 'our_partners' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Partners</a></li>
+                            <li><a href="{% url 'testimonials' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Testimonials</a></li>
+                            <li><a href="{% url 'blogs' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Blog</a></li>
+                        </ul>
+                    </div>
+                    <!-- Contact Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">Connect With Us</h3>
+                        <p class="text-gray-300 text-base mb-4">Stay updated with our latest news and initiatives</p>
+                        <div class="flex space-x-4">
+                            <!-- Facebook -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-600/50 relative overflow-hidden group" aria-label="Facebook">
+                                <span class="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                            <!-- Twitter/X -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-sky-500 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-500/50 relative overflow-hidden group" aria-label="Twitter">
+                                <span class="absolute inset-0 bg-gradient-to-br from-sky-400 to-sky-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                            <!-- LinkedIn -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-700/50 relative overflow-hidden group" aria-label="LinkedIn">
+                                <span class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 pt-8 text-center">
+                    <p class="text-base text-gray-400">&copy; 2025 Anila & Jawad Iqbal Foundation. All rights reserved.</p>
+                    <p class="text-sm text-gray-500 mt-2">Made with ❤️ for a better Pakistan</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            // Mobile menu toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            // Initialize aria-expanded
+            menuBtn.setAttribute('aria-expanded', 'false');
+
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                mobileMenu.classList.toggle('active', !isExpanded);
+                menuIcon.classList.toggle('hidden', !isExpanded);
+                closeIcon.classList.toggle('hidden', isExpanded);
+                menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+            });
+
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // ========== Advanced Interactivity ==========
+
+            // 1. Scroll Reveal Animation
+            const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            scrollRevealElements.forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // 2. Parallax Effect on Scroll
+            const parallaxElements = document.querySelectorAll('.parallax-element');
+            let ticking = false;
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        parallaxElements.forEach((element) => {
+                            const rect = element.getBoundingClientRect();
+                            const scrollPercent = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+
+                            if (scrollPercent >= 0 && scrollPercent <= 1) {
+                                const movement = (scrollPercent - 0.5) * 20;
+                                element.style.transform = `translateY(${movement}px)`;
+                            }
+                        });
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            // 3. Instagram Cards Hover Enhancement
+            const instagramCards = document.querySelectorAll('.instagram-card');
+
+            instagramCards.forEach(card => {
+                const img = card.querySelector('img');
+
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 15;
+                    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 15;
+
+                    if (img) {
+                        img.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    if (img) {
+                        img.style.transform = 'scale(1) translate(0, 0)';
+                    }
+                });
+            });
+
+            // 4. Testimonial Cards 3D Tilt Effect
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+
+            testimonialCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = (y - centerY) / 15;
+                    const rotateY = (centerX - x) / 15;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            });
+
+            // 5. Add fade-in animation on page load
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    scrollRevealElements.forEach(el => {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top < window.innerHeight && rect.bottom > 0) {
+                            el.classList.add('revealed');
+                        }
+                    });
+                }, 100);
+            });
+
+            // 6. Form Animation
+            const formInputs = document.querySelectorAll('input, textarea, select');
+
+            formInputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('glow-on-hover');
+                });
+
+                input.addEventListener('blur', function() {
+                    setTimeout(() => {
+                        this.parentElement.classList.remove('glow-on-hover');
+                    }, 300);
+                });
+            });
+
+            // 7. Enhanced Donate Button with Ripple Effect
+            const donateButtons = document.querySelectorAll('.donate-btn-enhanced, a[href="#donate"]');
+
+            donateButtons.forEach(btn => {
+                // Smooth scroll to footer
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector('#donate');
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+
+                    // Create ripple effect
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple-effect');
+
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+
+                    // Find the button element
+                    const buttonEl = this.querySelector('div[class*="bg-yellow"]') || this;
+                    buttonEl.style.position = 'relative';
+                    buttonEl.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+
+                // Add heartbeat animation on hover
+                btn.addEventListener('mouseenter', function() {
+                    const buttonEl = this.querySelector('div[class*="bg-yellow"]') || this;
+                    buttonEl.style.animation = 'heartbeat 0.8s ease infinite';
+                });
+
+                btn.addEventListener('mouseleave', function() {
+                    const buttonEl = this.querySelector('div[class*="bg-yellow"]') || this;
+                    buttonEl.style.animation = '';
+                });
+            });
+
+            // 8. Add magnetic effect to donate button
+            const donateBtn = document.querySelector('.donate-btn-enhanced');
+
+            if (donateBtn) {
+                donateBtn.addEventListener('mousemove', (e) => {
+                    const rect = donateBtn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+
+                    const distance = Math.sqrt(x * x + y * y);
+                    const maxDistance = 80;
+
+                    if (distance < maxDistance) {
+                        const pullStrength = (maxDistance - distance) / maxDistance;
+                        const pullX = x * pullStrength * 0.2;
+                        const pullY = y * pullStrength * 0.2;
+
+                        donateBtn.style.transform = `translate(${pullX}px, ${pullY}px)`;
+                    }
+                });
+
+                donateBtn.addEventListener('mouseleave', () => {
+                    donateBtn.style.transform = 'translate(0, 0)';
+                });
+            }
+
+            // ========== JAFA Section Interactivity ==========
+
+            // 9. JAFA Logo Interactive Effects
+            const jafaLogos = document.querySelectorAll('.jafa-logo-container');
+
+            jafaLogos.forEach(logo => {
+                // Add floating animation when scrolled into view
+                const logoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target.querySelector('img');
+                            if (img) {
+                                img.style.animation = 'float 3s ease-in-out infinite';
+                            }
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                logoObserver.observe(logo);
+
+                // Click effect - bounce and rotate
+                logo.addEventListener('click', function() {
+                    const img = this.querySelector('img');
+                    if (img) {
+                        // Remove existing animation
+                        img.style.animation = 'none';
+
+                        // Trigger reflow
+                        void img.offsetWidth;
+
+                        // Add bounce effect
+                        img.style.transition = 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                        img.style.transform = 'scale(1.3) rotate(360deg)';
+
+                        setTimeout(() => {
+                            img.style.transform = 'scale(1) rotate(0deg)';
+                            setTimeout(() => {
+                                img.style.animation = 'float 3s ease-in-out infinite';
+                            }, 600);
+                        }, 300);
+                    }
+                });
+            });
+
+            // 10. JAFA Main Image 3D Tilt Effect
+            const jafaMainImage = document.querySelector('.jafa-main-image');
+
+            if (jafaMainImage) {
+                jafaMainImage.addEventListener('mousemove', (e) => {
+                    const rect = jafaMainImage.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+
+                    const img = jafaMainImage.querySelector('img');
+                    if (img) {
+                        img.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.15)`;
+                    }
+                });
+
+                jafaMainImage.addEventListener('mouseleave', () => {
+                    const img = jafaMainImage.querySelector('img');
+                    if (img) {
+                        img.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+                    }
+                });
+            }
+
+            // 11. Social Links Enhanced Click Animation
+            const socialLinks = document.querySelectorAll('.social-link-item');
+
+            socialLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Don't prevent default if clicking on actual link
+                    if (!e.target.closest('a')) {
+                        // Add pulse effect
+                        this.style.transform = 'scale(0.95)';
+
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1.05)';
+
+                            setTimeout(() => {
+                                this.style.transform = 'scale(1)';
+                            }, 150);
+                        }, 150);
+
+                        // Add ripple effect
+                        const ripple = document.createElement('div');
+                        ripple.style.position = 'absolute';
+                        ripple.style.borderRadius = '50%';
+                        ripple.style.background = 'rgba(20, 184, 166, 0.4)';
+                        ripple.style.width = '20px';
+                        ripple.style.height = '20px';
+                        ripple.style.pointerEvents = 'none';
+                        ripple.style.transform = 'scale(0)';
+                        ripple.style.animation = 'ripple-animation 0.6s ease-out';
+
+                        const rect = this.getBoundingClientRect();
+                        ripple.style.left = (e.clientX - rect.left - 10) + 'px';
+                        ripple.style.top = (e.clientY - rect.top - 10) + 'px';
+
+                        this.style.position = 'relative';
+                        this.appendChild(ripple);
+
+                        setTimeout(() => {
+                            ripple.remove();
+                        }, 600);
+                    }
+                });
+
+                // Emoji bounce on hover
+                const emoji = link.querySelector('span[class*="text-red-600"], span[class*="text-gray-700"], span[class*="text-pink-500"]');
+
+                link.addEventListener('mouseenter', function() {
+                    if (emoji) {
+                        emoji.style.animation = 'float 0.5s ease-in-out 3';
+                    }
+                });
+
+                link.addEventListener('mouseleave', function() {
+                    if (emoji) {
+                        emoji.style.animation = '';
+                    }
+                });
+            });
+
+            // 12. JAFA Quote Box Subtle Animation
+            const jafaQuote = document.querySelector('.jafa-quote');
+
+            if (jafaQuote) {
+                // Add typing effect on scroll into view
+                const quoteObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                            quoteObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                quoteObserver.observe(jafaQuote);
+
+                // Subtle pulse on hover
+                jafaQuote.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+
+                jafaQuote.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            }
+
+            // 13. Highlighted Text Glow Effect
+            const highlightedSpans = document.querySelectorAll('span.font-bold.text-teal-600');
+
+            highlightedSpans.forEach(span => {
+                span.style.transition = 'all 0.3s ease';
+
+                span.addEventListener('mouseenter', function() {
+                    this.style.textShadow = '0 0 10px rgba(20, 184, 166, 0.6), 0 0 20px rgba(20, 184, 166, 0.4)';
+                    this.style.transform = 'scale(1.1)';
+                    this.style.display = 'inline-block';
+                });
+
+                span.addEventListener('mouseleave', function() {
+                    this.style.textShadow = '';
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // 14. JAFA Section Gradient Text Animation
+            const jafaHeaders = document.querySelectorAll('h1[class*="bg-gradient-to-r from-teal"]');
+
+            jafaHeaders.forEach(header => {
+                let scrollPosition = 0;
+
+                // Animate gradient on scroll
+                const headerAnimationInterval = setInterval(() => {
+                    scrollPosition += 1;
+                    if (scrollPosition > 100) scrollPosition = 0;
+
+                    // Only animate if element is in viewport
+                    const rect = header.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        header.style.backgroundPosition = `${scrollPosition}% 50%`;
+                        header.style.backgroundSize = '200% 200%';
+                    }
+                }, 50);
+
+                // Clean up on page unload
+                window.addEventListener('beforeunload', () => {
+                    clearInterval(headerAnimationInterval);
+                });
+            });
+
+            // 15. Submit Testimonial Button Interactive Effects
+            const submitTestimonialBtn = document.querySelector('.submit-testimonial-btn');
+
+            if (submitTestimonialBtn) {
+                // Click ripple effect
+                submitTestimonialBtn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('div');
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                    ripple.style.width = '20px';
+                    ripple.style.height = '20px';
+                    ripple.style.pointerEvents = 'none';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple-animation 0.6s ease-out';
+
+                    const rect = this.getBoundingClientRect();
+                    ripple.style.left = (e.clientX - rect.left - 10) + 'px';
+                    ripple.style.top = (e.clientY - rect.top - 10) + 'px';
+
+                    const buttonEl = this.querySelector('div[class*="bg-gradient"]');
+                    buttonEl.style.position = 'relative';
+                    buttonEl.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+
+                // Mouse trail effect
+                submitTestimonialBtn.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
+                    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 10;
+
+                    const buttonEl = this.querySelector('div[class*="bg-gradient"]');
+                    buttonEl.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg) scale(1.1)`;
+                });
+
+                submitTestimonialBtn.addEventListener('mouseleave', function() {
+                    const buttonEl = this.querySelector('div[class*="bg-gradient"]');
+                    buttonEl.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1)';
+                });
+            }
+        </script>
+    </body>
+</html>

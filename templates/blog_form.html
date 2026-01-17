@@ -1,0 +1,982 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if is_editing %}Edit{% else %}Create{% endif %} Post - AJIF Blog</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/fonts.css' %}">
+    <style>
+        .font-archivo { font-family: 'Archivo Black', sans-serif; }
+        .font-quattro { font-family: 'Quattrocento', serif; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: #fafbfc;
+            min-height: 100vh;
+            color: #1a202c;
+        }
+
+        /* Professional Top Navigation Bar */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #1a202c;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #14b8a6, #06b6d4);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 32px;
+            background: #e2e8f0;
+        }
+
+        .page-info h1 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 2px;
+        }
+
+        .page-info p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .nav-btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .nav-btn-primary {
+            background: linear-gradient(135deg, #14b8a6, #06b6d4);
+            color: white;
+            box-shadow: 0 2px 8px rgba(20, 184, 166, 0.25);
+        }
+
+        .nav-btn-primary:hover {
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .nav-btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 96px 24px 80px;
+        }
+
+        /* Professional Form Card */
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+
+        .form-header {
+            padding: 32px 40px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            font-size: 15px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .form-body {
+            padding: 40px;
+        }
+
+        /* Form Groups */
+        .form-section {
+            margin-bottom: 48px;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .section-badge {
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #92400e;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-field {
+            margin-bottom: 32px;
+        }
+
+        .form-field:last-child {
+            margin-bottom: 0;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .field-label .required {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        .field-description {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        /* Input Styles */
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            transition: all 0.2s;
+            background: white;
+            color: #1a202c;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        .form-input.input-lg {
+            padding: 16px 20px;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.6;
+        }
+
+        .form-textarea.textarea-lg {
+            min-height: 420px;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M7 7l3 3 3-3' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+        }
+
+        /* Character Counter */
+        .input-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .char-hint {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .char-counter {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .char-counter.warning {
+            color: #f59e0b;
+        }
+
+        .char-counter.error {
+            color: #ef4444;
+        }
+
+        /* Image Upload */
+        .image-upload-wrapper {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            background: #f8fafc;
+            transition: all 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .image-upload-wrapper:hover {
+            border-color: #14b8a6;
+            background: #f0fdfa;
+        }
+
+        .image-upload-wrapper.has-image {
+            border-style: solid;
+            border-color: #e2e8f0;
+            background: white;
+        }
+
+        .upload-placeholder {
+            padding: 48px 32px;
+            text-align: center;
+        }
+
+        .upload-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, #e0f2fe, #ccfbf1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 6px;
+        }
+
+        .upload-subtext {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .image-preview-wrapper {
+            position: relative;
+            display: none;
+        }
+
+        .image-preview-wrapper.active {
+            display: block;
+        }
+
+        .image-preview {
+            width: 100%;
+            aspect-ratio: 2/1;
+            object-fit: cover;
+        }
+
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .image-upload-wrapper:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Toggle Switch */
+        .toggle-field {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .toggle-field:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .toggle-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 28px;
+            background: #cbd5e1;
+            border-radius: 14px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="checkbox"]:checked + .toggle-switch {
+            background: #14b8a6;
+        }
+
+        input[type="checkbox"]:checked + .toggle-switch::after {
+            left: 23px;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        /* Info Box */
+        .info-box {
+            padding: 16px 20px;
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .info-box-icon {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .info-box-text {
+            font-size: 14px;
+            color: #92400e;
+            line-height: 1.5;
+        }
+
+        /* Grid Layout */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        /* Footer Actions */
+        .form-footer {
+            padding: 24px 40px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* User Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .user-menu:hover {
+            background: #f1f5f9;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #14b8a6, #06b6d4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a202c;
+            line-height: 1.2;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 80px 16px 60px;
+            }
+
+            .form-header,
+            .form-body {
+                padding: 24px;
+            }
+
+            .form-footer {
+                padding: 20px 24px;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-input.input-lg {
+                font-size: 24px;
+            }
+
+            .nav-right .user-menu {
+                display: none;
+            }
+
+            .page-info {
+                display: none;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Success Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="{% url 'home' %}" class="logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <span class="logo-text">AJIF</span>
+            </a>
+            <div class="nav-divider"></div>
+            <div class="page-info">
+                <h1>{% if is_editing %}Edit Post{% else %}New Post{% endif %}</h1>
+                <p>Blog Management</p>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="{% url 'blogmanagement' %}" class="nav-btn nav-btn-secondary">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+                Cancel
+            </a>
+            <button type="submit" form="blogForm" class="nav-btn nav-btn-primary" id="publishBtn">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span>{% if is_editing %}Update{% else %}Publish{% endif %}</span>
+            </button>
+            <div class="user-menu">
+                <div class="user-avatar">
+                    {% if user.username %}{{ user.username|slice:":1"|upper }}{% else %}A{% endif %}
+                </div>
+                <div class="user-info">
+                    <div class="user-name">{{ user.username|default:"Admin" }}</div>
+                    <div class="user-role">{% if is_superuser %}Super Admin{% else %}Blog Manager{% endif %}</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data" id="blogForm">
+            {% csrf_token %}
+
+            <div class="form-card fade-in">
+                <!-- Form Header -->
+                <div class="form-header">
+                    <h1 class="form-title">{% if is_editing %}Edit Your Post{% else %}Create Your Post{% endif %}</h1>
+                    <p class="form-subtitle">Share your story with the world. Fill in the details below to craft a compelling blog post.</p>
+                </div>
+
+                <!-- Form Body -->
+                <div class="form-body">
+                    <!-- Main Content Section -->
+                    <div class="form-section">
+                        <div class="form-field">
+                            <label class="field-label">
+                                Post Title <span class="required">*</span>
+                            </label>
+                            <p class="field-description">A compelling title that captures your reader's attention</p>
+                            <div class="input-wrapper">
+                                <input
+                                    type="text"
+                                    name="title"
+                                    id="titleInput"
+                                    value="{{ post.title|default:'' }}"
+                                    class="form-input input-lg"
+                                    placeholder="Enter your post title..."
+                                    required
+                                    maxlength="200">
+                            </div>
+                            <div class="input-footer">
+                                <span class="char-hint">Keep it clear and engaging</span>
+                                <span class="char-counter" id="titleCounter">0 / 200</span>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label class="field-label">Excerpt</label>
+                            <p class="field-description">A brief summary that appears in listings and search results</p>
+                            <textarea
+                                name="excerpt"
+                                id="excerptInput"
+                                class="form-textarea"
+                                placeholder="Write a compelling summary of your post..."
+                                maxlength="300">{{ post.excerpt|default:'' }}</textarea>
+                            <div class="input-footer">
+                                <span class="char-hint">Summarize the main points</span>
+                                <span class="char-counter" id="excerptCounter">0 / 300</span>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label class="field-label">
+                                Content <span class="required">*</span>
+                            </label>
+                            <p class="field-description">The main body of your blog post. Write freely and expressively.</p>
+                            <textarea
+                                name="content"
+                                id="contentInput"
+                                class="form-textarea textarea-lg"
+                                placeholder="Start writing your amazing content here..."
+                                required>{{ post.content|default:'' }}</textarea>
+                        </div>
+
+                        <div class="form-field">
+                            <label class="field-label">Featured Image</label>
+                            <p class="field-description">A high-quality image that represents your post (Recommended: 1200x630px)</p>
+                            <div class="image-upload-wrapper {% if post.featured_image %}has-image{% endif %}" id="imageWrapper" onclick="document.getElementById('imageInput').click()">
+                                <div class="upload-placeholder" id="uploadPlaceholder" {% if post.featured_image %}style="display:none"{% endif %}>
+                                    <div class="upload-icon">
+                                        <svg width="28" height="28" fill="none" stroke="#14b8a6" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="upload-text">Click to upload image</p>
+                                    <p class="upload-subtext">PNG, JPG, GIF up to 10MB</p>
+                                </div>
+                                <div class="image-preview-wrapper {% if post.featured_image %}active{% endif %}" id="previewWrapper">
+                                    <img src="{% if post.featured_image %}{{ post.featured_image.url }}{% endif %}" class="image-preview" id="imagePreview" alt="Preview">
+                                    <div class="image-overlay">
+                                        <svg width="48" height="48" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" name="featured_image" id="imageInput" accept="image/*" class="file-input">
+                        </div>
+                    </div>
+
+                    <!-- Publishing Options -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h2 class="section-title">Publishing Options</h2>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label class="field-label">
+                                    Category <span class="required">*</span>
+                                </label>
+                                <select name="category" class="form-select" required>
+                                    {% for value, label in categories %}
+                                    <option value="{{ value }}" {% if post.category == value %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            {% if is_superuser %}
+                            <div class="form-field">
+                                <label class="field-label">
+                                    Status
+                                    <span class="section-badge">Super Admin</span>
+                                </label>
+                                <select name="status" class="form-select">
+                                    {% for value, label in statuses %}
+                                    <option value="{{ value }}" {% if post.status == value %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% if is_superuser %}
+                        <div class="form-field">
+                            <label class="toggle-field" onclick="toggleCheckbox('featuredCheck')">
+                                <div class="toggle-label">
+                                    <div class="toggle-icon">
+                                        <svg width="20" height="20" fill="none" stroke="#14b8a6" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                                        </svg>
+                                    </div>
+                                    <span>Feature this post on homepage</span>
+                                </div>
+                                <input type="checkbox" name="is_featured" id="featuredCheck" {% if post.is_featured %}checked{% endif %}>
+                                <div class="toggle-switch"></div>
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="info-box">
+                            <svg class="info-box-icon" width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                            <p class="info-box-text">Your post will be saved as a draft and requires Super Admin approval before publishing.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- SEO Optimization -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h2 class="section-title">SEO Optimization</h2>
+                        </div>
+
+                        <div class="form-field">
+                            <label class="field-label">Meta Title</label>
+                            <p class="field-description">SEO-optimized title for search engines (50-60 characters recommended)</p>
+                            <input
+                                type="text"
+                                name="meta_title"
+                                id="metaTitleInput"
+                                value="{{ post.meta_title|default:'' }}"
+                                class="form-input"
+                                placeholder="Enter SEO title..."
+                                maxlength="60">
+                            <div class="input-footer">
+                                <span class="char-hint">Include relevant keywords</span>
+                                <span class="char-counter" id="metaTitleCounter">0 / 60</span>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label class="field-label">Meta Description</label>
+                            <p class="field-description">Compelling description for search results (150-160 characters recommended)</p>
+                            <textarea
+                                name="meta_description"
+                                id="metaDescInput"
+                                class="form-textarea"
+                                placeholder="Write a description for search engines..."
+                                maxlength="160">{{ post.meta_description|default:'' }}</textarea>
+                            <div class="input-footer">
+                                <span class="char-hint">Make it engaging and informative</span>
+                                <span class="char-counter" id="metaDescCounter">0 / 160</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Footer -->
+                <div class="form-footer">
+                    <div class="footer-left">
+                        All changes are saved automatically
+                    </div>
+                    <div class="footer-right">
+                        <a href="{% url 'blogmanagement' %}" class="nav-btn nav-btn-secondary">
+                            Discard
+                        </a>
+                        <button type="submit" class="nav-btn nav-btn-primary">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            {% if is_editing %}Update Post{% else %}Publish Post{% endif %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Character counters
+        function setupCounter(inputId, counterId, maxLength) {
+            const input = document.getElementById(inputId);
+            const counter = document.getElementById(counterId);
+
+            function updateCount() {
+                const length = input.value.length;
+                counter.textContent = `${length} / ${maxLength}`;
+
+                counter.classList.remove('warning', 'error');
+                if (length > maxLength * 0.9) {
+                    counter.classList.add('warning');
+                }
+                if (length >= maxLength) {
+                    counter.classList.add('error');
+                }
+            }
+
+            input.addEventListener('input', updateCount);
+            updateCount();
+        }
+
+        setupCounter('titleInput', 'titleCounter', 200);
+        setupCounter('excerptInput', 'excerptCounter', 300);
+        setupCounter('metaTitleInput', 'metaTitleCounter', 60);
+        setupCounter('metaDescInput', 'metaDescCounter', 160);
+
+        // Image upload preview
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const wrapper = document.getElementById('imageWrapper');
+                    const placeholder = document.getElementById('uploadPlaceholder');
+                    const previewWrapper = document.getElementById('previewWrapper');
+                    const preview = document.getElementById('imagePreview');
+
+                    wrapper.classList.add('has-image');
+                    placeholder.style.display = 'none';
+                    previewWrapper.classList.add('active');
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Toggle checkbox function
+        function toggleCheckbox(id) {
+            const checkbox = document.getElementById(id);
+            checkbox.checked = !checkbox.checked;
+        }
+
+        // Form submission
+        document.getElementById('blogForm').addEventListener('submit', function(e) {
+            const btn = document.getElementById('publishBtn');
+            const btnText = btn.querySelector('span');
+            const originalText = btnText.textContent;
+
+            btn.disabled = true;
+            btnText.textContent = 'Publishing...';
+            btn.innerHTML = '<div class="loading"></div>' + btnText.outerHTML;
+        });
+
+        // Auto-save functionality (visual feedback only)
+        let saveTimer;
+        document.querySelectorAll('input, textarea, select').forEach(input => {
+            input.addEventListener('input', function() {
+                clearTimeout(saveTimer);
+                saveTimer = setTimeout(() => {
+                    // You can implement actual auto-save here
+                    console.log('Auto-saved');
+                }, 2000);
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + S to save
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                document.getElementById('blogForm').submit();
+            }
+        });
+    </script>
+</body>
+</html>

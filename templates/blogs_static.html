@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Blog/News - Anila & Jawad Iqbal Foundation</title>
+        <link rel="stylesheet" href="/static/css/output.css">
+        <link rel="stylesheet" href="/static/assets/fonts/fonts.css">
+        <style>
+        .font-archivo { font-family: 'Archivo Black', sans-serif; }
+        .font-quattro { font-family: 'Quattrocento', serif; }
+        /* Mobile menu transitions */
+        #mobile-menu {
+            max-height: 0;
+            transition: max-height 0.4s ease-out;
+            overflow: hidden;
+            background-color: #0d9488;
+        }
+        #mobile-menu.active {
+            max-height: 600px;
+            transition: max-height 0.6s ease-in;
+            padding: 10px 0;
+        }
+        /* Prevent horizontal overflow */
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        .container-custom {
+            width: 100%;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 1024px) {
+            #mobile-menu {
+                display: none !important;
+            }
+        }
+        /* Blog card hover effect */
+        .blog-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        </style>
+    </head>
+    <body class="font-quattro bg-white text-black overflow-x-hidden">
+        <!-- Navbar -->
+        <nav class="bg-black text-white sticky top-0 z-50">
+            <div class="container-custom mx-auto px-3 flex items-center justify-between h-18 py-2">
+                <div class="flex items-center bg-gray-400 space-x-2">
+                    <img src="/static/assets/logo.png" alt="Logo" class="h-12 w-12 md:h-16 md:w-16">
+                    <span class="font-quattro text-xs md:text-sm">Anila & Jawad Iqbal Foundation</span>
+                </div>
+                <!-- Desktop Links -->
+                <div class="hidden lg:flex space-x-6 font-quattro items-center">
+                    <a href="/about/" class="hover:text-gray-200 transition-colors duration-200">About Us</a>
+                    <a href="/our-mission/" class="hover:text-gray-200 transition-colors duration-200">Our Mission</a>
+                    <a href="/our-partners/" class="hover:text-gray-200 transition-colors duration-200">Our Partners</a>
+                    <a href="/testimonials/" class="hover:text-gray-200 transition-colors duration-200">Testimonials</a>
+                    <a href="/blogs/" class="text-white hover:text-gray-200 transition-colors duration-200">Blog/News</a>
+                    <form action="/blogs/" method="GET" class="relative flex items-center bg-white text-black rounded-md shadow px-2 h-8 w-44">
+                        <input type="search" name="q" value="" placeholder="Search..." class="w-full bg-transparent outline-none text-sm placeholder-gray-500">
+                    </form>
+                </div>
+                <!-- Mobile/Tablet Menu Button -->
+                <div class="lg:hidden">
+                    <button id="menu-btn" class="focus:outline-none" aria-label="Toggle menu">
+                        <svg
+                            id="menu-icon"
+                            class="w-8 h-8"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
+                        </svg>
+                        <svg
+                            id="close-icon"
+                            class="w-8 h-8 hidden"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile/Tablet Menu -->
+            <div id="mobile-menu" class="lg:hidden bg-teal-600 px-4 space-y-3 font-archivo">
+                <a href="/about/" class="block py-3 hover:bg-teal-700 px-3 rounded-lg transition-colors duration-200 text-white font-medium text-lg">About Us</a>
+                <a href="/our-mission/" class="block py-3 hover:bg-teal-700 px-3 rounded-lg transition-colors duration-200 text-white font-medium text-lg">Our Mission</a>
+                <a href="/our-partners/" class="block py-3 hover:bg-teal-700 px-3 rounded-lg transition-colors duration-200 text-white font-medium text-lg">Our Partners</a>
+                <a href="/testimonials/" class="block py-3 hover:bg-teal-700 px-3 rounded-lg transition-colors duration-200 text-white font-medium text-lg">Testimonials</a>
+                <a href="/blogs/" class="block py-3 bg-teal-700 px-3 rounded-lg transition-colors duration-200 text-white font-medium text-lg">Blog/News</a>
+                <div class="pt-2 pb-4">
+                    <form action="/blogs/" method="GET" class="relative flex items-center bg-white text-black rounded-md shadow px-3 h-10 w-full">
+                        <input type="search" name="q" value="" placeholder="Search..." class="w-full bg-transparent outline-none text-sm placeholder-gray-500">
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!-- Main -->
+        <!-- Current News in Pakistan Section -->
+        <div class="bg-white py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-[22px] sm:text-2xl font-semibold text-black leading-tight mb-6 sm:mb-8">Current News in Pakistan</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <!-- Featured News Article 1 -->
+                    <article class="bg-gray-300 relative flex flex-col justify-end h-[225px] sm:h-[300px] lg:h-[480px] sm:row-span-2 lg:col-span-1 cursor-pointer">
+                        <img src="/static/assets/uni.jpg" alt="Featured News" class="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none">
+                        <div class="p-4 sm:p-6 relative z-10">
+                            <p class="text-xs sm:text-sm mb-1 sm:mb-2 text-black truncate">Dec 17, 2025</p>
+                            <h3 class="text-base sm:text-lg md:text-xl text-black line-clamp-2">Education Initiative Launches in Rural Punjab</h3>
+                            <a href="#" class="text-teal-600 hover:underline text-sm mt-2 inline-block">Read More →</a>
+                        </div>
+                    </article>
+
+                    <!-- News Article 2 -->
+                    <article class="bg-gray-300 relative flex flex-col justify-end h-[180px] sm:h-[225px] cursor-pointer">
+                        <img src="/static/assets/water.jpg" alt="News" class="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none">
+                        <div class="p-4 sm:p-6 relative z-10">
+                            <p class="text-xs sm:text-sm mb-1 sm:mb-2 text-black truncate">Dec 16, 2025</p>
+                            <h3 class="text-base sm:text-lg md:text-xl text-black line-clamp-2">Healthcare Services Expand</h3>
+                            <a href="#" class="text-teal-600 hover:underline text-sm mt-2 inline-block">Read More →</a>
+                        </div>
+                    </article>
+
+                    <!-- News Article 3 -->
+                    <article class="bg-gray-300 relative flex flex-col justify-end h-[180px] sm:h-[225px] cursor-pointer">
+                        <img src="/static/assets/mission-preview.jpg" alt="News" class="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none">
+                        <div class="p-4 sm:p-6 relative z-10">
+                            <p class="text-xs sm:text-sm mb-1 sm:mb-2 text-black truncate">Dec 15, 2025</p>
+                            <h3 class="text-base sm:text-lg md:text-xl text-black line-clamp-2">Community Outreach Program</h3>
+                            <a href="#" class="text-teal-600 hover:underline text-sm mt-2 inline-block">Read More →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <!-- Blog -->
+        <section id="blog-posts">
+            <div class="max-w-[1440px] mx-auto px-8">
+                <h2 class="text-[22px] font-semibold text-black leading-tight mb-4">Our Blog Posts</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Blog Post 1 -->
+                    <article class="bg-gray-300 h-[220px] flex flex-col md:h-[400px] relative group hover:shadow-lg transition-shadow">
+                        <img src="/static/assets/water.jpg" alt="Blog Post" class="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none group-hover:opacity-50 transition-opacity">
+                        <div class="pt-4 px-4 relative z-10">
+                            <h3 class="text-[16px] text-black font-bold">Empowering Communities Through Education</h3>
+                            <p class="text-sm text-gray-700 mt-2">Discover how our foundation is transforming lives through educational initiatives across Pakistan...</p>
+                            <a href="#" class="text-teal-600 hover:underline text-sm mt-2 inline-block">Read More →</a>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 2 -->
+                    <article class="bg-gray-300 h-[220px] flex flex-col md:h-[400px] relative group hover:shadow-lg transition-shadow">
+                        <img src="/static/assets/uni.jpg" alt="Blog Post" class="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none group-hover:opacity-50 transition-opacity">
+                        <div class="pt-4 px-4 relative z-10">
+                            <h3 class="text-[16px] text-black font-bold">Healthcare for Vulnerable Communities</h3>
+                            <p class="text-sm text-gray-700 mt-2">Learn about our healthcare programs providing essential medical services to those in need...</p>
+                            <a href="#" class="text-teal-600 hover:underline text-sm mt-2 inline-block">Read More →</a>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 3 -->
+                    <article class="bg-gray-300 h-[220px] flex flex-col md:h-[400px] relative group hover:shadow-lg transition-shadow">
+                        <img src="/static/assets/mission-preview.jpg" alt="Blog Post" class="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none group-hover:opacity-50 transition-opacity">
+                        <div class="pt-4 px-4 relative z-10">
+                            <h3 class="text-[16px] text-black font-bold">Legal Aid and Support Services</h3>
+                            <p class="text-sm text-gray-700 mt-2">Explore our legal aid initiatives helping families navigate complex legal challenges...</p>
+                            <a href="#" class="text-teal-600 hover:underline text-sm mt-2 inline-block">Read More →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <!-- Pagination Slider -->
+        <section class="w-full px-4  md:px-8">
+            <div class="relative w-full max-w-[1248px] mx-auto h-10">
+                <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[92%] md:w-[88%] relative">
+                    <div class="w-full h-px bg-black"></div>
+                    <div id="gallery-progress" class="absolute left-0 top-1/2 -translate-y-1/2 h-[6px] bg-black" style="width:50%"></div>
+                    <button id="gallery-prev" class="absolute left-0 top-1/2 -translate-y-1/2 mt-2 md:mt-3 z-10 cursor-pointer disabled:opacity-40">
+                        <img src="/static/assets/left-arrow.png" alt="Previous" class="w-5 h-5 md:w-6 md:h-6">
+                    </button>
+                    <button id="gallery-next" class="absolute right-0 top-1/2 -translate-y-1/2 mt-2 md:mt-3 z-10 cursor-pointer disabled:opacity-40">
+                        <img src="/static/assets/right-arrow.png" alt="Next" class="w-5 h-5 md:w-6 md:h-6">
+                    </button>
+                </div>
+                <span id="gallery-page" class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2 mt-2 md:mt-3 text-[10px] md:text-xs text-black/80">
+                    PAGE 1/3
+                </span>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <footer class="bg-[#868b91] text-white text-center min-h-[100px] flex flex-col items-center justify-center px-5 ">
+        <p class="text-[14px] leading-relaxed">&copy; 2024 Your Company. All rights reserved.</p>
+        <p class="text-[14px] leading-relaxed">Placeholder for footer content and links.</p>
+    </footer>
+    <script>
+            // Mobile menu toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            // Initialize aria-expanded
+            if (menuBtn) {
+                menuBtn.setAttribute('aria-expanded', 'false');
+
+                menuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                    mobileMenu.classList.toggle('active', !isExpanded);
+                    menuIcon.classList.toggle('hidden', !isExpanded);
+                    closeIcon.classList.toggle('hidden', isExpanded);
+                    menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+                });
+
+                // Close mobile menu when a link is clicked
+                document.querySelectorAll('#mobile-menu a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.remove('active');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                    });
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                        mobileMenu.classList.remove('active');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Add active class to current page in navigation
+            document.addEventListener('DOMContentLoaded', function() {
+                const currentPage = window.location.pathname.split('/').pop();
+                const navLinks = document.querySelectorAll('nav a');
+
+                navLinks.forEach(link => {
+                    const linkHref = link.getAttribute('href');
+                    if (linkHref && linkHref.includes(currentPage)) {
+                        link.classList.add('text-white', 'font-bold');
+                        link.classList.remove('text-gray-400');
+                    }
+                });
+            });
+    </script>
+</body>
+</html>

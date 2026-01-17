@@ -1,0 +1,1224 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Us - Anila & Jawad Iqbal Foundation</title>
+        <!-- Production Tailwind CSS (compiled) -->
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/fonts/fonts.css' %}">
+        <style>
+        .font-archivo { font-family: 'Archivo Black', sans-serif; }
+        .font-quattro { font-family: 'Quattrocento', serif; }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mobile menu transitions */
+        #mobile-menu {
+            max-height: 0;
+            transition: max-height 0.4s ease-out;
+            overflow: hidden;
+            background: #1a1a1a;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        #mobile-menu.active {
+            max-height: 600px;
+            transition: max-height 0.6s ease-in;
+            padding: 10px 0;
+        }
+
+        /* Ensure the menu is hidden by default on larger screens */
+        @media (min-width: 1024px) {
+            #mobile-menu {
+                display: none !important;
+            }
+        }
+
+        /* ==================== NAVBAR ANIMATIONS ==================== */
+        /* Underline animation for nav links */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #14b8a6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Left border animation for mobile nav links */
+        .mobile-nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, #fbbf24, #f59e0b);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        .mobile-nav-link:hover::before {
+            transform: scaleY(1);
+        }
+
+        /* Footer gradient */
+        .footer-gradient {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0a0a0a 100%);
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Testimonial card enhancement */
+        .testimonial-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(29, 171, 186, 0.4);
+        }
+
+        .testimonial-card img {
+            transition: transform 0.6s ease;
+        }
+        .testimonial-card:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Advanced JAFA Section Interactivity */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(20, 184, 166, 0.4),
+                            0 0 40px rgba(20, 184, 166, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(20, 184, 166, 0.6),
+                            0 0 60px rgba(20, 184, 166, 0.3);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes rotate-continuous {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10% { transform: scale(1.05); }
+            20% { transform: scale(1); }
+        }
+
+        /* Animated gradient background */
+        .animated-gradient {
+            background: linear-gradient(45deg, #0d9488, #14b8a6, #2dd4bf, #14b8a6, #0d9488);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Interactive stat cards */
+        .stat-card-interactive {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card-interactive::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .stat-card-interactive:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Parallax effect helper */
+        .parallax-element {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Magnetic button effect */
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Donate button enhancements */
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        .donate-btn-wrapper {
+            position: relative;
+        }
+
+        .donate-btn-wrapper::before,
+        .donate-btn-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            border: 3px solid rgba(251, 191, 36, 0.6);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .donate-btn-wrapper:hover::before {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        .donate-btn-wrapper:hover::after {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            animation-delay: 1s;
+        }
+
+        @keyframes float-donate {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
+        }
+
+        .donate-float {
+            animation: float-donate 3s ease-in-out infinite;
+        }
+
+        /* Ripple effect on click */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Card border glow animation */
+        @keyframes border-glow {
+            0%, 100% {
+                border-color: rgba(20, 184, 166, 0.3);
+                box-shadow: 0 0 10px rgba(20, 184, 166, 0.2);
+            }
+            50% {
+                border-color: rgba(20, 184, 166, 0.8);
+                box-shadow: 0 0 25px rgba(20, 184, 166, 0.5);
+            }
+        }
+
+        .info-card-animated:hover {
+            animation: border-glow 2s ease-in-out infinite;
+        }
+
+        /* Scroll reveal animation */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger delay for multiple elements */
+        .scroll-reveal:nth-child(1) { transition-delay: 0.1s; }
+        .scroll-reveal:nth-child(2) { transition-delay: 0.2s; }
+        .scroll-reveal:nth-child(3) { transition-delay: 0.3s; }
+        .scroll-reveal:nth-child(4) { transition-delay: 0.4s; }
+
+        /* Interactive number counter */
+        .number-counter {
+            display: inline-block;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* 3D Tilt effect */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Glowing border animation */
+        @keyframes glow-border {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(251, 191, 36, 0.5),
+                            0 0 10px rgba(251, 191, 36, 0.3),
+                            inset 0 0 5px rgba(251, 191, 36, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 15px rgba(251, 191, 36, 0.8),
+                            0 0 30px rgba(251, 191, 36, 0.5),
+                            inset 0 0 10px rgba(251, 191, 36, 0.4);
+            }
+        }
+
+        /* Particle effect */
+        @keyframes particle-float {
+            0% {
+                transform: translateY(0) translateX(0) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(20px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Donate CTA Button Effects */
+        .donate-cta-btn {
+            position: relative;
+            display: inline-block;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            animation: pulse-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-bounce {
+            0%, 100% {
+                transform: scale(1) translateY(0);
+            }
+            50% {
+                transform: scale(1.05) translateY(-5px);
+            }
+        }
+
+        .donate-cta-btn::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: pulse-ring-donate 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse-ring-donate {
+            0%, 100% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        .donate-cta-btn:hover {
+            transform: scale(1.15) rotate(2deg);
+            filter: brightness(1.2) drop-shadow(0 10px 30px rgba(255, 255, 255, 0.5));
+            animation: none;
+        }
+
+        .donate-cta-btn:hover::before {
+            animation: none;
+            opacity: 0.8;
+            transform: scale(1.3);
+        }
+
+        .donate-cta-btn:active {
+            transform: scale(1.05);
+        }
+
+        /* Hero Title Effects */
+        .hero-title {
+            position: relative;
+            display: inline-block;
+            animation: title-glow 3s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+                         0 0 40px rgba(255, 255, 255, 0.2),
+                         0 0 60px rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes title-glow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+                             0 0 40px rgba(255, 255, 255, 0.2),
+                             0 0 60px rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.5),
+                             0 0 60px rgba(255, 255, 255, 0.4),
+                             0 0 90px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+
+        .hero-title:hover {
+            animation: none;
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.6),
+                         0 0 80px rgba(255, 255, 255, 0.5),
+                         0 0 120px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .donate-cta-btn,
+            .donate-cta-btn::before,
+            .hero-title {
+                animation: none !important;
+            }
+        }
+        </style>
+    </head>
+    <body class="font-quattro bg-white text-black overflow-x-hidden">
+        <!-- Navbar -->
+        <nav class="bg-black text-white sticky top-0 z-50 shadow-[0_4px_20px_rgba(0,0,0,0.4)] border-b border-white/5">
+            <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-[78px]">
+                <div class="flex items-center justify-between h-14 sm:h-16 md:h-16 lg:h-20">
+
+                    <!-- LEFT: Logo and Foundation Name -->
+                    <div class="flex items-center">
+                        <a href="{% url 'home' %}" class="flex items-center transition-all duration-300 hover:bg-teal-500/10 px-3 py-2 rounded-lg cursor-pointer group">
+                            <img src="{% static 'assets/logo.png' %}" alt="AJIF Logo" class="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 transition-transform duration-400 group-hover:rotate-[360deg] flex-shrink-0" loading="lazy">
+                            <span class="font-archivo text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base ml-3 text-white font-bold tracking-[0.3px] whitespace-nowrap transition-colors duration-300 group-hover:text-teal-500">Anila & Jawad Iqbal Foundation</span>
+                        </a>
+                    </div>
+
+                    <!-- CENTER: Navigation Links -->
+                    <nav class="hidden lg:flex items-center gap-6 md:gap-8 lg:gap-10 xl:gap-12 absolute left-1/2 transform -translate-x-1/2">
+                        <a href="{% url 'about' %}" class="nav-link relative text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide text-white/90 py-2 transition-colors duration-300 hover:text-teal-500">About Us</a>
+                        <a href="{% url 'our_mission' %}" class="nav-link relative text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide text-white/90 py-2 transition-colors duration-300 hover:text-teal-500">Our Mission</a>
+                        <a href="{% url 'our_partners' %}" class="nav-link relative text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide text-white/90 py-2 transition-colors duration-300 hover:text-teal-500">Our Partners</a>
+                        <a href="{% url 'testimonials' %}" class="nav-link relative text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide text-white/90 py-2 transition-colors duration-300 hover:text-teal-500">Testimonials</a>
+                        <a href="{% url 'home' %}#blog" class="nav-link relative text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide text-white/90 py-2 transition-colors duration-300 hover:text-teal-500">Blog/News</a>
+                    </nav>
+
+                    <!-- Mobile/Tablet Menu Button -->
+                    <div class="lg:hidden flex items-center">
+                        <button id="menu-btn" class="bg-white/10 border-2 border-white/30 rounded-xl p-2 transition-all duration-300 hover:bg-white/20 hover:border-white/50 hover:scale-110 hover:rotate-90 hover:shadow-[0_4px_12px_rgba(255,255,255,0.2)] backdrop-blur-[10px] focus:outline-none" aria-label="Toggle menu">
+                        <svg
+                            id="menu-icon"
+                            class="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
+                        </svg>
+                        <svg
+                            id="close-icon"
+                            class="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7 hidden"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile/Tablet Menu -->
+            <div id="mobile-menu" class="lg:hidden px-4 sm:px-6 space-y-4 sm:space-y-5 font-archivo">
+                <a href="{% url 'about' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-xl text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 hover:translate-x-3 hover:bg-gradient-to-r hover:from-amber-400/20 hover:to-teal-500/10 hover:pl-6 relative overflow-hidden">About Us</a>
+                <a href="{% url 'our_mission' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-xl text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 hover:translate-x-3 hover:bg-gradient-to-r hover:from-amber-400/20 hover:to-teal-500/10 hover:pl-6 relative overflow-hidden">Our Mission</a>
+                <a href="{% url 'our_partners' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-xl text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 hover:translate-x-3 hover:bg-gradient-to-r hover:from-amber-400/20 hover:to-teal-500/10 hover:pl-6 relative overflow-hidden">Our Partners</a>
+                <a href="{% url 'testimonials' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-xl text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 hover:translate-x-3 hover:bg-gradient-to-r hover:from-amber-400/20 hover:to-teal-500/10 hover:pl-6 relative overflow-hidden">Testimonials</a>
+                <a href="{% url 'home' %}#blog" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-xl text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide transition-all duration-300 hover:translate-x-3 hover:bg-gradient-to-r hover:from-amber-400/20 hover:to-teal-500/10 hover:pl-6 relative overflow-hidden">Blog/News</a>
+            </div>
+        </div>
+        </nav>
+      
+        <!-- Hero Section -->
+        <section id="mission" class="bg-[#1dabba] text-white text-center relative py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 px-4 sm:px-6 md:px-8 lg:px-16 mx-2 sm:mx-4 md:mx-6 lg:mx-8 mt-4 sm:mt-6">
+            <div class="max-w-7xl mx-auto flex flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+                <div class="w-full flex justify-center mt-2 mb-4 sm:mb-6">
+                    <a href="#donate" class="donate-cta-btn block w-40 sm:w-48 md:w-56 lg:w-64">
+                        <img src="{% static 'assets/CTA.png' %}" alt="Donate Here" class="w-full h-auto">
+                    </a>
+                </div>
+                <h1 class="hero-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[96px] font-normal leading-tight">
+                    ABOUT US
+                </h1>
+                <p class="text-sm sm:text-base md:text-lg lg:text-xl max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl leading-snug px-2">
+                    BODY TEXT
+                </p>
+                <!-- Timeline -->
+                <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl xl:max-w-4xl mx-auto h-12 sm:h-14 md:h-16 flex items-center justify-center px-2 mt-6 sm:mt-8">
+                    <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 sm:h-2 bg-white rounded-full"></div>
+                    <div class="absolute left-0 top-1/2 -translate-y-1/2 z-10">
+                        <div class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 bg-[#1dabba] rounded-full border-2 sm:border-3 md:border-4 border-white"></div>
+                    </div>
+                    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                        <div class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 bg-white rounded-full border-2 sm:border-3 md:border-4 border-white"></div>
+                    </div>
+                    <div class="absolute right-0 top-1/2 -translate-y-1/2 z-10">
+                        <div class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 bg-white rounded-full border-2 sm:border-3 md:border-4 border-white"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="relative pt-[121px] pb-[30px] sm:pt-[80px]">
+            <img src="{% static 'assets/bg.png' %}" alt="background pattern" class="absolute inset-0 w-full h-full object-cover -z-10">
+            
+            <!-- Testimonials -->
+            <section id="partners" class="pb-[100px] px-4 md:px-5">
+                <div class="testimonial-card bg-[#1dabba80] rounded-[90px] p-6 md:p-[60px] flex flex-col md:flex-row items-center gap-8 md:gap-10 text-white text-center md:text-left">
+                    <div class="flex-1">
+                        <h2 class="text-3xl md:text-[40px] lg:text-[36px] font-bold font-archivo mb-8 md:mb-12">PARTNER TESTIMONIALS</h2>
+                        <p class="text-xl md:text-[32px] lg:text-[24px] font-normal leading-relaxed">
+                            "Working with the Anila & Jawad Iqbal Foundation has been an incredible experience. Their dedication to empowering communities and creating lasting change is truly inspiring. Together, we've made a real difference in the lives of countless individuals across Pakistan."
+                        </p>
+                        <p class="mt-6 text-lg md:text-xl font-bold text-yellow-300">
+                            — Ahmed Hassan, Community Partner Director
+                        </p>
+                    </div>
+                    <div class="bg-white rounded-[90px] w-full max-w-sm md:w-[422px] h-64 md:h-[415px] overflow-hidden shadow-2xl">
+                        <img src="{% static 'assets/jafa1.jpg' %}" alt="Partner Testimonial" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Academy -->
+            <section id="academy" class="relative pb-[100px] px-4 md:px-10 overflow-hidden">
+                <!-- Background Decoration -->
+                <div class="absolute inset-0 -z-10 opacity-5">
+                    <div class="absolute top-20 left-10 w-72 h-72 bg-teal-500 rounded-full blur-3xl"></div>
+                    <div class="absolute bottom-20 right-10 w-96 h-96 bg-yellow-500 rounded-full blur-3xl"></div>
+                </div>
+
+                <!-- Centered Heading and Description -->
+                <div class="text-center max-w-5xl mx-auto mb-16 md:mb-20">
+                    <div class="inline-block mb-6">
+                        <span class="bg-gradient-to-r from-teal-600 via-teal-700 to-teal-800 text-black px-8 py-3 rounded-full text-sm md:text-base font-bold uppercase tracking-widest shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-default">
+                            Est. 2018 • Award-Winning Academy
+                        </span>
+                    </div>
+
+                    <h2 class="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold font-archivo mb-8 bg-gradient-to-r from-teal-700 via-teal-600 to-teal-800 bg-clip-text text-transparent leading-tight hover:scale-105 transition-transform duration-500 cursor-default">
+                        JAFA Football Academy
+                    </h2>
+
+                    <div class="relative inline-block mb-8">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-teal-400 to-yellow-400 rounded-lg blur opacity-30"></div>
+                        <p class="relative text-xl md:text-2xl lg:text-3xl font-bold italic text-gray-900 px-6 py-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg shadow-xl border-2 border-teal-200">
+                            "Equal fields, equal chances, unapologetic passion"
+                        </p>
+                    </div>
+
+                    <p class="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
+                        A recognized and awarded academy promoting football and girls empowerment. Honored with an award in <span class="font-bold text-teal-700">May 2023</span> from the Director of Sports, NADRA Islamabad, recognizing continuous efforts to uplift youth—especially young girls—through sports.
+                    </p>
+
+                    <!-- Stats Row -->
+                    <div class="grid grid-cols-3 gap-4 md:gap-8 max-w-3xl mx-auto mt-12">
+                        <div class="group cursor-pointer scroll-reveal">
+                            <div class="stat-card-interactive tilt-card bg-gradient-to-br from-teal-100 to-teal-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-2 border-teal-300 hover:border-teal-600 relative">
+                                <div class="text-4xl md:text-5xl font-bold text-teal-800 mb-2 group-hover:scale-110 transition-transform duration-500 number-counter" data-target="200">0</div>
+                                <div class="text-sm md:text-base text-teal-900 font-semibold">Active Members</div>
+                                <div class="absolute top-2 right-2 text-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300">⚽</div>
+                            </div>
+                        </div>
+                        <div class="group cursor-pointer scroll-reveal">
+                            <div class="stat-card-interactive tilt-card bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-2 border-yellow-300 hover:border-yellow-600 relative">
+                                <div class="text-4xl md:text-5xl font-bold text-yellow-700 mb-2 group-hover:scale-110 transition-transform duration-500 number-counter" data-target="5">0</div>
+                                <div class="text-sm md:text-base text-yellow-900 font-semibold">Years Experience</div>
+                                <div class="absolute top-2 right-2 text-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300">🏆</div>
+                            </div>
+                        </div>
+                        <div class="group cursor-pointer scroll-reveal">
+                            <div class="stat-card-interactive tilt-card bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-2 border-blue-300 hover:border-blue-600 relative">
+                                <div class="text-4xl md:text-5xl font-bold text-blue-800 mb-2 group-hover:scale-110 transition-transform duration-500 number-counter" data-target="4">0</div>
+                                <div class="text-sm md:text-base text-blue-900 font-semibold">Age Categories</div>
+                                <div class="absolute top-2 right-2 text-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300">👥</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="max-w-7xl mx-auto mb-16 md:mb-20">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+                        <!-- Info Cards Column -->
+                        <div class="lg:col-span-5 space-y-6">
+                            <!-- Card 1 -->
+                            <div class="scroll-reveal group info-card-animated tilt-card relative bg-gradient-to-br from-teal-600 to-teal-800 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
+                                <div class="absolute top-0 right-0 w-40 h-40 bg-yellow-400/10 rounded-full -translate-y-20 translate-x-20 group-hover:scale-150 transition-transform duration-700"></div>
+                                <!-- Animated shimmer overlay -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="w-16 h-16 bg-yellow-400/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-3xl font-bold text-yellow-300 border-2 border-yellow-400/30 group-hover:rotate-12 group-hover:scale-110 transition-all duration-500">
+                                            200+
+                                        </div>
+                                        <h3 class="text-2xl md:text-3xl font-bold font-archivo text-yellow-300 group-hover:tracking-wider transition-all duration-300">Our Community</h3>
+                                    </div>
+                                    <p class="text-teal-50 text-base md:text-lg leading-relaxed group-hover:text-teal-100 transition-colors duration-300">
+                                        JAFA Football Academy has over 200 members and is open for both boys and girls. With affiliated teams (U10, U12, U14, U16) in Islamabad, plus teams based in Lahore, Rawalpindi and recognized in Khyber Pakhtunkhwa.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="scroll-reveal group info-card-animated tilt-card relative bg-gradient-to-br from-yellow-500 to-orange-600 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
+                                <div class="absolute top-0 right-0 w-40 h-40 bg-orange-900/10 rounded-full -translate-y-20 translate-x-20 group-hover:scale-150 transition-transform duration-700"></div>
+                                <!-- Animated shimmer overlay -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="w-16 h-16 bg-orange-900/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-3xl font-bold text-orange-900 border-2 border-orange-900/30 group-hover:rotate-12 group-hover:scale-110 transition-all duration-500">
+                                            5+
+                                        </div>
+                                        <h3 class="text-2xl md:text-3xl font-bold font-archivo text-orange-900 group-hover:tracking-wider transition-all duration-300">Years of Excellence</h3>
+                                    </div>
+                                    <p class="text-orange-50 text-base md:text-lg leading-relaxed group-hover:text-orange-100 transition-colors duration-300">
+                                        Operating for over 5 years as one of Pakistan's most recognized youth football academies, always striving to break barriers and encourage everyone to pursue their dreams, regardless of background.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="scroll-reveal group info-card-animated tilt-card relative bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
+                                <div class="absolute top-0 right-0 w-40 h-40 bg-cyan-400/10 rounded-full -translate-y-20 translate-x-20 group-hover:scale-150 transition-transform duration-700"></div>
+                                <!-- Animated shimmer overlay -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
+                                <div class="relative z-10">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="w-16 h-16 bg-cyan-400/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-4xl border-2 border-cyan-400/30 group-hover:rotate-12 group-hover:scale-110 transition-all duration-500">
+                                            ⚽
+                                        </div>
+                                        <h3 class="text-2xl md:text-3xl font-bold font-archivo text-cyan-300 group-hover:tracking-wider transition-all duration-300">Expert Leadership</h3>
+                                    </div>
+                                    <p class="text-blue-50 text-base md:text-lg leading-relaxed group-hover:text-blue-100 transition-colors duration-300">
+                                        Led by a renowned professional who played with international teams, serving as head trainer of the Pakistan women's team and National Football coach, known as <span class="font-bold text-cyan-200">Al-Saeid Jr</span>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Images Column -->
+                        <div class="lg:col-span-7 space-y-6">
+                            <!-- Large Main Image -->
+                            <div class="scroll-reveal group parallax-element relative h-[350px] md:h-[420px] lg:h-[480px] rounded-[40px] overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 cursor-pointer">
+                                <img src="{% static 'assets/jafa6.jpeg' %}" alt="JAFA Training Excellence" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 group-hover:rotate-2">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+                                <!-- Gradient border on hover -->
+                                <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style="background: linear-gradient(45deg, transparent 48%, rgba(251, 191, 36, 0.5) 50%, transparent 52%); background-size: 20px 20px;"></div>
+                                <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                                    <div class="transform transition-all duration-500 group-hover:translate-y-0 translate-y-4">
+                                        <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold font-archivo mb-3 text-yellow-300 group-hover:scale-105 transition-transform duration-300">Professional Training Excellence</h3>
+                                        <p class="text-base md:text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 max-w-2xl text-gray-100">
+                                            State-of-the-art training facilities and world-class coaching for aspiring football champions across Pakistan.
+                                        </p>
+                                        <div class="w-20 h-1 bg-teal-400 mt-4 opacity-0 group-hover:opacity-100 group-hover:w-32 transition-all duration-700 delay-200"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Row Images -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="scroll-reveal group parallax-element relative h-48 md:h-56 lg:h-64 rounded-[40px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer">
+                                    <img src="{% static 'assets/jafa3.jpeg' %}" alt="Youth Development" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-yellow-900/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                        <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                            <h4 class="text-xl md:text-2xl font-bold font-archivo mb-2 text-yellow-200">Youth Programs</h4>
+                                            <p class="text-sm opacity-90 text-yellow-50">U10, U12, U14, U16 Teams</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="scroll-reveal group parallax-element relative h-48 md:h-56 lg:h-64 rounded-[40px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer">
+                                    <img src="{% static 'assets/jafa7.webp' %}" alt="Championship Success" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-teal-900/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                        <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                            <h4 class="text-xl md:text-2xl font-bold font-archivo mb-2 text-teal-200">Championships</h4>
+                                            <p class="text-sm opacity-90 text-teal-50">Award-winning performance</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Banner -->
+                <div class="max-w-7xl mx-auto">
+                    <div class="relative bg-gradient-to-r from-teal-600 via-teal-700 to-teal-900 rounded-[50px] p-12 md:p-16 text-center overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 group">
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIgb3BhY2l0eT0iMC4xIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-30"></div>
+                        <div class="relative z-10">
+                            <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold font-archivo text-yellow-300 mb-6 group-hover:scale-105 transition-transform duration-500">
+                                Support Our Mission
+                            </h3>
+                            <p class="text-lg md:text-xl text-teal-50 mb-10 max-w-3xl mx-auto leading-relaxed">
+                                Help us continue empowering youth and breaking barriers through sports. Every contribution makes a difference in a young athlete's life.
+                            </p>
+                            <a href="#donate" class="inline-block group/btn donate-btn-wrapper magnetic-btn" id="donate-button">
+                                <div class="relative donate-float">
+                                    <!-- Outer Glow -->
+                                    <div class="absolute -inset-8 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-400 rounded-3xl blur-2xl opacity-40 group-hover/btn:opacity-70 transition-all duration-500 group-hover/btn:animate-pulse"></div>
+
+                                    <!-- Inner Glow -->
+                                    <div class="absolute inset-0 bg-yellow-400 rounded-2xl blur-xl opacity-50 group-hover/btn:opacity-90 transition-opacity duration-500"></div>
+
+                                    <!-- Additional Sparkle Effect -->
+                                    <div class="absolute -inset-4 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300">
+                                        <div class="absolute top-0 left-1/4 w-2 h-2 bg-white rounded-full animate-ping"></div>
+                                        <div class="absolute bottom-0 right-1/4 w-2 h-2 bg-yellow-200 rounded-full animate-ping" style="animation-delay: 0.3s;"></div>
+                                        <div class="absolute top-1/2 left-0 w-2 h-2 bg-orange-300 rounded-full animate-ping" style="animation-delay: 0.6s;"></div>
+                                    </div>
+
+                                    <!-- Button Image -->
+                                    <div class="relative transform transition-all duration-500 group-hover/btn:scale-110 group-hover/btn:rotate-3">
+                                        <img src="{% static 'assets/CTA.png' %}" alt="Donate Here" class="w-56 md:w-64 lg:w-72 drop-shadow-2xl group-hover/btn:drop-shadow-[0_20px_35px_rgba(251,191,36,0.8)] transition-all duration-500">
+
+                                        <!-- Shimmer Effect -->
+                                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
+
+                                        <!-- Double shimmer on second pass -->
+                                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1500" style="transition-delay: 0.3s;"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery -->
+            <section id="blog" class="px-4 md:px-12 lg:px-16">
+                <h2 class="text-3xl md:text-[48px] lg:text-[36px] font-bold font-archivo text-center mb-12 md:mb-[60px] text-teal-700">PARTNERSHIPS AND EVENTS IMAGES</h2>
+                <div id="gallery-viewport" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-3 mb-6">
+                    <!-- Page 1 Items -->
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer w-full md:w-[500px] lg:w-[700px] h-64 md:h-[300px] lg:h-[514px] mx-auto" data-page="1">
+                        <img src="{% static 'assets/jafa8.jpeg' %}" alt="Partnership Event" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer w-full md:w-[500px] lg:w-[700px] h-64 md:h-[300px] lg:h-[514px] mx-auto" data-page="1">
+                        <img src="{% static 'assets/jafa9.jpg' %}" alt="Community Event" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+
+                    <!-- Page 2 Items -->
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer w-full md:w-[500px] lg:w-[700px] h-64 md:h-[300px] lg:h-[514px] mx-auto hidden" data-page="2">
+                        <img src="{% static 'assets/jafa3.jpeg' %}" alt="Healthcare Initiative" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer w-full md:w-[500px] lg:w-[700px] h-64 md:h-[300px] lg:h-[514px] mx-auto hidden" data-page="2">
+                        <img src="{% static 'assets/jafa5.jpeg' %}" alt="Education Program" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+
+                    <!-- Page 3 Items -->
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer w-full md:w-[500px] lg:w-[700px] h-64 md:h-[300px] lg:h-[514px] mx-auto hidden" data-page="3">
+                        <img src="{% static 'assets/hockey.jpg' %}" alt="Youth Sports Program" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer w-full md:w-[500px] lg:w-[700px] h-64 md:h-[300px] lg:h-[514px] mx-auto hidden" data-page="3">
+                        <img src="{% static 'assets/darbar.jpg' %}" alt="Relief Aid Distribution" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                </div>
+            </section>
+
+            <section class="w-full px-4 md:px-8 mt-0">
+                <div class="relative w-full max-w-[1248px] mx-auto h-10">
+                    <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[92%] md:w-[88%] relative">
+                        <div class="w-full h-px bg-black"></div>
+                        <div id="gallery-progress" class="absolute left-0 top-1/2 -translate-y-1/2 h-[6px] bg-black" style="width:50%"></div>
+                        <button id="gallery-prev" class="absolute left-0 top-1/2 -translate-y-1/2 mt-2 md:mt-3 z-10 cursor-pointer disabled:opacity-40">
+                            <img src="{% static 'assets/left-arrow.png' %}" alt="Previous" class="w-5 h-5 md:w-6 md:h-6">
+                        </button>
+                        <button id="gallery-next" class="absolute right-0 top-1/2 -translate-y-1/2 mt-2 md:mt-3 z-10 cursor-pointer disabled:opacity-40">
+                            <img src="{% static 'assets/right-arrow.png' %}" alt="Next" class="w-5 h-5 md:w-6 md:h-6">
+                        </button>
+                    </div>
+                    <span id="gallery-page" class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2 mt-2 md:mt-3 text-xs md:text-[10px] lg:text-xs text-black/80">
+                        PAGE 1/3
+                    </span>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer id="donate" class="footer-gradient text-white px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20 pt-8 sm:pt-10 md:pt-12 lg:pt-14 pb-6 sm:pb-7 md:pb-8 lg:pb-10 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    <!-- About Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">About AJIF</h3>
+                        <p class="text-gray-300 text-base leading-relaxed">Empowering Pakistan's vulnerable communities through health, education, legal aid, and opportunity-building initiatives.</p>
+                    </div>
+                    <!-- Quick Links Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">Quick Links</h3>
+                        <ul class="space-y-2 text-base">
+                            <li><a href="{% url 'about' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">About Us</a></li>
+                            <li><a href="{% url 'our_mission' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Mission</a></li>
+                            <li><a href="{% url 'our_partners' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Partners</a></li>
+                            <li><a href="{% url 'testimonials' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Testimonials</a></li>
+                            <li><a href="{% url 'blogs' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Blog</a></li>
+                        </ul>
+                    </div>
+                    <!-- Contact Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">Connect With Us</h3>
+                        <p class="text-gray-300 text-base mb-4">Stay updated with our latest news and initiatives</p>
+                        <div class="flex space-x-4">
+                            <!-- Facebook -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-600/50 relative overflow-hidden group" aria-label="Facebook">
+                                <span class="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                            <!-- Twitter/X -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-sky-500 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-500/50 relative overflow-hidden group" aria-label="Twitter">
+                                <span class="absolute inset-0 bg-gradient-to-br from-sky-400 to-sky-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                            <!-- LinkedIn -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-700/50 relative overflow-hidden group" aria-label="LinkedIn">
+                                <span class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 pt-8 text-center">
+                    <p class="text-base text-gray-400">&copy; 2025 Anila & Jawad Iqbal Foundation. All rights reserved.</p>
+                    <p class="text-sm text-gray-500 mt-2">Made with ❤️ for a better Pakistan</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            // Mobile menu toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+    
+            // Initialize aria-expanded
+            menuBtn.setAttribute('aria-expanded', 'false');
+    
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                mobileMenu.classList.toggle('active', !isExpanded);
+                menuIcon.classList.toggle('hidden', !isExpanded);
+                closeIcon.classList.toggle('hidden', isExpanded);
+                menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+            });
+    
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+    
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+    
+            // Gallery pagination functionality
+            const galleryPrevBtn = document.getElementById('gallery-prev');
+            const galleryNextBtn = document.getElementById('gallery-next');
+            const galleryPageEl = document.getElementById('gallery-page');
+            const galleryProg = document.getElementById('gallery-progress');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            // Calculate total pages
+            const totalPages = Math.max(...Array.from(galleryItems).map(item => parseInt(item.dataset.page) || 1));
+            let currentPage = 1;
+
+            function showPage(pageNum) {
+                // Hide all items
+                galleryItems.forEach(item => {
+                    item.classList.add('hidden');
+                });
+
+                // Show items for current page
+                galleryItems.forEach(item => {
+                    if (item.dataset.page == pageNum) {
+                        item.classList.remove('hidden');
+                    }
+                });
+
+                // Update page number display
+                if (galleryPageEl) {
+                    galleryPageEl.textContent = `PAGE ${pageNum}/${totalPages}`;
+                }
+
+                // Update progress bar
+                if (galleryProg) {
+                    const minPct = 8, maxPct = 92;
+                    const span = maxPct - minPct;
+                    const t = totalPages > 1 ? ((pageNum - 1) / (totalPages - 1)) : 0;
+                    galleryProg.style.width = (minPct + t * span) + '%';
+                }
+
+                // Update button states
+                if (galleryPrevBtn) {
+                    galleryPrevBtn.disabled = (pageNum === 1);
+                }
+                if (galleryNextBtn) {
+                    galleryNextBtn.disabled = (pageNum === totalPages);
+                }
+
+                currentPage = pageNum;
+            }
+
+            // Previous button click
+            if (galleryPrevBtn) {
+                galleryPrevBtn.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        showPage(currentPage - 1);
+                    }
+                });
+            }
+
+            // Next button click
+            if (galleryNextBtn) {
+                galleryNextBtn.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        showPage(currentPage + 1);
+                    }
+                });
+            }
+
+            // Initialize - show page 1
+            showPage(1);
+
+            // ========== JAFA Section Advanced Interactivity ==========
+
+            // 1. Scroll Reveal Animation with IntersectionObserver
+            const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            scrollRevealElements.forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // 2. Number Counter Animation
+            const numberCounters = document.querySelectorAll('.number-counter');
+            let countersAnimated = false;
+
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !countersAnimated) {
+                        countersAnimated = true;
+                        animateCounters();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            if (numberCounters.length > 0) {
+                counterObserver.observe(numberCounters[0].closest('.scroll-reveal') || numberCounters[0]);
+            }
+
+            function animateCounters() {
+                numberCounters.forEach(counter => {
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2000;
+                    const increment = target / (duration / 16);
+                    let current = 0;
+
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            counter.textContent = Math.floor(current) + (target >= 100 ? '+' : '');
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target + (target >= 100 ? '+' : '');
+                        }
+                    };
+
+                    updateCounter();
+                });
+            }
+
+            // 3. 3D Tilt Effect on Cards
+            const tiltCards = document.querySelectorAll('.tilt-card');
+
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+                });
+            });
+
+            // 4. Parallax Effect on Scroll
+            const parallaxElements = document.querySelectorAll('.parallax-element');
+            let ticking = false;
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        parallaxElements.forEach((element, index) => {
+                            const rect = element.getBoundingClientRect();
+                            const scrollPercent = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+
+                            if (scrollPercent >= 0 && scrollPercent <= 1) {
+                                const movement = (scrollPercent - 0.5) * 30;
+                                element.style.transform = `translateY(${movement}px)`;
+                            }
+                        });
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            // 5. Magnetic Button Effect
+            const donateButton = document.getElementById('donate-button');
+
+            if (donateButton) {
+                donateButton.addEventListener('mousemove', (e) => {
+                    const rect = donateButton.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+
+                    const distance = Math.sqrt(x * x + y * y);
+                    const maxDistance = 100;
+
+                    if (distance < maxDistance) {
+                        const pullStrength = (maxDistance - distance) / maxDistance;
+                        const pullX = x * pullStrength * 0.3;
+                        const pullY = y * pullStrength * 0.3;
+
+                        donateButton.style.transform = `translate(${pullX}px, ${pullY}px)`;
+                    }
+                });
+
+                donateButton.addEventListener('mouseleave', () => {
+                    donateButton.style.transform = 'translate(0, 0)';
+                });
+
+                // 6. Ripple Effect on Click
+                donateButton.addEventListener('click', (e) => {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+
+                    const rect = donateButton.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+
+                    donateButton.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            }
+
+            // 7. Interactive Info Cards - Add click ripple effect
+            const infoCards = document.querySelectorAll('.info-card-animated');
+
+            infoCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+
+            // 8. Stat Cards - Add click ripple and pulse
+            const statCards = document.querySelectorAll('.stat-card-interactive');
+
+            statCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+
+                    // Pulse animation on number
+                    const numberEl = this.querySelector('.number-counter');
+                    if (numberEl) {
+                        numberEl.style.animation = 'heartbeat 0.6s ease';
+                        setTimeout(() => {
+                            numberEl.style.animation = '';
+                        }, 600);
+                    }
+                });
+            });
+
+            // 9. Enhanced Image Hover - Parallax effect within image
+            const imageContainers = document.querySelectorAll('.lg\\:col-span-7 .group');
+
+            imageContainers.forEach(container => {
+                const img = container.querySelector('img');
+
+                if (img) {
+                    container.addEventListener('mousemove', (e) => {
+                        const rect = container.getBoundingClientRect();
+                        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+                        const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
+
+                        img.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+                    });
+
+                    container.addEventListener('mouseleave', () => {
+                        img.style.transform = 'scale(1) translate(0, 0)';
+                    });
+                }
+            });
+
+            // 10. Add subtle animation on page load
+            window.addEventListener('load', () => {
+                // Trigger scroll reveal for elements already in view
+                setTimeout(() => {
+                    scrollRevealElements.forEach(el => {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top < window.innerHeight && rect.bottom > 0) {
+                            el.classList.add('revealed');
+                        }
+                    });
+                }, 100);
+            });
+
+            // 11. Smooth scroll enhancement for donate button
+            document.querySelectorAll('a[href="#donate"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

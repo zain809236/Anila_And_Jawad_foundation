@@ -1,0 +1,718 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Share Your Story - AJIF</title>
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+        <!-- Google Fonts -->
+        <link rel="stylesheet" href="{% static 'assets/fonts/fonts.css' %}">
+        <style>
+        .font-archivo { font-family: 'Archivo Black', sans-serif; }
+        .font-quattro { font-family: 'Quattrocento', serif; }
+
+        /* Background Pattern */
+        .bg-pattern {
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(20, 184, 166, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mobile menu transitions */
+        #mobile-menu {
+            max-height: 0;
+            transition: max-height 0.4s ease-out;
+            overflow: hidden;
+            background: #1a1a1a;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        #mobile-menu.active {
+            max-height: 600px;
+            transition: max-height 0.6s ease-in;
+            padding: 10px 0;
+        }
+
+        @media (min-width: 1024px) {
+            #mobile-menu {
+                display: none !important;
+            }
+        }
+
+        /* Enhanced navbar */
+        .navbar-gradient {
+            background: #000000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-container {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+        }
+        .logo-container:hover {
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .logo-img {
+            transition: transform 0.4s ease;
+            flex-shrink: 0;
+        }
+        .logo-container:hover .logo-img {
+            transform: rotate(360deg);
+        }
+
+        .foundation-name {
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+        .logo-container:hover .foundation-name {
+            color: #14b8a6;
+        }
+
+        .nav-link {
+            position: relative;
+            color: rgba(255, 255, 255, 0.9);
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #14b8a6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #14b8a6;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .mobile-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-nav-link {
+            transition: all 0.3s ease;
+            border-radius: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .mobile-nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, #fbbf24, #f59e0b);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        .mobile-nav-link:hover::before {
+            transform: scaleY(1);
+        }
+        .mobile-nav-link:hover {
+            transform: translateX(12px);
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.2), rgba(20, 184, 166, 0.1));
+            padding-left: 1.5rem;
+        }
+
+        .footer-gradient {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0a0a0a 100%);
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Form Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .form-container {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Custom form styling */
+        .form-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            font-family: 'Quattrocento', serif;
+        }
+
+        .form-input:hover, .form-textarea:hover, .form-select:hover {
+            border-color: #cbd5e1;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1),
+                        0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-textarea {
+            min-height: 180px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-group.focused .form-label {
+            color: #14b8a6;
+        }
+
+        .form-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .form-group.focused .form-icon {
+            color: #14b8a6;
+        }
+
+        /* Progress indicator */
+        .progress-step {
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active {
+            background: linear-gradient(135deg, #14b8a6, #0f766e);
+            color: white;
+        }
+
+        .progress-step.completed {
+            background: #14b8a6;
+            color: white;
+        }
+
+        /* Button Hover Effects */
+        button[type="submit"]:hover {
+            box-shadow: 0 0 25px rgba(20, 184, 166, 0.5);
+        }
+
+        button[type="submit"]:active {
+            transform: scale(0.98) !important;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        </style>
+    </head>
+    <body class="font-quattro bg-pattern text-black overflow-x-hidden">
+        <!-- Navbar -->
+        <nav class="navbar-gradient text-white sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 lg:px-6">
+                <div class="flex items-center justify-between h-16 lg:h-18">
+
+                    <!-- LEFT: Logo and Foundation Name -->
+                    <div class="flex items-center">
+                        <a href="{% url 'home' %}" class="logo-container flex items-center">
+                            <img src="{% static 'assets/logo.png' %}" alt="AJIF Logo" class="logo-img h-10 w-10 lg:h-12 lg:w-12">
+                            <span class="foundation-name font-archivo text-sm lg:text-base xl:text-lg ml-3">Anila & Jawad Iqbal Foundation</span>
+                        </a>
+                    </div>
+
+                    <!-- CENTER: Navigation Links -->
+                    <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8 absolute left-1/2 transform -translate-x-1/2">
+                        <a href="{% url 'about' %}" class="nav-link text-sm font-medium">About Us</a>
+                        <a href="{% url 'our_mission' %}" class="nav-link text-sm font-medium">Our Mission</a>
+                        <a href="{% url 'our_partners' %}" class="nav-link text-sm font-medium">Our Partners</a>
+                        <a href="{% url 'testimonials' %}" class="nav-link text-sm font-medium">Testimonials</a>
+                        <a href="{% url 'home' %}#blog" class="nav-link text-sm font-medium">Blog/News</a>
+                    </nav>
+
+                    <!-- Mobile/Tablet Menu Button -->
+                    <div class="lg:hidden flex items-center">
+                        <button id="menu-btn" class="mobile-menu-btn focus:outline-none" aria-label="Toggle menu">
+                        <svg
+                            id="menu-icon"
+                            class="w-6 h-6 sm:w-8 sm:h-8"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
+                        </svg>
+                        <svg
+                            id="close-icon"
+                            class="w-6 h-6 sm:w-8 sm:h-8 hidden"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile/Tablet Menu -->
+            <div id="mobile-menu" class="lg:hidden px-4 space-y-2 font-archivo">
+                <a href="{% url 'about' %}" class="mobile-nav-link block py-3 px-3 rounded-lg text-white font-medium text-base sm:text-lg">About Us</a>
+                <a href="{% url 'our_mission' %}" class="mobile-nav-link block py-3 px-3 rounded-lg text-white font-medium text-base sm:text-lg">Our Mission</a>
+                <a href="{% url 'our_partners' %}" class="mobile-nav-link block py-3 px-3 rounded-lg text-white font-medium text-base sm:text-lg">Our Partners</a>
+                <a href="{% url 'testimonials' %}" class="mobile-nav-link block py-3 px-3 rounded-lg text-white font-medium text-base sm:text-lg">Testimonials</a>
+                <a href="{% url 'home' %}#blog" class="mobile-nav-link block py-3 px-3 rounded-lg text-white font-medium text-base sm:text-lg">Blog/News</a>
+            </div>
+        </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="min-h-screen py-16 md:py-20 lg:py-24">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- Header -->
+                <div class="text-center mb-12 md:mb-16 scroll-reveal">
+                    <h1 class="font-archivo text-4xl sm:text-5xl md:text-6xl mb-6 bg-gradient-to-r from-teal-600 via-teal-700 to-teal-800 bg-clip-text text-transparent leading-tight">
+                        Share Your Story
+                    </h1>
+                    <p class="text-gray-600 text-lg sm:text-xl max-w-2xl mx-auto">
+                        Your voice matters. Help us inspire others.
+                    </p>
+                </div>
+
+                <!-- Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="mb-8 p-5 rounded-xl {% if message.tags == 'success' %}bg-gradient-to-r from-green-50 to-teal-50 text-green-800 border-l-4 border-green-600{% else %}bg-gradient-to-r from-blue-50 to-teal-50 text-blue-800 border-l-4 border-blue-600{% endif %} shadow-lg scroll-reveal">
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="font-medium">{{ message }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!-- Form Container -->
+                <div class="form-container">
+                    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+
+                        <!-- Form Header -->
+                        <div class="bg-gradient-to-r from-teal-600 to-teal-700 px-8 py-10 text-white">
+                            <h2 class="text-2xl sm:text-3xl font-archivo mb-3">Tell Us Your Experience</h2>
+                            <p class="text-teal-50 text-base sm:text-lg">Every story helps us grow and serve better</p>
+                        </div>
+
+                        <!-- Form -->
+                        <form method="POST" enctype="multipart/form-data" class="p-8 md:p-12">
+                            {% csrf_token %}
+
+                            <div class="space-y-8">
+                                <!-- Name -->
+                                <div class="form-group">
+                                    <label for="id_name" class="form-label">
+                                        Full Name <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" name="name" id="id_name" required class="form-input" placeholder="John Doe" value="{{ form.name.value|default:'' }}">
+                                    {% if form.name.errors %}
+                                        <p class="mt-2 text-sm text-red-600 flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                                            {{ form.name.errors.0 }}
+                                        </p>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Organization -->
+                                <div class="form-group">
+                                    <label for="id_organization" class="form-label">
+                                        Organization <span class="text-gray-400 text-sm ml-1">(Optional)</span>
+                                    </label>
+                                    <input type="text" name="organization" id="id_organization" class="form-input" placeholder="Your organization name" value="{{ form.organization.value|default:'' }}">
+                                    {% if form.organization.errors %}
+                                        <p class="mt-2 text-sm text-red-600">{{ form.organization.errors.0 }}</p>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Testimonial Type -->
+                                <div class="form-group">
+                                    <label for="id_testimonial_type" class="form-label">
+                                        I am a <span class="text-red-500">*</span>
+                                    </label>
+                                    <select name="testimonial_type" id="id_testimonial_type" required class="form-select">
+                                        <option value="">Choose your relationship with us</option>
+                                        <option value="beneficiary" {% if form.testimonial_type.value == 'beneficiary' %}selected{% endif %}>Beneficiary</option>
+                                        <option value="donor" {% if form.testimonial_type.value == 'donor' %}selected{% endif %}>Donor</option>
+                                        <option value="volunteer" {% if form.testimonial_type.value == 'volunteer' %}selected{% endif %}>Volunteer</option>
+                                        <option value="partner" {% if form.testimonial_type.value == 'partner' %}selected{% endif %}>Partner Organization</option>
+                                        <option value="other" {% if form.testimonial_type.value == 'other' %}selected{% endif %}>Other</option>
+                                    </select>
+                                    {% if form.testimonial_type.errors %}
+                                        <p class="mt-2 text-sm text-red-600">{{ form.testimonial_type.errors.0 }}</p>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Content -->
+                                <div class="form-group">
+                                    <label for="id_content" class="form-label">
+                                        Your Story <span class="text-red-500">*</span>
+                                    </label>
+                                    <textarea name="content" id="id_content" required class="form-textarea" placeholder="Share how AJIF has impacted your life...">{{ form.content.value|default:'' }}</textarea>
+                                    {% if form.content.errors %}
+                                        <p class="mt-2 text-sm text-red-600">{{ form.content.errors.0 }}</p>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Image -->
+                                <div class="form-group">
+                                    <label for="id_image" class="form-label">
+                                        Profile Photo <span class="text-gray-400 text-sm ml-1">(Optional)</span>
+                                    </label>
+                                    <div class="mt-2 flex items-center justify-center w-full">
+                                        <label for="id_image" class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-all duration-300 hover:border-teal-500">
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                                </svg>
+                                                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                                <p class="text-xs text-gray-500">PNG, JPG (MAX. 5MB)</p>
+                                            </div>
+                                            <input type="file" name="image" id="id_image" accept="image/*" class="hidden">
+                                        </label>
+                                    </div>
+                                    {% if form.image.errors %}
+                                        <p class="mt-2 text-sm text-red-600">{{ form.image.errors.0 }}</p>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                                    <a href="{% url 'testimonials' %}" class="flex-1 bg-gray-200 text-gray-800 font-bold py-4 px-8 rounded-xl text-center border border-gray-300">
+                                        Cancel
+                                    </a>
+                                    <button type="submit" class="flex-1 bg-teal-600 text-white font-bold py-4 px-8 rounded-xl">
+                                        Submit Testimonial
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer id="donate" class="footer-gradient text-white py-12 sm:py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    <!-- About Column -->
+                    <div>
+                        <h3 class="font-archivo text-xl mb-4">About AJIF</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Empowering Pakistan's vulnerable communities through health, education, legal aid, and opportunity-building initiatives.</p>
+                    </div>
+                    <!-- Quick Links Column -->
+                    <div>
+                        <h3 class="font-archivo text-xl mb-4">Quick Links</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="{% url 'about' %}" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">About Us</a></li>
+                            <li><a href="{% url 'our_mission' %}" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Mission</a></li>
+                            <li><a href="{% url 'our_partners' %}" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Partners</a></li>
+                            <li><a href="{% url 'testimonials' %}" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Testimonials</a></li>
+                            <li><a href="{% url 'blogs' %}" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Blog</a></li>
+                        </ul>
+                    </div>
+                    <!-- Contact Column -->
+                    <div>
+                        <h3 class="font-archivo text-xl mb-4">Connect With Us</h3>
+                        <p class="text-gray-300 text-sm mb-4">Stay updated with our latest news and initiatives</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                <span class="text-white">f</span>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                <span class="text-white">t</span>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                <span class="text-white">in</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 pt-8 text-center">
+                    <p class="text-sm text-gray-400">&copy; 2025 Anila & Jawad Iqbal Foundation. All rights reserved.</p>
+                    <p class="text-xs text-gray-500 mt-2">Made with ❤️ for a better Pakistan</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            // Mobile menu toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            menuBtn.setAttribute('aria-expanded', 'false');
+
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                mobileMenu.classList.toggle('active', !isExpanded);
+                menuIcon.classList.toggle('hidden', !isExpanded);
+                closeIcon.classList.toggle('hidden', isExpanded);
+                menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+            });
+
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Scroll reveal
+            const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            scrollRevealElements.forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // Enhanced Form field focus animations
+            const formGroups = document.querySelectorAll('.form-group');
+            const formInputs = document.querySelectorAll('.form-input, .form-textarea, .form-select');
+
+            formInputs.forEach(input => {
+                const formGroup = input.closest('.form-group');
+
+                input.addEventListener('focus', function() {
+                    formGroup.classList.add('focused');
+
+                    // Add gentle scale animation
+                    this.style.transform = 'scale(1.01)';
+                });
+
+                input.addEventListener('blur', function() {
+                    formGroup.classList.remove('focused');
+                    this.style.transform = 'scale(1)';
+                });
+
+                // Add character count for textarea
+                if (input.tagName === 'TEXTAREA') {
+                    const charCount = document.createElement('div');
+                    charCount.className = 'text-xs text-gray-400 mt-2 text-right';
+                    charCount.textContent = '0 characters';
+                    input.parentElement.appendChild(charCount);
+
+                    input.addEventListener('input', function() {
+                        const length = this.value.length;
+                        charCount.textContent = `${length} character${length !== 1 ? 's' : ''}`;
+
+                        if (length > 0) {
+                            charCount.classList.remove('text-gray-400');
+                            charCount.classList.add('text-teal-600');
+                        } else {
+                            charCount.classList.remove('text-teal-600');
+                            charCount.classList.add('text-gray-400');
+                        }
+                    });
+                }
+            });
+
+            // File upload preview
+            const fileInput = document.getElementById('id_image');
+            if (fileInput) {
+                fileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        const label = this.parentElement;
+
+                        reader.onload = function(e) {
+                            label.style.backgroundImage = `url(${e.target.result})`;
+                            label.style.backgroundSize = 'cover';
+                            label.style.backgroundPosition = 'center';
+                            label.innerHTML = `
+                                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                    <div class="text-white text-center">
+                                        <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <p class="text-sm font-semibold">${file.name}</p>
+                                        <p class="text-xs mt-1">Click to change</p>
+                                    </div>
+                                </div>
+                            `;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // Form validation feedback
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const requiredFields = form.querySelectorAll('[required]');
+                    let isValid = true;
+
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            field.style.borderColor = '#ef4444';
+
+                            setTimeout(() => {
+                                field.style.borderColor = '';
+                            }, 2000);
+                        }
+                    });
+
+                    if (isValid) {
+                        // Add loading state to submit button
+                        const submitBtn = form.querySelector('button[type="submit"]');
+                        submitBtn.innerHTML = `
+                            <svg class="animate-spin h-5 w-5 mx-auto" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        `;
+                        submitBtn.disabled = true;
+                    }
+                });
+            }
+
+            // Stagger animation for form groups
+            formGroups.forEach((group, index) => {
+                group.style.opacity = '0';
+                group.style.transform = 'translateX(-20px)';
+
+                setTimeout(() => {
+                    group.style.transition = 'all 0.5s ease';
+                    group.style.opacity = '1';
+                    group.style.transform = 'translateX(0)';
+                }, 100 * index);
+            });
+
+            // Page load animation
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    scrollRevealElements.forEach(el => {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top < window.innerHeight && rect.bottom > 0) {
+                            el.classList.add('revealed');
+                        }
+                    });
+                }, 100);
+            });
+        </script>
+    </body>
+</html>

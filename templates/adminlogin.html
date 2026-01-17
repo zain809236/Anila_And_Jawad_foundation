@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Login - Work & Growth Project Foundation</title>
+        <link rel="stylesheet" href="../dist/output.css">
+    </head>
+    <body class="min-h-screen flex flex-col bg-gray-100">
+        <!-- Navbar -->
+        <nav class="bg-black text-white sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-3 sm:px-4 flex items-center justify-between h-16 sm:h-18 py-2">
+                <div class="flex items-center bg-gray-400 space-x-2">
+                    <img src="../assets/logo.png" alt="Logo" class="h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16">
+                    <span class="font-quattro text-xs sm:text-sm md:text-base">Anila & Jawad Iqbal Foundation</span>
+                </div>
+                <!-- Desktop Links -->
+                <div class="hidden lg:flex space-x-4 xl:space-x-6 font-quattro items-center">
+                    <a href="index.html#about" class="hover:text-gray-200 transition-colors duration-200 text-sm xl:text-base">About Us</a>
+                    <a href="Our%20Mission.html" class="hover:text-gray-200 transition-colors duration-200 text-sm xl:text-base">Our Mission</a>
+                    <a href="index.html#partners" class="hover:text-gray-200 transition-colors duration-200 text-sm xl:text-base">Our Partners</a>
+                    <a href="index.html#testimonials" class="hover:text-gray-200 transition-colors duration-200 text-sm xl:text-base">Testimonials</a>
+                    <a href="blogs.html" class="text-white hover:text-gray-200 transition-colors duration-200 text-sm xl:text-base">Blog/News</a>
+                    <form action="#" class="relative flex items-center bg-white text-black rounded-md shadow px-2 h-8 w-36 xl:w-44">
+                        <input type="search" placeholder="Search..." class="w-full bg-transparent outline-none text-sm placeholder-gray-500">
+                    </form>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden">
+                    <button id="menu-btn" class="focus:outline-none" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+                        <svg
+                            id="menu-icon"
+                            class="w-6 h-6 sm:w-8 sm:h-8"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
+                        </svg>
+                        <svg
+                            id="close-icon"
+                            class="w-6 h-6 sm:w-8 sm:h-8 hidden"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden bg-teal-600 px-4 space-y-2 font-archivo hidden">
+                <a href="index.html#about" class="block py-3 hover:bg-teal-700 px-3 rounded-lg text-white font-medium text-base sm:text-lg">About Us</a>
+                <a href="Our%20Mission.html" class="block py-3 hover:bg-teal-700 px-3 rounded-lg text-white font-medium text-base sm:text-lg">Our Mission</a>
+                <a href="index.html#partners" class="block py-3 hover:bg-teal-700 px-3 rounded-lg text-white font-medium text-base sm:text-lg">Our Partners</a>
+                <a href="index.html#testimonials" class="block py-3 hover:bg-teal-700 px-3 rounded-lg text-white font-medium text-base sm:text-lg">Testimonials</a>
+                <a href="blogs.html" class="block py-3 bg-teal-700 px-3 rounded-lg text-white font-medium text-base sm:text-lg">Blog/News</a>
+                <div class="pt-2 pb-4">
+                    <form action="#" class="relative flex items-center bg-white text-black rounded-md shadow px-3 h-10 w-full">
+                        <input type="search" placeholder="Search..." class="w-full bg-transparent outline-none text-sm placeholder-gray-500">
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!-- Main Section -->
+        <div class="relative flex-1 flex items-center justify-center bg-[#868b91] overflow-hidden">
+            <!-- Background image -->
+            <img src="../assets/adminbg.png" alt="Background Leaf"
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-full h-full sm:w-[120%] sm:h-[120%] md:w-[140%] md:h-[140%] object-cover opacity-90"
+                style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
+            <!-- Login Box -->
+            <div class="relative bg-[#36d6eb] rounded-md shadow-lg px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-8 w-[90%] max-w-xs sm:max-w-sm md:max-w-md text-center mx-4">
+                <h2 class="text-white text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Admin Log In</h2>
+                <form class="space-y-4 sm:space-y-5">
+                    <!-- Username -->
+                    <input type="text" placeholder="Username...." class="w-full px-3 py-2 sm:px-4 sm:py-2 rounded bg-white text-gray-700 focus:outline-none text-sm sm:text-base">
+                    <!-- Password -->
+                    <input type="password" placeholder="Password...." class="w-full px-3 py-2 sm:px-4 sm:py-2 rounded bg-white text-gray-700 focus:outline-none text-sm sm:text-base">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mt-1">
+                        <!-- Forgot Password -->
+                        <a href="#" class="text-white text-xs sm:text-sm hover:underline w-full sm:w-auto text-center sm:text-left">
+                            Forgot password?
+                        </a>
+                        <!-- Don't have account + Sign Up -->
+                        <div class="flex flex-col items-center sm:items-end w-full sm:w-auto">
+                            <span class="text-white text-xs sm:text-sm mb-1">Don't have an account?</span>
+                            <a href="#" class="bg-[#FCE205] text-black font-semibold px-3 py-1 sm:px-4 sm:py-1 rounded hover:bg-yellow-400 transition text-sm sm:text-base w-full sm:w-auto text-center">
+                                Sign Up Here
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="bg-black text-white text-center py-4 sm:py-6">
+            <p class="text-xs sm:text-sm">&copy; 2025 Anila & Jawad Iqbal Foundation. All rights reserved.</p>
+        </footer>
+        <script>
+            // Mobile menu toggle functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                const menuBtn = document.getElementById('menu-btn');
+                const menuIcon = document.getElementById('menu-icon');
+                const closeIcon = document.getElementById('close-icon');
+                const mobileMenu = document.getElementById('mobile-menu');
+                
+                // Initially hide the mobile menu
+                if (mobileMenu) {
+                    mobileMenu.style.display = 'none';
+                    
+                    menuBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        
+                        if (mobileMenu.style.display === 'none' || !mobileMenu.style.display) {
+                            mobileMenu.style.display = 'block';
+                            menuIcon.classList.add('hidden');
+                            closeIcon.classList.remove('hidden');
+                        } else {
+                            mobileMenu.style.display = 'none';
+                            menuIcon.classList.remove('hidden');
+                            closeIcon.classList.add('hidden');
+                        }
+                    });
+                    
+                    // Close menu when clicking outside
+                    document.addEventListener('click', function(e) {
+                        if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                            mobileMenu.style.display = 'none';
+                            menuIcon.classList.remove('hidden');
+                            closeIcon.classList.add('hidden');
+                        }
+                    });
+                    
+                    // Close menu when clicking on a menu item
+                    const menuItems = mobileMenu.querySelectorAll('a');
+                    menuItems.forEach(item => {
+                        item.addEventListener('click', function() {
+                            mobileMenu.style.display = 'none';
+                            menuIcon.classList.remove('hidden');
+                            closeIcon.classList.add('hidden');
+                        });
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

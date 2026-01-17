@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anila & Jawad Iqbal Foundation - Admin Controls</title>
+    <link rel="stylesheet" href="../dist/output.css">
+  </head>
+
+   <body class="min-h-screen flex flex-col bg-gray-100">
+        <!-- Navbar -->
+        <nav class="bg-black text-white sticky top-0 z-50">
+            <div class="w-full px-3 flex items-center justify-between h-16 py-2 sm:px-4 sm:h-18 md:px-6 lg:max-w-7xl lg:mx-auto">
+                <div class="flex items-center bg-gray-400 space-x-2">
+                    <img src="../assets/logo.png" alt="Logo" class="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12">
+                    <span class="font-quattro text-xs sm:text-sm md:text-base truncate max-w-[120px] sm:max-w-none">Anila & Jawad Iqbal Foundation</span>
+                </div>
+                <!-- Desktop Links -->
+                <div class="hidden lg:flex lg:space-x-4 xl:space-x-6 font-quattro items-center">
+                    <a href="index.html#about" class="hover:text-gray-200 transition-colors duration-200 text-sm xl:text-base">About Us</a>
+                    <a href="Our%20Mission.html" class="hover:text-gray-200 transition-colors duration-200 text-sm xl:text-base">Our Mission</a>
+                    <a href="index.html#partners" class="hover:text-gray-200 transition-colors duration-200 text-sm xl:text-base">Our Partners</a>
+                    <a href="index.html#testimonials" class="hover:text-gray-200 transition-colors duration-200 text-sm xl:text-base">Testimonials</a>
+                    <a href="getinvolved.html" class="text-white hover:text-gray-200 transition-colors duration-200 text-sm xl:text-base">Get Involved</a>
+                    <form action="#" class="relative flex items-center bg-white text-black rounded-md shadow px-2 h-8 w-36 xl:w-44">
+                        <input type="search" placeholder="Search..." class="w-full bg-transparent outline-none text-sm placeholder-gray-500">
+                    </form>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden">
+                    <button id="menu-btn" class="focus:outline-none" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+                        <svg
+                            id="menu-icon"
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
+                        </svg>
+                        <svg
+                            id="close-icon"
+                            class="w-6 h-6 hidden"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden bg-teal-600 px-3 space-y-1 font-archivo hidden">
+                <a href="index.html#about" class="block py-3 hover:bg-teal-700 px-2 rounded-lg text-white font-medium text-sm">About Us</a>
+                <a href="Our%20Mission.html" class="block py-3 hover:bg-teal-700 px-2 rounded-lg text-white font-medium text-sm">Our Mission</a>
+                <a href="index.html#partners" class="block py-3 hover:bg-teal-700 px-2 rounded-lg text-white font-medium text-sm">Our Partners</a>
+                <a href="index.html#testimonials" class="block py-3 hover:bg-teal-700 px-2 rounded-lg text-white font-medium text-sm">Testimonials</a>
+                <a href="getinvolved.html" class="block py-3 bg-teal-700 px-2 rounded-lg text-white font-medium text-sm">Get Involved</a>
+                <div class="py-3">
+                    <form action="#" class="relative flex items-center bg-white text-black rounded-md shadow px-3 h-10 w-full">
+                        <input type="search" placeholder="Search..." class="w-full bg-transparent outline-none text-sm placeholder-gray-500">
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+      <!-- ===== MAIN ===== -->
+      <main id="admin-controls" class="flex-1 w-full py-4 sm:py-6 md:py-8 lg:py-12">
+        <style>
+          .control-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: #f9f9f9;
+            border-radius: 0 0 8px 8px;
+          }
+          .control-item.expanded .control-content {
+            max-height: 500px;
+            padding: 12px;
+            border: 1px solid #58c9d4;
+            border-top: none;
+            position: relative;
+            z-index: 5;
+          }
+          .control-item > button {
+            border-radius: 8px 8px 0 0;
+          }
+          @media (min-width: 640px) {
+            .control-item.expanded .control-content {
+              padding: 16px;
+            }
+            .control-item > button {
+              border-radius: 12px 12px 0 0;
+            }
+          }
+          @media (min-width: 1024px) {
+            .control-item > button {
+              border-radius: 15px 15px 0 0;
+            }
+          }
+        </style>
+        
+        <div class="w-full px-4 sm:px-6 lg:px-8">
+          <h1 class="text-center text-[#333333] font-bold text-xl mb-4 sm:text-2xl sm:mb-6 md:text-3xl md:mb-8 lg:text-4xl lg:mb-12">
+            Admin Controls
+          </h1>
+
+          <div class="flex flex-col gap-3 sm:gap-4 md:gap-6 max-w-full mx-auto">
+            <!-- Control Item 1 -->
+            <div class="control-item relative">
+              <button class="toggle-button flex justify-between items-center w-full bg-[#58c9d4] rounded-lg px-4 py-3 cursor-pointer text-left relative z-10 sm:px-5 sm:py-4 md:px-6 md:py-4 lg:px-8 lg:py-5">
+                <span class="text-white font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Blog Management</span>
+                <img src="../assets/plus.png" alt="Expand" class="toggle-icon rounded-lg w-6 h-6 transform transition-transform duration-300 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10">
+              </button>
+              <div class="control-content">
+                <p class="text-gray-700 text-sm sm:text-base">Blog management content will go here.</p>
+              </div>
+            </div>
+
+            <!-- Other Control Items -->
+            <div class="control-item">
+              <button class="toggle-button flex justify-between items-center w-full bg-[#58c9d4] rounded-lg px-4 py-3 cursor-pointer text-left relative z-10 sm:px-5 sm:py-4 md:px-6 md:py-4 lg:px-8 lg:py-5">
+                <span class="text-white font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Donation Management</span>
+                <img src="../assets/plus.png" alt="Expand" class="toggle-icon rounded-lg w-6 h-6 transform transition-transform duration-300 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10">
+              </button>
+              <div class="control-content">
+                <p class="text-gray-700 text-sm sm:text-base">Donation management content will go here.</p>
+              </div>
+            </div>
+
+            <div class="control-item">
+              <button class="toggle-button flex justify-between items-center w-full bg-[#58c9d4] rounded-lg px-4 py-3 cursor-pointer text-left relative z-10 sm:px-5 sm:py-4 md:px-6 md:py-4 lg:px-8 lg:py-5">
+                <span class="text-white font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Mailing List Management</span>
+                <img src="../assets/plus.png" alt="Expand" class="toggle-icon rounded-lg w-6 h-6 transform transition-transform duration-300 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10">
+              </button>
+              <div class="control-content">
+                <p class="text-gray-700 text-sm sm:text-base">Mailing list management content will go here.</p>
+              </div>
+            </div>
+
+            <div class="control-item">
+              <button class="toggle-button flex justify-between items-center w-full bg-[#58c9d4] rounded-lg px-4 py-3 cursor-pointer text-left relative z-10 sm:px-5 sm:py-4 md:px-6 md:py-4 lg:px-8 lg:py-5">
+                <span class="text-white font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Webpage Management</span>
+                <img src="../assets/plus.png" alt="Expand" class="toggle-icon rounded-lg w-6 h-6 transform transition-transform duration-300 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10">
+              </button>
+              <div class="control-content">
+                <p class="text-gray-700 text-sm sm:text-base">Webpage management content will go here.</p>
+              </div>
+            </div>
+
+            <div class="control-item">
+              <button class="toggle-button flex justify-between items-center w-full bg-[#58c9d4] rounded-lg px-4 py-3 cursor-pointer text-left relative z-10 sm:px-5 sm:py-4 md:px-6 md:py-4 lg:px-8 lg:py-5">
+                <span class="text-white font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Website Analytics</span>
+                <img src="../assets/plus.png" alt="Expand" class="toggle-icon rounded-lg w-6 h-6 transform transition-transform duration-300 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10">
+              </button>
+              <div class="control-content">
+                <p class="text-gray-700 text-sm sm:text-base">Website analytics content will go here.</p>
+              </div>
+            </div>
+
+            <div class="control-item">
+              <button class="toggle-button flex justify-between items-center w-full bg-[#58c9d4] rounded-lg px-4 py-3 cursor-pointer text-left relative z-10 sm:px-5 sm:py-4 md:px-6 md:py-4 lg:px-8 lg:py-5">
+                <span class="text-white font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Settings & Integration</span>
+                <img src="../assets/plus.png" alt="Expand" class="toggle-icon rounded-lg w-6 h-6 transform transition-transform duration-300 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10">
+              </button>
+              <div class="control-content">
+                <p class="text-gray-700 text-sm sm:text-base">Settings and integration content will go here.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+        <footer class="bg-black text-white text-center py-4 sm:py-5 md:py-6">
+            <p class="text-xs sm:text-sm">&copy; 2025 Anila & Jawad Iqbal Foundation. All rights reserved.</p>
+        </footer>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            // Get all toggle buttons
+            const toggleButtons = document.querySelectorAll('.toggle-button');
+            
+            // Add click event to each button
+            toggleButtons.forEach(button => {
+              button.addEventListener('click', function() {
+                const controlItem = this.closest('.control-item');
+                const icon = this.querySelector('.toggle-icon');
+                
+                // Close all other open items
+                document.querySelectorAll('.control-item').forEach(item => {
+                  if (item !== controlItem) {
+                    item.classList.remove('expanded');
+                    const otherIcon = item.querySelector('.toggle-icon');
+                    if (otherIcon) {
+                      otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                  }
+                });
+                
+                // Toggle the current item
+                controlItem.classList.toggle('expanded');
+                
+                // Rotate the icon
+                if (controlItem.classList.contains('expanded')) {
+                  icon.style.transform = 'rotate(180deg)';
+                } else {
+                  icon.style.transform = 'rotate(0deg)';
+                }
+              });
+            });
+          });
+        </script>
+
+        <script>
+          // Mobile menu toggle functionality
+          document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('menu-btn');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            // Initially hide the mobile menu
+            if (mobileMenu) {
+              mobileMenu.style.display = 'none';
+              
+              menuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                if (mobileMenu.style.display === 'none' || !mobileMenu.style.display) {
+                  mobileMenu.style.display = 'block';
+                  menuIcon.classList.add('hidden');
+                  closeIcon.classList.remove('hidden');
+                } else {
+                  mobileMenu.style.display = 'none';
+                  menuIcon.classList.remove('hidden');
+                  closeIcon.classList.add('hidden');
+                }
+              });
+              
+              // Close menu when clicking outside
+              document.addEventListener('click', function(e) {
+                if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                  mobileMenu.style.display = 'none';
+                  menuIcon.classList.remove('hidden');
+                  closeIcon.classList.add('hidden');
+                }
+              });
+              
+              // Close menu when clicking on a menu item
+              const menuItems = mobileMenu.querySelectorAll('a');
+              menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                  mobileMenu.style.display = 'none';
+                  menuIcon.classList.remove('hidden');
+                  closeIcon.classList.add('hidden');
+                });
+              });
+            }
+          });
+        </script>
+  </body>
+</html>

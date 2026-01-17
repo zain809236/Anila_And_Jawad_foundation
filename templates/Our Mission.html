@@ -1,0 +1,885 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Our Mission - Anila & Jawad Iqbal Foundation</title>
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/fonts/fonts.css' %}">
+        <style>
+        .font-archivo { font-family: 'Archivo Black', sans-serif; }
+        .font-quattro { font-family: 'Quattrocento', serif; }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mobile menu transitions */
+        #mobile-menu {
+            max-height: 0;
+            transition: max-height 0.4s ease-out;
+            overflow: hidden;
+            background: #1a1a1a;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        #mobile-menu.active {
+            max-height: 600px;
+            transition: max-height 0.6s ease-in;
+            padding: 10px 0;
+        }
+
+        /* Ensure the menu is hidden by default on larger screens */
+        @media (min-width: 1024px) {
+            #mobile-menu {
+                display: none !important;
+            }
+        }
+
+        /* Enhanced navbar - Professional Black */
+        .navbar-gradient {
+            background: #000000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Logo container - Clean & Aligned */
+        .logo-container {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+        }
+        .logo-container:hover {
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        /* Logo image */
+        .logo-img {
+            transition: transform 0.4s ease;
+            flex-shrink: 0;
+        }
+        .logo-container:hover .logo-img {
+            transform: rotate(360deg);
+        }
+
+        /* Foundation name */
+        .foundation-name {
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+        .logo-container:hover .foundation-name {
+            color: #14b8a6;
+        }
+
+        /* Nav links - Consistent */
+        .nav-link {
+            position: relative;
+            color: rgba(255, 255, 255, 0.9);
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #14b8a6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #14b8a6;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Button hover effects - Enhanced */
+        .btn-primary {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #14b8a6 0%, #0ea5e9 100%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 24px -5px rgba(14, 165, 233, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, #0ea5e9 0%, #14b8a6 100%);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        .btn-primary:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .btn-yellow {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-yellow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-yellow:hover::before {
+            left: 100%;
+        }
+        .btn-yellow:hover {
+            transform: translateY(-3px) scale(1.08);
+            box-shadow: 0 12px 28px -5px rgba(251, 191, 36, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.7);
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        .btn-yellow:active {
+            transform: translateY(-1px) scale(1.04);
+        }
+
+        /* Card hover effects */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Image hover effects */
+        .image-hover {
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+        .image-hover img {
+            transition: transform 0.4s ease;
+        }
+        .image-hover:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Testimonial card enhancement */
+        .testimonial-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(13, 148, 136, 0.2);
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+        }
+
+        /* Partner card enhancement */
+        .partner-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: white;
+        }
+        .partner-card:hover {
+            transform: translateY(-5px) rotate(2deg);
+            box-shadow: 0 15px 30px -10px rgba(13, 148, 136, 0.3);
+        }
+
+        /* Link hover effects */
+        .link-hover {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .link-hover:hover {
+            transform: translateX(5px);
+            color: #0d9488;
+        }
+
+        /* Section title animation */
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #14b8a6 0%, #0d9488 100%);
+            border-radius: 2px;
+        }
+
+        /* Footer enhancement */
+        .footer-gradient {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0a0a0a 100%);
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Smooth transitions for all interactive elements */
+        a, button {
+            cursor: pointer;
+        }
+
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .mobile-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Mobile menu link hover */
+        .mobile-nav-link {
+            transition: all 0.3s ease;
+            border-radius: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .mobile-nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, #fbbf24, #f59e0b);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        .mobile-nav-link:hover::before {
+            transform: scaleY(1);
+        }
+        .mobile-nav-link:hover {
+            transform: translateX(12px);
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.2), rgba(20, 184, 166, 0.1));
+            padding-left: 1.5rem;
+        }
+
+        /* Hero Section Enhancements */
+        #mission {
+            box-shadow: inset 0 -5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        #mission h1 {
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        #mission h1:hover {
+            transform: scale(1.05);
+        }
+
+        #mission a img {
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+        }
+
+        #mission a:hover img {
+            transform: scale(1.1) translateY(-5px);
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
+        }
+
+        /* Timeline hover effects */
+        #mission .absolute > div {
+            transition: all 0.3s ease;
+        }
+
+        #mission .absolute > div:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Testimonial Cards Enhancement */
+        #testimonials > div > div {
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        #testimonials > div > div:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 16px 40px rgba(20, 184, 166, 0.4);
+            background: rgba(29, 171, 186, 0.7) !important;
+        }
+
+        #testimonials h2 {
+            transition: color 0.3s ease;
+        }
+
+        #testimonials > div > div:hover h2 {
+            color: #fbbf24;
+        }
+
+        /* Image placeholder hover */
+        #testimonials .bg-\\[\\#d9d9d9\\] {
+            transition: all 0.3s ease;
+        }
+
+        #testimonials > div > div:hover .bg-\\[\\#d9d9d9\\] {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Program Cards Enhancement */
+        .program-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .program-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 60px rgba(20, 184, 166, 0.6);
+        }
+
+        .program-card img {
+            transition: transform 0.7s ease;
+        }
+
+        .program-card:hover img {
+            transform: scale(1.15);
+        }
+
+        .program-card h3 {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Pagination slider enhancement */
+        #gallery-prev, #gallery-next {
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        #gallery-prev:hover, #gallery-next:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        #gallery-prev:active, #gallery-next:active {
+            transform: scale(0.95);
+        }
+
+        #gallery-progress {
+            transition: width 0.5s ease;
+            background: linear-gradient(90deg, #0d9488 0%, #14b8a6 100%);
+            box-shadow: 0 2px 8px rgba(20, 184, 166, 0.5);
+        }
+
+        /* Footer Enhancement */
+        footer {
+            background: linear-gradient(135deg, #4b5563 0%, #6b7280 50%, #868b91 100%);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Prevent horizontal overflow */
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (min-width: 1024px) {
+            #mobile-menu {
+                display: none !important;
+            }
+        }
+
+        /* Footer link styling */
+        .footer-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #14b8a6;
+            transition: width 0.3s ease;
+        }
+
+        .footer-link:hover::after {
+            width: 100%;
+        }
+        </style>
+    </head>
+    <body class="font-quattro bg-white text-black overflow-x-hidden">
+        <!-- Navbar -->
+        <nav class="navbar-gradient text-white sticky top-0 z-50 ">
+            <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-[78px]">
+                <div class="flex items-center justify-between h-14 sm:h-16 md:h-16 lg:h-20 ">
+
+                    <!-- LEFT: Logo and Foundation Name -->
+                    <div class="flex items-center">
+                        <a href="{% url 'home' %}" class="logo-container flex items-center">
+                            <img src="{% static 'assets/logo.png' %}" alt="AJIF Logo" class="logo-img h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10" loading="lazy">
+                            <span class="foundation-name font-archivo text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base ml-3">Anila & Jawad Iqbal Foundation</span>
+                        </a>
+                    </div>
+
+                    <!-- CENTER: Navigation Links -->
+                    <nav class="hidden lg:flex items-center space-x-6 md:space-x-8 lg:space-x-10 xl:space-x-12 absolute left-1/2 transform -translate-x-1/2">
+                        <a href="{% url 'about' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">About Us</a>
+                        <a href="{% url 'our_mission' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Our Mission</a>
+                        <a href="{% url 'our_partners' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Our Partners</a>
+                        <a href="{% url 'testimonials' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Testimonials</a>
+                        <a href="{% url 'home' %}#blog" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Blog/News</a>
+                    </nav>
+
+                    <!-- Mobile/Tablet Menu Button -->
+                    <div class="lg:hidden flex items-center">
+                        <button id="menu-btn" class="mobile-menu-btn focus:outline-none" aria-label="Toggle menu">
+                        <svg
+                            id="menu-icon"
+                            class="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
+                        </svg>
+                        <svg
+                            id="close-icon"
+                            class="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7 hidden"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile/Tablet Menu -->
+            <div id="mobile-menu" class="lg:hidden px-4 sm:px-6 space-y-4 sm:space-y-5 font-archivo">
+                <a href="{% url 'about' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">About Us</a>
+                <a href="{% url 'our_mission' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Our Mission</a>
+                <a href="{% url 'our_partners' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Our Partners</a>
+                <a href="{% url 'testimonials' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Testimonials</a>
+                <a href="{% url 'home' %}#blog" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Blog/News</a>
+            </div>
+        </div>
+        </nav>
+
+        <!-- Hero Section (No background pattern) -->
+        <section id="mission" class="bg-[#1dabba] text-white text-center relative py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 px-4 sm:px-6 md:px-8 lg:px-16 mx-2 sm:mx-4 md:mx-6 lg:mx-8 mt-4 sm:mt-6">
+            <div class="max-w-7xl mx-auto flex flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+                <div class="w-full flex justify-center mt-2 mb-4 sm:mb-6">
+                    <a href="#donate" class="block w-40 sm:w-48 md:w-56 lg:w-64">
+                        <img src="{% static 'assets/CTA.png' %}" alt="Donate Here" class="w-full h-auto">
+                    </a>
+                </div>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[96px] font-normal leading-tight">
+                    OUR MISSION
+                </h1>
+                <p class="text-sm sm:text-base md:text-lg lg:text-xl max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl leading-snug px-2">
+                    BODY TEXT
+                </p>
+                <!-- Timeline -->
+                <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl xl:max-w-4xl mx-auto h-12 sm:h-14 md:h-16 flex items-center justify-center px-2 mt-6 sm:mt-8">
+                    <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 sm:h-2 bg-white rounded-full"></div>
+                    <div class="absolute left-0 top-1/2 -translate-y-1/2 z-10">
+                        <div class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 bg-white rounded-full border-2 sm:border-3 md:border-4 border-white"></div>
+                    </div>
+                    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                        <div class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 bg-[#1dabba] rounded-full border-2 sm:border-3 md:border-4 border-white"></div>
+                    </div>
+                    <div class="absolute right-0 top-1/2 -translate-y-1/2 z-10">
+                        <div class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 bg-white rounded-full border-2 sm:border-3 md:border-4 border-white"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content with background pattern (scrolls with page) -->
+        <div class="bg-cover bg-center bg-no-repeat" style="background-image: url('{% static 'assets/bg.png' %}');">
+            <!-- Testimonials Section with Two Columns -->
+            <section id="testimonials" class="py-8 sm:py-12 md:py-16 lg:py-24 px-4 sm:px-6 md:px-8">
+                <div class="max-w-7xl mx-auto space-y-8 sm:space-y-12 md:space-y-16">
+                    <!-- First Testimonial Row -->
+                    <div class="flex flex-col lg:flex-row items-center bg-[#1dabba80] rounded-2xl sm:rounded-3xl md:rounded-[90px] p-4 sm:p-6 md:p-8 lg:p-12 xl:p-16 gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 text-white">
+                        <div class="flex-1 text-center lg:text-left">
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-archivo mb-4 sm:mb-6 md:mb-8 lg:mb-10">Education Transformed My Life</h2>
+                            <p class="text-base sm:text-lg md:text-xl lg:text-2xl max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                                "Thanks to the scholarship program from AJIF, I was able to complete my medical degree. Today, I'm giving back to my community as a doctor, serving those who need it most. This foundation doesn't just change lives—it creates hope and opportunity."
+                            </p>
+                            <p class="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg font-bold text-yellow-300">
+                                — Dr. Sarah Ahmed, Scholarship Recipient 2018
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-2xl sm:rounded-3xl md:rounded-[90px] w-full max-w-xs sm:max-w-sm md:max-w-[422px] h-48 sm:h-64 md:h-80 lg:h-[319px] overflow-hidden shadow-2xl">
+                            <img src="{% static 'assets/logo.png' %}" alt="Dr. Sarah Ahmed" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Second Testimonial Row -->
+                    <div class="flex flex-col lg:flex-row items-center bg-[#1dabba80] rounded-2xl sm:rounded-3xl md:rounded-[90px] p-4 sm:p-6 md:p-8 lg:p-12 xl:p-16 gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 text-white">
+                        <div class="flex-1 text-center lg:text-left">
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-archivo mb-4 sm:mb-6 md:mb-8 lg:mb-10">Healthcare Reached Our Village</h2>
+                            <p class="text-base sm:text-lg md:text-xl lg:text-2xl max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                                "Before AJIF's mobile clinic came to our village, we had to travel hours for basic healthcare. Now, our children receive regular check-ups and vaccinations. The foundation's medical camps have saved countless lives in our community."
+                            </p>
+                            <p class="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg font-bold text-yellow-300">
+                                — Muhammad Rashid, Village Elder, Sindh
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-2xl sm:rounded-3xl md:rounded-[90px] w-full max-w-xs sm:max-w-sm md:max-w-[422px] h-48 sm:h-64 md:h-80 lg:h-[319px] overflow-hidden shadow-2xl">
+                            <img src="{% static 'assets/logo.png' %}" alt="Muhammad Rashid" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Third Testimonial Row -->
+                    <div class="flex flex-col lg:flex-row items-center bg-[#1dabba80] rounded-2xl sm:rounded-3xl md:rounded-[90px] p-4 sm:p-6 md:p-8 lg:p-12 xl:p-16 gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 text-white">
+                        <div class="flex-1 text-center lg:text-left">
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-archivo mb-4 sm:mb-6 md:mb-8 lg:mb-10">Building a Better Future</h2>
+                            <p class="text-base sm:text-lg md:text-xl lg:text-2xl max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                                "The microfinance program helped me start my own tailoring business. Now I can support my family and employ three other women from my community. AJIF believed in me when no one else would, and that made all the difference."
+                            </p>
+                            <p class="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg font-bold text-yellow-300">
+                                — Fatima Khan, Entrepreneur, Punjab
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-2xl sm:rounded-3xl md:rounded-[90px] w-full max-w-xs sm:max-w-sm md:max-w-[422px] h-48 sm:h-64 md:h-80 lg:h-[319px] overflow-hidden shadow-2xl">
+                            <img src="{% static 'assets/logo.png' %}" alt="Fatima Khan" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery - Three in a Row on Large Screens -->
+            <section id="gallery" class="py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-8 lg:px-16">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold font-archivo text-teal-700">Our Programs</h2>
+                    <p class="text-lg md:text-xl text-gray-700 mt-4">Making a difference across Pakistan</p>
+                </div>
+                <div id="gallery-viewport" class="w-full overflow-hidden">
+                    <div id="gallery-track" class="flex flex-col sm:flex-row flex-wrap lg:flex-nowrap justify-center gap-4 sm:gap-6 md:gap-8 w-full max-w-7xl mx-auto">
+                        <!-- Page 1 Items -->
+                        <div class="gallery-item program-card w-full sm:w-64 md:w-80 lg:w-96 xl:w-[400px] h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden relative group" data-page="1">
+                            <img src="{% static 'assets/jafa1.jpg' %}" alt="Education Program" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-6 sm:p-8">
+                                <div class="transform transition-all duration-500 group-hover:translate-y-0 translate-y-4">
+                                    <h3 class="text-white font-bold font-archivo text-2xl sm:text-3xl mb-2">Education</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-500">Building futures through quality education and scholarships</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-item program-card w-full sm:w-64 md:w-80 lg:w-96 xl:w-[400px] h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden relative group" data-page="1">
+                            <img src="{% static 'assets/jafa3.jpeg' %}" alt="Healthcare Program" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-6 sm:p-8">
+                                <div class="transform transition-all duration-500 group-hover:translate-y-0 translate-y-4">
+                                    <h3 class="text-white font-bold font-archivo text-2xl sm:text-3xl mb-2">Healthcare</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-500">Providing medical care to remote communities</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-item program-card w-full sm:w-64 md:w-80 lg:w-96 xl:w-[400px] h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden relative group" data-page="1">
+                            <img src="{% static 'assets/construction.jpg' %}" alt="Community Development" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-6 sm:p-8">
+                                <div class="transform transition-all duration-500 group-hover:translate-y-0 translate-y-4">
+                                    <h3 class="text-white font-bold font-archivo text-2xl sm:text-3xl mb-2">Community</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-500">Infrastructure and sustainable development projects</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Page 2 Items -->
+                        <div class="gallery-item program-card w-full sm:w-64 md:w-80 lg:w-96 xl:w-[400px] h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden relative group hidden" data-page="2">
+                            <img src="{% static 'assets/labour.jpg' %}" alt="Water & Sanitation" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-6 sm:p-8">
+                                <div class="transform transition-all duration-500 group-hover:translate-y-0 translate-y-4">
+                                    <h3 class="text-white font-bold font-archivo text-2xl sm:text-3xl mb-2">Clean Water</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-500">Bringing clean water and sanitation to villages</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-item program-card w-full sm:w-64 md:w-80 lg:w-96 xl:w-[400px] h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden relative group hidden" data-page="2">
+                            <img src="{% static 'assets/jafa5.jpeg' %}" alt="Legal Aid" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-6 sm:p-8">
+                                <div class="transform transition-all duration-500 group-hover:translate-y-0 translate-y-4">
+                                    <h3 class="text-white font-bold font-archivo text-2xl sm:text-3xl mb-2">Legal Aid</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-500">Justice and legal support for vulnerable communities</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-item program-card w-full sm:w-64 md:w-80 lg:w-96 xl:w-[400px] h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden relative group hidden" data-page="2">
+                            <img src="{% static 'assets/jafa6.jpeg' %}" alt="Women Empowerment" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-6 sm:p-8">
+                                <div class="transform transition-all duration-500 group-hover:translate-y-0 translate-y-4">
+                                    <h3 class="text-white font-bold font-archivo text-2xl sm:text-3xl mb-2">Women's Rights</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-500">Empowering women through education and opportunities</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Page 3 Items -->
+                        <div class="gallery-item program-card w-full sm:w-64 md:w-80 lg:w-96 xl:w-[400px] h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden relative group hidden" data-page="3">
+                            <img src="{% static 'assets/hockey.jpg' %}" alt="Youth Programs" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-6 sm:p-8">
+                                <div class="transform transition-all duration-500 group-hover:translate-y-0 translate-y-4">
+                                    <h3 class="text-white font-bold font-archivo text-2xl sm:text-3xl mb-2">Youth Sports</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-500">Developing talent and character through sports</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-item program-card w-full sm:w-64 md:w-80 lg:w-96 xl:w-[400px] h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden relative group hidden" data-page="3">
+                            <img src="{% static 'assets/jafa8.jpeg' %}" alt="Vocational Training" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-6 sm:p-8">
+                                <div class="transform transition-all duration-500 group-hover:translate-y-0 translate-y-4">
+                                    <h3 class="text-white font-bold font-archivo text-2xl sm:text-3xl mb-2">Skills Training</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-500">Vocational skills for sustainable employment</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-item program-card w-full sm:w-64 md:w-80 lg:w-96 xl:w-[400px] h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden relative group hidden" data-page="3">
+                            <img src="{% static 'assets/darbar.jpg' %}" alt="Emergency Relief" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-6 sm:p-8">
+                                <div class="transform transition-all duration-500 group-hover:translate-y-0 translate-y-4">
+                                    <h3 class="text-white font-bold font-archivo text-2xl sm:text-3xl mb-2">Relief Aid</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-500">Emergency support during crises and disasters</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pagination Slider -->
+            <section class="w-full px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8">
+                <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-4xl xl:max-w-5xl 2xl:max-w-[1248px] mx-auto h-8 sm:h-10">
+                    <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-11/12 sm:w-[92%] md:w-[88%] relative">
+                        <div class="w-full h-px bg-black"></div>
+                        <div id="gallery-progress" class="absolute left-0 top-1/2 -translate-y-1/2 h-1 sm:h-[6px] bg-black" style="width:50%"></div>
+                        <button id="gallery-prev" class="absolute left-0 top-1/2 -translate-y-1/2 mt-1 sm:mt-2 md:mt-3 z-10 cursor-pointer disabled:opacity-40">
+                            <img src="{% static 'assets/left-arrow.png' %}" alt="Previous" class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6">
+                        </button>
+                        <button id="gallery-next" class="absolute right-0 top-1/2 -translate-y-1/2 mt-1 sm:mt-2 md:mt-3 z-10 cursor-pointer disabled:opacity-40">
+                            <img src="{% static 'assets/right-arrow.png' %}" alt="Next" class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6">
+                        </button>
+                    </div>
+                    <span id="gallery-page" class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2 mt-1 sm:mt-2 md:mt-3 text-xs sm:text-[10px] md:text-xs text-black/80">
+                        PAGE 1/3
+                    </span>
+                </div>
+            </section>
+
+
+        <footer class="footer-gradient text-white px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20 pt-8 sm:pt-10 md:pt-12 lg:pt-14 pb-6 sm:pb-7 md:pb-8 lg:pb-10 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    <!-- About Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">About AJIF</h3>
+                        <p class="text-gray-300 text-base leading-relaxed">Empowering Pakistan's vulnerable communities through health, education, legal aid, and opportunity-building initiatives.</p>
+                    </div>
+                    <!-- Quick Links Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">Quick Links</h3>
+                        <ul class="space-y-2 text-base">
+                            <li><a href="{% url 'about' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">About Us</a></li>
+                            <li><a href="{% url 'our_mission' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Mission</a></li>
+                            <li><a href="{% url 'our_partners' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Partners</a></li>
+                            <li><a href="{% url 'testimonials' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Testimonials</a></li>
+                            <li><a href="{% url 'blogs' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Blog</a></li>
+                        </ul>
+                    </div>
+                    <!-- Contact Column -->
+                    <div>
+                        <h3 class="font-archivo text-2xl mb-4">Connect With Us</h3>
+                        <p class="text-gray-300 text-base mb-4">Stay updated with our latest news and initiatives</p>
+                        <div class="flex space-x-4">
+                            <!-- Facebook -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-600/50 relative overflow-hidden group" aria-label="Facebook">
+                                <span class="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                            <!-- Twitter/X -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-sky-500 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-500/50 relative overflow-hidden group" aria-label="Twitter">
+                                <span class="absolute inset-0 bg-gradient-to-br from-sky-400 to-sky-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                            <!-- LinkedIn -->
+                            <a href="#" class="social-icon w-10 h-10 bg-gray-700 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-700/50 relative overflow-hidden group" aria-label="LinkedIn">
+                                <span class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 pt-8 text-center">
+                    <p class="text-base text-gray-400">&copy; 2025 Anila & Jawad Iqbal Foundation. All rights reserved.</p>
+                    <p class="text-sm text-gray-500 mt-2">Made with ❤️ for a better Pakistan</p>
+                </div>
+            </div>
+        </footer>
+        </div>
+
+        <script>
+            // Mobile menu toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            // Initialize aria-expanded
+            menuBtn.setAttribute('aria-expanded', 'false');
+
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                mobileMenu.classList.toggle('active', !isExpanded);
+                menuIcon.classList.toggle('hidden', !isExpanded);
+                closeIcon.classList.toggle('hidden', isExpanded);
+                menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+            });
+
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Gallery pagination functionality
+            const prevBtn = document.getElementById('gallery-prev');
+            const nextBtn = document.getElementById('gallery-next');
+            const pageEl = document.getElementById('gallery-page');
+            const prog = document.getElementById('gallery-progress');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const totalPages = 3;
+            let currentPage = 1;
+
+            function showPage(pageNum) {
+                // Hide all items
+                galleryItems.forEach(item => {
+                    item.classList.add('hidden');
+                });
+
+                // Show items for current page
+                galleryItems.forEach(item => {
+                    if (item.dataset.page == pageNum) {
+                        item.classList.remove('hidden');
+                    }
+                });
+
+                // Update page number display
+                if (pageEl) {
+                    pageEl.textContent = `PAGE ${pageNum}/${totalPages}`;
+                }
+
+                // Update progress bar
+                if (prog) {
+                    const minPct = 8, maxPct = 92;
+                    const span = maxPct - minPct;
+                    const t = totalPages > 1 ? ((pageNum - 1) / (totalPages - 1)) : 0;
+                    prog.style.width = (minPct + t * span) + '%';
+                }
+
+                // Update button states
+                if (prevBtn) {
+                    prevBtn.disabled = (pageNum === 1);
+                }
+                if (nextBtn) {
+                    nextBtn.disabled = (pageNum === totalPages);
+                }
+
+                currentPage = pageNum;
+            }
+
+            // Previous button click
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        showPage(currentPage - 1);
+                    }
+                });
+            }
+
+            // Next button click
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        showPage(currentPage + 1);
+                    }
+                });
+            }
+
+            // Initialize - show page 1
+            showPage(1);
+        </script>
+    </body>
+</html>

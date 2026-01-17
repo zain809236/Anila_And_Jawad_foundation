@@ -1,0 +1,1455 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Anila & Jawad Iqbal Foundation</title>
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+        <!-- Google Fonts -->
+        <link rel="stylesheet" href="{% static 'assets/fonts/fonts.css' %}">
+        <style>
+            .font-archivo { font-family: 'Archivo Black', sans-serif; }
+            .font-quattro { font-family: 'Quattrocento', serif; }
+
+            /* Smooth scrolling */
+            html {
+                scroll-behavior: smooth;
+            }
+
+            /* Mobile menu transitions */
+            #mobile-menu {
+                max-height: 0;
+                transition: max-height 0.4s ease-out;
+                overflow: hidden;
+                background: #1a1a1a;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            #mobile-menu.active {
+                max-height: 600px;
+                transition: max-height 0.6s ease-in;
+                padding: 10px 0;
+            }
+
+            /* Ensure the menu is hidden by default on larger screens */
+            @media (min-width: 1024px) {
+                #mobile-menu {
+                    display: none !important;
+                }
+            }
+
+            /* Enhanced navbar - Professional Black */
+            .navbar-gradient {
+                background: #000000;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            /* Logo container - Clean & Aligned */
+            .logo-container {
+                transition: all 0.3s ease;
+                cursor: pointer;
+                padding: 0.5rem 0.75rem;
+                border-radius: 0.5rem;
+            }
+            .logo-container:hover {
+                background: rgba(20, 184, 166, 0.1);
+            }
+
+            /* Logo image */
+            .logo-img {
+                transition: transform 0.4s ease;
+                flex-shrink: 0;
+            }
+            .logo-container:hover .logo-img {
+                transform: rotate(360deg);
+            }
+
+            /* Foundation name */
+            .foundation-name {
+                color: #ffffff;
+                font-weight: 700;
+                letter-spacing: 0.3px;
+                transition: color 0.3s ease;
+                white-space: nowrap;
+            }
+            .logo-container:hover .foundation-name {
+                color: #14b8a6;
+            }
+
+            /* Nav links - Consistent */
+            .nav-link {
+                position: relative;
+                color: rgba(255, 255, 255, 0.9);
+                transition: color 0.3s ease;
+                padding: 0.5rem 0;
+            }
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: #14b8a6;
+                transition: width 0.3s ease;
+            }
+            .nav-link:hover {
+                color: #14b8a6;
+            }
+            .nav-link:hover::after {
+                width: 100%;
+            }
+
+            /* Button hover effects - Enhanced */
+            .btn-primary {
+                transition: all 0.3s ease;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+                background: linear-gradient(135deg, #14b8a6 0%, #0ea5e9 100%);
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+                font-weight: 600;
+            }
+            .btn-primary::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                transition: left 0.5s ease;
+            }
+            .btn-primary:hover::before {
+                left: 100%;
+            }
+            .btn-primary:hover {
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 12px 24px -5px rgba(14, 165, 233, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+                background: linear-gradient(135deg, #0ea5e9 0%, #14b8a6 100%);
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+            .btn-primary:active {
+                transform: translateY(-1px) scale(1.02);
+            }
+
+            .btn-yellow {
+                transition: all 0.3s ease;
+                cursor: pointer;
+                background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+                box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                font-weight: 700;
+                position: relative;
+                overflow: hidden;
+            }
+            .btn-yellow::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+                transition: left 0.5s ease;
+            }
+            .btn-yellow:hover::before {
+                left: 100%;
+            }
+            .btn-yellow:hover {
+                transform: translateY(-3px) scale(1.08);
+                box-shadow: 0 12px 28px -5px rgba(251, 191, 36, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.7);
+                background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+                border-color: rgba(255, 255, 255, 0.5);
+            }
+            .btn-yellow:active {
+                transform: translateY(-1px) scale(1.04);
+            }
+
+            /* Search bar - Dark theme integrated */
+            .search-bar {
+                transition: all 0.3s ease;
+            }
+            .search-bar:hover {
+                background: rgba(31, 41, 55, 0.6) !important;
+                border-color: rgba(75, 85, 99, 1) !important;
+            }
+            .search-bar:focus-within {
+                background: rgba(31, 41, 55, 0.7) !important;
+                border-color: rgba(20, 184, 166, 0.5) !important;
+                box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+            }
+            .search-bar input {
+                color: #ffffff;
+            }
+            .search-bar input::placeholder {
+                color: rgba(156, 163, 175, 1);
+            }
+            .search-bar:focus-within input::placeholder {
+                color: rgba(20, 184, 166, 0.7);
+            }
+
+            /* Card hover effects */
+            .card-hover {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                cursor: pointer;
+            }
+            .card-hover:hover {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+
+            /* Image hover effects */
+            .image-hover {
+                transition: all 0.4s ease;
+                overflow: hidden;
+            }
+            .image-hover img {
+                transition: transform 0.4s ease;
+            }
+            .image-hover:hover img {
+                transform: scale(1.1);
+            }
+
+            /* Testimonial card enhancement */
+            .testimonial-card {
+                transition: all 0.3s ease;
+                cursor: pointer;
+                background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            }
+            .testimonial-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 30px -10px rgba(13, 148, 136, 0.2);
+                background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            }
+
+            /* Partner card enhancement */
+            .partner-card {
+                transition: all 0.3s ease;
+                cursor: pointer;
+                background: white;
+            }
+            .partner-card:hover {
+                transform: translateY(-5px) rotate(2deg);
+                box-shadow: 0 15px 30px -10px rgba(13, 148, 136, 0.3);
+            }
+
+            /* Link hover effects */
+            .link-hover {
+                transition: all 0.3s ease;
+                cursor: pointer;
+                position: relative;
+            }
+            .link-hover:hover {
+                transform: translateX(5px);
+                color: #0d9488;
+            }
+
+            /* Slideshow overlay enhancement */
+            .slide-content {
+                backdrop-filter: blur(8px);
+                transition: all 0.3s ease;
+            }
+            .slide-content:hover {
+                backdrop-filter: blur(12px);
+                transform: scale(1.02);
+            }
+
+            /* Donate button special effect */
+            .donate-btn {
+                transition: all 0.3s ease;
+                cursor: pointer;
+                box-shadow: 0 4px 14px 0 rgba(13, 148, 136, 0.4);
+            }
+            .donate-btn:hover {
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.6);
+                background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+            }
+            .donate-btn:active {
+                transform: translateY(-1px);
+            }
+
+            /* Section title animation */
+            .section-title {
+                position: relative;
+                display: inline-block;
+            }
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 4px;
+                background: linear-gradient(90deg, #14b8a6 0%, #0d9488 100%);
+                border-radius: 2px;
+            }
+
+            /* Footer enhancement */
+            .footer-gradient {
+                background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0a0a0a 100%);
+                box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.3);
+            }
+
+            /* Footer floating particles animation */
+            @keyframes float-particle {
+                0%, 100% {
+                    transform: translateY(0) translateX(0);
+                    opacity: 0.2;
+                }
+                25% {
+                    transform: translateY(-20px) translateX(10px);
+                    opacity: 0.4;
+                }
+                50% {
+                    transform: translateY(-10px) translateX(-10px);
+                    opacity: 0.3;
+                }
+                75% {
+                    transform: translateY(-30px) translateX(5px);
+                    opacity: 0.5;
+                }
+            }
+
+            /* Footer section reveal animation */
+            .footer-section-reveal {
+                opacity: 0;
+                transform: translateY(30px);
+                animation: footer-reveal 0.8s ease forwards;
+            }
+
+            @keyframes footer-reveal {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Footer link styling */
+            .footer-link {
+                position: relative;
+                display: inline-block;
+            }
+
+            .footer-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 1px;
+                bottom: -2px;
+                left: 0;
+                background-color: #14b8a6;
+                transition: width 0.3s ease;
+            }
+
+            .footer-link:hover::after {
+                width: 100%;
+            }
+
+            /* Smooth transitions for all interactive elements */
+            a, button {
+                cursor: pointer;
+            }
+
+            /* Mobile menu button */
+            .mobile-menu-btn {
+                background: rgba(255, 255, 255, 0.1);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-radius: 0.75rem;
+                padding: 0.5rem;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(10px);
+            }
+            .mobile-menu-btn:hover {
+                background: rgba(255, 255, 255, 0.2);
+                border-color: rgba(255, 255, 255, 0.5);
+                transform: scale(1.1) rotate(90deg);
+                box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+            }
+
+            /* Mobile menu link hover */
+            .mobile-nav-link {
+                transition: all 0.3s ease;
+                border-radius: 0.75rem;
+                position: relative;
+                overflow: hidden;
+            }
+            .mobile-nav-link::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 4px;
+                background: linear-gradient(180deg, #fbbf24, #f59e0b);
+                transform: scaleY(0);
+                transition: transform 0.3s ease;
+            }
+            .mobile-nav-link:hover::before {
+                transform: scaleY(1);
+            }
+            .mobile-nav-link:hover {
+                transform: translateX(12px);
+                background: linear-gradient(90deg, rgba(251, 191, 36, 0.2), rgba(20, 184, 166, 0.1));
+                padding-left: 1.5rem;
+            }
+
+            /* Article card enhancement */
+            .article-card {
+                transition: all 0.4s ease;
+                cursor: pointer;
+                overflow: hidden;
+            }
+            .article-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 40px -10px rgba(13, 148, 136, 0.3);
+            }
+            .article-card img {
+                transition: transform 0.4s ease;
+            }
+            .article-card:hover img {
+                transform: scale(1.15);
+            }
+
+            /* Scroll-triggered animations */
+            .scroll-reveal {
+                opacity: 0;
+                transform: translateY(50px);
+                transition: opacity 0.8s ease, transform 0.8s ease;
+            }
+
+            .scroll-reveal.revealed {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .scroll-reveal-left {
+                opacity: 0;
+                transform: translateX(-50px);
+                transition: opacity 0.8s ease, transform 0.8s ease;
+            }
+
+            .scroll-reveal-left.revealed {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .scroll-reveal-right {
+                opacity: 0;
+                transform: translateX(50px);
+                transition: opacity 0.8s ease, transform 0.8s ease;
+            }
+
+            .scroll-reveal-right.revealed {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .scroll-scale {
+                opacity: 0;
+                transform: scale(0.9);
+                transition: opacity 0.8s ease, transform 0.8s ease;
+            }
+
+            .scroll-scale.revealed {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            /* Enhanced keyboard focus indicators */
+            *:focus {
+                outline: none;
+            }
+
+            *:focus-visible {
+                outline: 3px solid #14b8a6;
+                outline-offset: 2px;
+                border-radius: 4px;
+            }
+
+            button:focus-visible,
+            a:focus-visible {
+                outline: 3px solid #14b8a6;
+                outline-offset: 3px;
+                box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.2);
+            }
+
+            .nav-link:focus-visible {
+                outline: 2px solid #14b8a6;
+                outline-offset: 4px;
+                background: rgba(20, 184, 166, 0.1);
+                border-radius: 4px;
+            }
+
+            .btn-primary:focus-visible,
+            .btn-yellow:focus-visible {
+                outline: 3px solid #fbbf24;
+                outline-offset: 3px;
+                box-shadow: 0 0 0 6px rgba(251, 191, 36, 0.3);
+            }
+
+            .mobile-menu-btn:focus-visible {
+                outline: 3px solid #14b8a6;
+                box-shadow: 0 0 0 6px rgba(20, 184, 166, 0.2);
+            }
+
+            .card-hover:focus-within,
+            .testimonial-card:focus-within,
+            .partner-card:focus-within,
+            .article-card:focus-within {
+                outline: 2px solid #14b8a6;
+                outline-offset: 4px;
+                box-shadow: 0 0 0 6px rgba(20, 184, 166, 0.15);
+            }
+
+            .hero-dot:focus-visible,
+            .program-dot:focus-visible {
+                outline: 2px solid #ffffff;
+                outline-offset: 2px;
+                box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.5);
+                transform: scale(1.3);
+            }
+
+            /* Enhanced section title animations */
+            .section-title {
+                transition: transform 0.3s ease;
+            }
+
+            .revealed .section-title::after {
+                animation: underline-expand 0.6s ease forwards;
+            }
+
+            @keyframes underline-expand {
+                from {
+                    width: 0;
+                }
+                to {
+                    width: 60px;
+                }
+            }
+
+            .section-title:hover {
+                transform: scale(1.05);
+            }
+
+            /* Image loading placeholder */
+            .image-loading {
+                background: linear-gradient(
+                    90deg,
+                    #f0f0f0 25%,
+                    #e0e0e0 50%,
+                    #f0f0f0 75%
+                );
+                background-size: 200% 100%;
+                animation: loading 1.5s ease-in-out infinite;
+            }
+
+            @keyframes loading {
+                0% {
+                    background-position: 200% 0;
+                }
+                100% {
+                    background-position: -200% 0;
+                }
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+
+            /* Donate button pulse animation */
+            @keyframes pulse-glow {
+                0%, 100% {
+                    box-shadow: 0 4px 14px 0 rgba(13, 148, 136, 0.4);
+                }
+                50% {
+                    box-shadow: 0 4px 20px 0 rgba(13, 148, 136, 0.7);
+                }
+            }
+
+            .donate-btn {
+                animation: pulse-glow 2s ease-in-out infinite;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .donate-btn:hover {
+                animation: none;
+            }
+
+            .donate-btn .gradient-overlay {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(to right, #14b8a6, #0d9488);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .donate-btn:hover .gradient-overlay {
+                opacity: 1;
+            }
+
+            /* Mobile touch targets */
+            @media (max-width: 768px) {
+                .nav-link,
+                .mobile-nav-link,
+                button,
+                a.btn-primary,
+                a.btn-yellow {
+                    min-height: 44px;
+                    min-width: 44px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .hero-dot,
+                .program-dot {
+                    min-width: 44px;
+                    min-height: 44px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 12px;
+                }
+
+                .hero-dot::before,
+                .program-dot::before {
+                    content: '';
+                    width: 12px;
+                    height: 12px;
+                    background: currentColor;
+                    border-radius: 50%;
+                }
+            }
+
+            /* Respect user's motion preferences */
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                    scroll-behavior: auto !important;
+                }
+
+                .scroll-reveal,
+                .scroll-reveal-left,
+                .scroll-reveal-right,
+                .scroll-scale {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+        </style>
+    </head>
+    <body class="text-black font-quattro bg-cover bg-no-repeat bg-center" style="background-image: url('{% static 'assets/bg.png' %}');">
+       <!-- Navbar -->
+        <nav class="navbar-gradient text-white sticky top-0 z-50 ">
+            <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-[78px]">
+                <div class="flex items-center justify-between h-14 sm:h-16 md:h-16 lg:h-20 ">
+
+                    <!-- LEFT: Logo and Foundation Name -->
+                    <div class="flex items-center">
+                        <a href="{% url 'home' %}" class="logo-container flex items-center">
+                            <img src="{% static 'assets/logo.png' %}" alt="AJIF Logo" class="logo-img h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10" loading="lazy">
+                            <span class="foundation-name font-archivo text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base ml-3">Anila & Jawad Iqbal Foundation</span>
+                        </a>
+                    </div>
+
+                    <!-- CENTER: Navigation Links -->
+                    <nav class="hidden lg:flex items-center space-x-6 md:space-x-8 lg:space-x-10 xl:space-x-12 absolute left-1/2 transform -translate-x-1/2">
+                        <a href="{% url 'about' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">About Us</a>
+                        <a href="{% url 'our_mission' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Our Mission</a>
+                        <a href="{% url 'our_partners' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Our Partners</a>
+                        <a href="{% url 'testimonials' %}" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Testimonials</a>
+                        <a href="#blog" class="nav-link text-xs md:text-sm lg:text-base xl:text-lg font-semibold tracking-wide">Blog/News</a>
+                    </nav>
+
+                    <!-- RIGHT: Login Button -->
+                    <div class="hidden lg:flex items-center">
+                        {% if user.is_authenticated %}
+                            {% if user.groups.all %}
+                                {% for group in user.groups.all %}
+                                    {% if group.name == 'Blog Manager' or user.is_superuser %}
+                                        <a href="{% url 'blogmanagement' %}" class="btn-primary flex items-center px-4 py-2 rounded-lg text-base font-semibold whitespace-nowrap h-10">
+                                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                            </svg>
+                                            Manage
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% elif user.is_superuser %}
+                                <a href="{% url 'blogmanagement' %}" class="btn-primary flex items-center px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap h-10">
+                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                    Manage
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'blog_manager_login' %}" class="btn-yellow flex items-center text-black px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                                </svg>
+                                Login
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    <!-- Mobile/Tablet Menu Button -->
+                    <div class="lg:hidden flex items-center">
+                        <button id="menu-btn" class="mobile-menu-btn focus:outline-none" aria-label="Toggle menu">
+                        <svg
+                            id="menu-icon"
+                            class="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
+                        </svg>
+                        <svg
+                            id="close-icon"
+                            class="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7 hidden"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile/Tablet Menu -->
+            <div id="mobile-menu" class="lg:hidden px-4 sm:px-6 space-y-4 sm:space-y-5 font-archivo">
+                <a href="{% url 'about' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">About Us</a>
+                <a href="{% url 'our_mission' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Our Mission</a>
+                <a href="{% url 'our_partners' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Our Partners</a>
+                <a href="{% url 'testimonials' %}" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Testimonials</a>
+                <a href="#blog" class="mobile-nav-link block py-3 sm:py-3.5 px-4 sm:px-5 rounded-lg text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide">Blog/News</a>
+
+                {% if user.is_authenticated %}
+                    {% if user.groups.all %}
+                        {% for group in user.groups.all %}
+                            {% if group.name == 'Blog Manager' or user.is_superuser %}
+                                <a href="{% url 'blogmanagement' %}" class="block py-3 sm:py-4 bg-yellow-400 text-black hover:bg-yellow-500 px-4 sm:px-5 rounded-lg transition-all duration-300 font-bold text-sm sm:text-base md:text-lg hover:scale-105">
+                                    📝 Blog Management
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif user.is_superuser %}
+                        <a href="{% url 'blogmanagement' %}" class="block py-3 sm:py-4 bg-yellow-400 text-black hover:bg-yellow-500 px-4 sm:px-5 rounded-lg transition-all duration-300 font-bold text-base sm:text-lg md:text-xl hover:scale-105">
+                            📝 Blog Management
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'blog_manager_login' %}" class="block py-3 sm:py-4 bg-yellow-400 text-black hover:bg-yellow-500 px-4 sm:px-5 rounded-lg transition-all duration-300 font-bold text-sm sm:text-base md:text-lg hover:scale-105">
+                        🔑 Blog Manager Login
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        </nav>
+
+        <!-- Slideshow Section -->
+        <section class="relative w-full h-64 sm:h-80 md:h-96 lg:h-[520px] xl:h-[700px] 2xl:h-[820px] overflow-hidden">
+            <div class="absolute z-10 inset-x-0 top-4 sm:top-6 flex justify-center">
+                <a id="donate" href="{% url 'contact' %}" class="donate-btn bg-teal-600 text-white px-4 sm:px-5 md:px-6 lg:px-8 py-2 sm:py-2.5 md:py-3 rounded-xl font-archivo text-sm sm:text-base md:text-lg lg:text-xl font-bold shadow-lg">
+                    💝 Donate Now
+                </a>
+            </div>
+            <div id="slides" class="h-full w-full relative">
+                <!-- Slide 1 -->
+                <div class="absolute inset-0 flex items-center justify-center text-center bg-no-repeat bg-center bg-cover transition-opacity duration-1000 opacity-100" style="background-image: url('{% static 'assets/mission-preview.jpg' %}');">
+                    <div class="slide-content bg-gray-900 bg-opacity-60 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl text-white max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-xl mx-3 sm:mx-4 shadow-2xl">
+                        <h2 class="font-archivo text-lg sm:text-xl md:text-2xl lg:text-3xl mb-2 sm:mb-3 md:mb-4">Our Mission</h2>
+                        <p class="mb-3 sm:mb-4 md:mb-5 lg:mb-6 text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">Empowering Pakistan through health, education, legal aid, and opportunity.</p>
+                        <a href="#mission" class="btn-primary inline-block bg-teal-500 px-4 sm:px-5 md:px-6 lg:px-8 py-2 sm:py-2.5 md:py-3 rounded-lg hover:bg-teal-600 text-xs sm:text-sm md:text-base lg:text-lg font-bold">Read More →</a>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="absolute inset-0 flex items-center justify-center text-center bg-no-repeat bg-center bg-cover transition-opacity duration-1000 opacity-0" style="background-image: url('{% static 'assets/about-preview.jpg' %}');">
+                    <div class="slide-content bg-gray-900 bg-opacity-60 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl text-white max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-xl mx-3 sm:mx-4 shadow-2xl">
+                        <h2 class="font-archivo text-lg sm:text-xl md:text-2xl lg:text-3xl mb-2 sm:mb-3 md:mb-4">About Us</h2>
+                        <p class="mb-3 sm:mb-4 md:mb-5 lg:mb-6 text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">Learn more about the story behind our foundation and our values.</p>
+                        <a href="#about" class="btn-primary inline-block bg-teal-500 px-4 sm:px-5 md:px-6 lg:px-8 py-2 sm:py-2.5 md:py-3 rounded-lg hover:bg-teal-600 text-xs sm:text-sm md:text-base lg:text-lg font-bold">Read More →</a>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="absolute inset-0 flex items-center justify-center text-center bg-no-repeat bg-center bg-contain transition-opacity duration-1000 opacity-0" style="background-image: url('{% static 'assets/meethi zindagi.png' %}');">
+                    <div class="slide-content bg-black bg-opacity-70 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl text-white max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-xl mx-3 sm:mx-4 shadow-2xl">
+                        <h2 class="font-archivo text-lg sm:text-xl md:text-2xl lg:text-3xl mb-2 sm:mb-3 md:mb-4">Our Partners</h2>
+                        <p class="mb-3 sm:mb-4 md:mb-5 lg:mb-6 text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">Meet the organizations we collaborate with to drive change.</p>
+                        <a href="#partners" class="btn-primary inline-block bg-teal-500 px-4 sm:px-5 md:px-6 lg:px-8 py-2 sm:py-2.5 md:py-3 rounded-lg hover:bg-teal-600 text-xs sm:text-sm md:text-base lg:text-lg font-bold">See Partners →</a>
+                    </div>
+                </div>
+
+                <!-- Navigation Arrows for Hero Slideshow -->
+                <button id="hero-prev" class="absolute left-4 sm:left-6 md:left-8 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-teal-600 rounded-full p-2 sm:p-3 md:p-4 shadow-xl transition-all duration-300 hover:scale-110 z-20 backdrop-blur-sm" aria-label="Previous slide">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <button id="hero-next" class="absolute right-4 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-teal-600 rounded-full p-2 sm:p-3 md:p-4 shadow-xl transition-all duration-300 hover:scale-110 z-20 backdrop-blur-sm" aria-label="Next slide">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+
+                <!-- Dots Navigation for Hero Slideshow -->
+                <div class="absolute bottom-6 sm:bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 z-20">
+                    <button class="hero-dot w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 rounded-full bg-white shadow-lg transition-all duration-300" data-slide="0" aria-label="Slide 1"></button>
+                    <button class="hero-dot w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 rounded-full bg-white/50 hover:bg-white/75 shadow-lg transition-all duration-300" data-slide="1" aria-label="Slide 2"></button>
+                    <button class="hero-dot w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 rounded-full bg-white/50 hover:bg-white/75 shadow-lg transition-all duration-300" data-slide="2" aria-label="Slide 3"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Mission Section -->
+        <section id="mission" class="scroll-reveal max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20 py-12 sm:py-16 md:py-20 lg:py-24">
+            <div class="flex flex-col md:grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-center">
+                <div class="order-2 md:order-1">
+                    <h2 class="section-title font-archivo text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-teal-600 mb-4 sm:mb-5 md:mb-6 lg:mb-8">Our Missions</h2>
+                    <p class="mb-5 sm:mb-6 md:mb-7 lg:mb-8 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed">We empower Pakistan's vulnerable communities through accessible healthcare, equitable education, legal aid, and opportunity-building initiatives. Our programs are community-led and focused on sustainable impact.</p>
+                    <ul class="list-disc pl-5 sm:pl-6 md:pl-7 space-y-2 sm:space-y-3 md:space-y-4 text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl">
+                        <li class="hover:text-teal-600 transition-colors duration-300 cursor-default">Healthcare camps and preventative care</li>
+                        <li class="hover:text-teal-600 transition-colors duration-300 cursor-default">Scholarships and school support</li>
+                        <li class="hover:text-teal-600 transition-colors duration-300 cursor-default">Pro-bono legal assistance and rights awareness</li>
+                        <li class="hover:text-teal-600 transition-colors duration-300 cursor-default">Partnerships that create jobs and skills</li>
+                    </ul>
+                    <a href="{% url 'our_mission' %}" class="link-hover mt-6 sm:mt-7 md:mt-8 lg:mt-10 inline-block text-teal-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Learn More →</a>
+                </div>
+
+                <!-- Professional Image Slider -->
+                <div class="order-1 md:order-2 relative">
+                    <div class="program-slider relative rounded-2xl shadow-2xl overflow-hidden">
+                        <!-- Slider Container -->
+                        <div id="program-slides" class="relative h-72 sm:h-80 md:h-96 lg:h-[480px]">
+                            <!-- Slide 1: Healthcare -->
+                            <div class="program-slide absolute inset-0 opacity-100 transition-opacity duration-700">
+                                <img src="{% static 'assets/mission-preview.jpg' %}" alt="Healthcare Programs" class="w-full h-full object-cover" loading="lazy">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-5 sm:p-6 md:p-8 lg:p-10">
+                                    <h3 class="text-white font-archivo text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">Healthcare Services</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base md:text-lg lg:text-xl mt-1 sm:mt-2">Free medical camps and preventative care</p>
+                                </div>
+                            </div>
+
+                            <!-- Slide 2: Education -->
+                            <div class="program-slide absolute inset-0 opacity-0 transition-opacity duration-700">
+                                <img src="{% static 'assets/about-preview.jpg' %}" alt="Education Programs" class="w-full h-full object-cover" loading="lazy">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-5 sm:p-6 md:p-8 lg:p-10">
+                                    <h3 class="text-white font-archivo text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">Education Support</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base md:text-lg lg:text-xl mt-1 sm:mt-2">Scholarships and school infrastructure</p>
+                                </div>
+                            </div>
+
+                            <!-- Slide 3: Legal Aid -->
+                            <div class="program-slide absolute inset-0 opacity-0 transition-opacity duration-700">
+                                <img src="{% static 'assets/mission-preview.jpg' %}" alt="Legal Aid Programs" class="w-full h-full object-cover">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-5 sm:p-6 md:p-8 lg:p-10">
+                                    <h3 class="text-white font-archivo text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">Legal Assistance</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base md:text-lg lg:text-xl mt-1 sm:mt-2">Pro-bono legal aid and rights awareness</p>
+                                </div>
+                            </div>
+
+                            <!-- Slide 4: Skills & Jobs -->
+                            <div class="program-slide absolute inset-0 opacity-0 transition-opacity duration-700">
+                                <img src="{% static 'assets/about-preview.jpg' %}" alt="Skills Programs" class="w-full h-full object-cover">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-5 sm:p-6 md:p-8 lg:p-10">
+                                    <h3 class="text-white font-archivo text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">Skills & Employment</h3>
+                                    <p class="text-gray-200 text-sm sm:text-base md:text-lg lg:text-xl mt-1 sm:mt-2">Job creation and vocational training</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Arrows -->
+                        <button id="program-prev" class="absolute left-3 sm:left-4 md:left-5 lg:left-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-teal-600 rounded-full p-2 sm:p-2.5 md:p-3 lg:p-3.5 shadow-lg transition-all duration-300 hover:scale-110 z-10">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                        <button id="program-next" class="absolute right-3 sm:right-4 md:right-5 lg:right-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-teal-600 rounded-full p-2 sm:p-2.5 md:p-3 lg:p-3.5 shadow-lg transition-all duration-300 hover:scale-110 z-10">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+
+                        <!-- Dots Navigation -->
+                        <div class="absolute bottom-4 sm:bottom-5 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-2.5 md:gap-3 z-10">
+                            <button class="program-dot w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 rounded-full bg-white shadow-md transition-all duration-300" data-slide="0"></button>
+                            <button class="program-dot w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 rounded-full bg-white/50 hover:bg-white/75 shadow-md transition-all duration-300" data-slide="1"></button>
+                            <button class="program-dot w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 rounded-full bg-white/50 hover:bg-white/75 shadow-md transition-all duration-300" data-slide="2"></button>
+                            <button class="program-dot w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 rounded-full bg-white/50 hover:bg-white/75 shadow-md transition-all duration-300" data-slide="3"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="scroll-reveal max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20 py-12 sm:py-16 md:py-20 lg:py-24">
+            <div class="flex flex-col md:grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-center">
+                <div class="image-hover rounded-2xl shadow-xl overflow-hidden">
+                    <img src="{% static 'assets/about-preview.jpg' %}" alt="About Us" class="w-full" loading="lazy">
+                </div>
+                <div>
+                    <h2 class="section-title font-archivo text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-teal-600 mb-4 sm:mb-5 md:mb-6 lg:mb-8">About Us</h2>
+                    <p class="mb-5 sm:mb-6 md:mb-7 lg:mb-8 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed">We are committed to uplifting vulnerable communities in Pakistan through sustainable programs in health, education, and legal aid.</p>
+                    <a href="{% url 'about' %}" class="link-hover text-teal-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Learn More →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partners Section -->
+        <section id="partners" class="scroll-reveal px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20 py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-white to-gray-50">
+            <div class="max-w-[1400px] mx-auto text-center">
+                <h2 class="section-title font-archivo text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-teal-600 mb-4 sm:mb-5 md:mb-6 lg:mb-8">Our Partners</h2>
+                <p class="mb-6 sm:mb-7 md:mb-8 lg:mb-10 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-600">We work hand in hand with leading organizations to bring change.</p>
+                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6 md:gap-8 lg:gap-10">
+                    {% if partners %}
+                        {% for partner in partners %}
+                        <div class="partner-card bg-white p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 rounded-xl shadow-md">
+                            {% if partner.logo %}
+                            <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="mx-auto h-16 sm:h-20 md:h-24 lg:h-28 object-contain" loading="lazy">
+                            {% else %}
+                            <div class="mx-auto h-16 sm:h-20 md:h-24 lg:h-28 flex items-center justify-center bg-gray-200 rounded">
+                                <span class="text-xs sm:text-sm md:text-base text-gray-600 font-semibold">{{ partner.name }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="partner-card scroll-scale bg-white p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 rounded-xl shadow-md" style="transition-delay: 0s">
+                            <img src="{% static 'assets/meethi zindagi.png' %}" alt="Partner 1" class="mx-auto h-16 sm:h-20 md:h-24 lg:h-28" loading="lazy">
+                        </div>
+                        <div class="partner-card scroll-scale bg-white p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 rounded-xl shadow-md" style="transition-delay: 0.1s">
+                            <img src="{% static 'assets/my impact meter.png' %}" alt="Partner 2" class="mx-auto h-16 sm:h-20 md:h-24 lg:h-28" loading="lazy">
+                        </div>
+                        <div class="partner-card scroll-scale bg-white p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 rounded-xl shadow-md" style="transition-delay: 0.2s">
+                            <img src="{% static 'assets/lls.png' %}" alt="Partner 3" class="mx-auto h-16 sm:h-20 md:h-24 lg:h-28" loading="lazy">
+                        </div>
+                        <div class="partner-card scroll-scale bg-white p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 rounded-xl shadow-md" style="transition-delay: 0.3s">
+                            <img src="{% static 'assets/mm.jpg' %}" alt="Partner 4" class="mx-auto h-16 sm:h-20 md:h-24 lg:h-28" loading="lazy">
+                        </div>
+                    {% endif %}
+                </div>
+                <a href="{% url 'our_partners' %}" class="link-hover block mt-8 sm:mt-9 md:mt-10 lg:mt-12 text-teal-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">View All Partners →</a>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="scroll-reveal max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20 py-12 sm:py-16 md:py-20 lg:py-24">
+            <h2 class="section-title font-archivo text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-teal-600 mb-4 sm:mb-5 md:mb-6 lg:mb-8 text-center">Testimonials</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8 lg:gap-10">
+                {% if testimonials %}
+                    {% for testimonial in testimonials %}
+                    <div class="testimonial-card p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 rounded-2xl shadow-lg">
+                        {% if testimonial.image %}
+                        <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}" class="w-20 sm:w-24 md:w-28 h-20 sm:h-24 md:h-28 rounded-full mx-auto mb-4 sm:mb-5 md:mb-6 object-cover border-4 border-teal-500 shadow-md">
+                        {% endif %}
+                        <p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 italic leading-relaxed">"{{ testimonial.content|truncatewords:30 }}"</p>
+                        <span class="block mt-4 sm:mt-5 md:mt-6 lg:mt-7 font-bold text-sm sm:text-base md:text-lg text-teal-600">— {{ testimonial.name }}{% if testimonial.organization %}, {{ testimonial.organization }}{% endif %}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="testimonial-card p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 rounded-2xl shadow-lg">
+                        <p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 italic leading-relaxed">"This foundation has changed lives in our community for the better."</p>
+                        <span class="block mt-4 sm:mt-5 md:mt-6 lg:mt-7 font-bold text-sm sm:text-base md:text-lg text-teal-600">— Community Member</span>
+                    </div>
+                    <div class="testimonial-card p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 rounded-2xl shadow-lg">
+                        <p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 italic leading-relaxed">"An inspiring mission and transparent use of donations."</p>
+                        <span class="block mt-4 sm:mt-5 md:mt-6 lg:mt-7 font-bold text-sm sm:text-base md:text-lg text-teal-600">— Donor</span>
+                    </div>
+                    <div class="testimonial-card p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 rounded-2xl shadow-lg">
+                        <p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 italic leading-relaxed">"Working together with the foundation has been impactful and rewarding."</p>
+                        <span class="block mt-4 sm:mt-5 md:mt-6 lg:mt-7 font-bold text-sm sm:text-base md:text-lg text-teal-600">— Partner Organization</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="text-center mt-8 sm:mt-9 md:mt-10 lg:mt-12">
+                <a href="{% url 'testimonials' %}" class="link-hover text-teal-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">Read More Testimonials →</a>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="scroll-reveal px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20 py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-white to-gray-50">
+            <div class="max-w-[1400px] mx-auto">
+                <h2 class="section-title font-archivo text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-teal-600 mb-4 sm:mb-5 md:mb-6 lg:mb-8 text-center">Blog / News</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8 lg:gap-10">
+                    {% if featured_posts %}
+                        {% for post in featured_posts %}
+                        <article class="article-card bg-white p-0 rounded-2xl shadow-lg">
+                            {% if post.featured_image %}
+                            <div class="overflow-hidden rounded-t-2xl h-48 sm:h-52 md:h-56 lg:h-60">
+                                <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover" loading="lazy">
+                            </div>
+                            {% endif %}
+                            <div class="p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8">
+                                <h3 class="font-bold mb-3 sm:mb-4 md:mb-5 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-900">{{ post.title }}</h3>
+                                <p class="text-sm sm:text-base md:text-lg text-gray-600 mb-4 sm:mb-5 md:mb-6 leading-relaxed">{{ post.excerpt|default:post.content|truncatewords:15 }}</p>
+                                <a href="{% url 'blogpost_detail' post.slug %}" class="link-hover inline-block text-teal-600 font-bold text-sm sm:text-base md:text-lg">Read More →</a>
+                            </div>
+                        </article>
+                        {% endfor %}
+                    {% else %}
+                        <article class="article-card bg-white p-0 rounded-2xl shadow-lg">
+                            <div class="p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8">
+                                <h3 class="font-bold mb-3 sm:mb-4 md:mb-5 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-900">The Water Crisis</h3>
+                                <p class="text-sm sm:text-base md:text-lg text-gray-600 mb-4 sm:mb-5 md:mb-6 leading-relaxed">New purification systems are helping rural communities.</p>
+                                <a href="{% url 'blogs' %}" class="link-hover inline-block text-teal-600 font-bold text-sm sm:text-base md:text-lg">Read More →</a>
+                            </div>
+                        </article>
+                        <article class="article-card bg-white p-0 rounded-2xl shadow-lg">
+                            <div class="p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8">
+                                <h3 class="font-bold mb-3 sm:mb-4 md:mb-5 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-900">Empowering Girls Through Sports</h3>
+                                <p class="text-sm sm:text-base md:text-lg text-gray-600 mb-4 sm:mb-5 md:mb-6 leading-relaxed">How JAFA is transforming youth through football.</p>
+                                <a href="{% url 'blogs' %}" class="link-hover inline-block text-teal-600 font-bold text-sm sm:text-base md:text-lg">Read More →</a>
+                            </div>
+                        </article>
+                        <article class="article-card bg-white p-0 rounded-2xl shadow-lg">
+                            <div class="p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8">
+                                <h3 class="font-bold mb-3 sm:mb-4 md:mb-5 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-900">Legal Aid for the Vulnerable</h3>
+                                <p class="text-sm sm:text-base md:text-lg text-gray-600 mb-4 sm:mb-5 md:mb-6 leading-relaxed">Providing justice for those most at risk of exploitation.</p>
+                                <a href="{% url 'blogs' %}" class="link-hover inline-block text-teal-600 font-bold text-sm sm:text-base md:text-lg">Read More →</a>
+                            </div>
+                        </article>
+                    {% endif %}
+                </div>
+                <div class="text-center mt-8 sm:mt-9 md:mt-10 lg:mt-12">
+                    <a href="{% url 'blogs' %}" class="link-hover text-teal-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">View All Posts →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer-gradient text-white px-4 sm:px-6 md:px-10 lg:px-14 xl:px-20 pt-8 sm:pt-10 md:pt-12 lg:pt-14 pb-6 sm:pb-7 md:pb-8 lg:pb-10 relative overflow-hidden">
+            <!-- Animated Background Particles -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+                <div class="floating-particle absolute w-2 h-2 bg-teal-400 rounded-full" style="left: 10%; top: 20%; animation: float-particle 8s ease-in-out infinite;"></div>
+                <div class="floating-particle absolute w-3 h-3 bg-teal-500 rounded-full" style="left: 25%; top: 60%; animation: float-particle 10s ease-in-out infinite 2s;"></div>
+                <div class="floating-particle absolute w-2.5 h-2.5 bg-teal-300 rounded-full" style="left: 50%; top: 40%; animation: float-particle 12s ease-in-out infinite 1s;"></div>
+                <div class="floating-particle absolute w-2 h-2 bg-teal-400 rounded-full" style="left: 75%; top: 70%; animation: float-particle 9s ease-in-out infinite 3s;"></div>
+                <div class="floating-particle absolute w-3 h-3 bg-teal-500 rounded-full" style="left: 85%; top: 30%; animation: float-particle 11s ease-in-out infinite 1.5s;"></div>
+            </div>
+
+            <div class="max-w-[1400px] mx-auto relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 md:gap-7 lg:gap-8 mb-5 sm:mb-6 md:mb-7">
+                    <!-- About Column -->
+                    <div class="footer-section-reveal" style="animation-delay: 0.1s">
+                        <h3 class="font-archivo text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 md:mb-5">About AJIF</h3>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed">Empowering Pakistan's vulnerable communities through health, education, legal aid, and opportunity-building initiatives.</p>
+                    </div>
+                    <!-- Quick Links Column -->
+                    <div class="footer-section-reveal" style="animation-delay: 0.2s">
+                        <h3 class="font-archivo text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 md:mb-5">Quick Links</h3>
+                        <ul class="space-y-2 sm:space-y-2.5 text-sm sm:text-base">
+                            <li><a href="{% url 'about' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">About Us</a></li>
+                            <li><a href="{% url 'our_mission' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Mission</a></li>
+                            <li><a href="{% url 'our_partners' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Our Partners</a></li>
+                            <li><a href="{% url 'testimonials' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Testimonials</a></li>
+                            <li><a href="{% url 'blogs' %}" class="footer-link text-gray-300 hover:text-teal-400 transition-colors duration-300">Blog</a></li>
+                        </ul>
+                    </div>
+                    <!-- Contact Column -->
+                    <div class="footer-section-reveal" style="animation-delay: 0.3s">
+                        <h3 class="font-archivo text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 md:mb-5">Connect With Us</h3>
+                        <p class="text-gray-300 text-sm sm:text-base mb-3 sm:mb-4 md:mb-5">Stay updated with our latest news and initiatives</p>
+                        <div class="flex space-x-3 sm:space-x-4 md:space-x-5">
+                            <!-- Facebook -->
+                            <a href="#" class="social-icon w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-600/50 relative overflow-hidden group" aria-label="Facebook">
+                                <span class="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                            <!-- Twitter/X -->
+                            <a href="#" class="social-icon w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-gray-700 hover:bg-sky-500 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-500/50 relative overflow-hidden group" aria-label="Twitter">
+                                <span class="absolute inset-0 bg-gradient-to-br from-sky-400 to-sky-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                            <!-- LinkedIn -->
+                            <a href="#" class="social-icon w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-gray-700 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-700/50 relative overflow-hidden group" aria-label="LinkedIn">
+                                <span class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 pt-5 sm:pt-6 md:pt-7 text-center">
+                    <p class="text-sm sm:text-base text-gray-400">&copy; 2025 Anila & Jawad Iqbal Foundation. All rights reserved.</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2">Made with ❤️ for a better Pakistan</p>
+                </div>
+            </div>
+        </footer>
+
+    <script>
+            // Mobile menu toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            // Initialize aria-expanded
+            menuBtn.setAttribute('aria-expanded', 'false');
+
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                mobileMenu.classList.toggle('active', !isExpanded);
+                menuIcon.classList.toggle('hidden', !isExpanded);
+                closeIcon.classList.toggle('hidden', isExpanded);
+                menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+            });
+
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Prevent mobile menu from closing when clicking inside it
+            mobileMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            // Enhanced Hero Slideshow with Manual Controls
+            (function() {
+                const slides = Array.from(document.querySelectorAll('#slides > div'));
+                const heroPrev = document.getElementById('hero-prev');
+                const heroNext = document.getElementById('hero-next');
+                const heroDots = Array.from(document.querySelectorAll('.hero-dot'));
+
+                if (!slides.length) return;
+
+                let current = 0;
+                let autoPlayInterval;
+
+                function show(idx) {
+                    slides.forEach((s, i) => {
+                        if (i === idx) {
+                            s.classList.remove('opacity-0');
+                            s.classList.add('opacity-100');
+                            s.style.zIndex = '5';
+                        } else {
+                            s.classList.remove('opacity-100');
+                            s.classList.add('opacity-0');
+                            s.style.zIndex = '';
+                        }
+                    });
+
+                    // Update dots
+                    heroDots.forEach((dot, i) => {
+                        if (i === idx) {
+                            dot.classList.remove('bg-white/50');
+                            dot.classList.add('bg-white');
+                            dot.style.transform = 'scale(1.2)';
+                        } else {
+                            dot.classList.remove('bg-white');
+                            dot.classList.add('bg-white/50');
+                            dot.style.transform = 'scale(1)';
+                        }
+                    });
+
+                    current = idx;
+                }
+
+                function nextSlide() {
+                    current = (current + 1) % slides.length;
+                    show(current);
+                }
+
+                function prevSlide() {
+                    current = (current - 1 + slides.length) % slides.length;
+                    show(current);
+                }
+
+                function startAutoPlay() {
+                    autoPlayInterval = setInterval(nextSlide, 10000);
+                }
+
+                function stopAutoPlay() {
+                    clearInterval(autoPlayInterval);
+                }
+
+                function restartAutoPlay() {
+                    stopAutoPlay();
+                    startAutoPlay();
+                }
+
+                // Event listeners
+                if (heroPrev) {
+                    heroPrev.addEventListener('click', () => {
+                        prevSlide();
+                        restartAutoPlay();
+                    });
+                }
+
+                if (heroNext) {
+                    heroNext.addEventListener('click', () => {
+                        nextSlide();
+                        restartAutoPlay();
+                    });
+                }
+
+                heroDots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        show(index);
+                        restartAutoPlay();
+                    });
+                });
+
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                    if (e.key === 'ArrowLeft') {
+                        prevSlide();
+                        restartAutoPlay();
+                    } else if (e.key === 'ArrowRight') {
+                        nextSlide();
+                        restartAutoPlay();
+                    }
+                });
+
+                // Pause on hover
+                const slideshowContainer = document.querySelector('#slides').parentElement;
+                slideshowContainer.addEventListener('mouseenter', stopAutoPlay);
+                slideshowContainer.addEventListener('mouseleave', startAutoPlay);
+
+                // Touch/swipe support for mobile
+                let touchStartX = 0;
+                let touchEndX = 0;
+
+                slideshowContainer.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                    stopAutoPlay();
+                });
+
+                slideshowContainer.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                    startAutoPlay();
+                });
+
+                function handleSwipe() {
+                    if (touchEndX < touchStartX - 50) nextSlide(); // Swipe left
+                    if (touchEndX > touchStartX + 50) prevSlide(); // Swipe right
+                }
+
+                // Initialize
+                show(0);
+                startAutoPlay();
+            })();
+
+            // Program Slider (Our Mission Section)
+            (function() {
+                const programSlides = Array.from(document.querySelectorAll('.program-slide'));
+                const prevBtn = document.getElementById('program-prev');
+                const nextBtn = document.getElementById('program-next');
+                const dots = Array.from(document.querySelectorAll('.program-dot'));
+
+                if (!programSlides.length) return;
+
+                let currentSlide = 0;
+                let autoPlayInterval;
+
+                function showSlide(index) {
+                    // Update slides
+                    programSlides.forEach((slide, i) => {
+                        if (i === index) {
+                            slide.classList.remove('opacity-0');
+                            slide.classList.add('opacity-100');
+                            slide.style.zIndex = '5';
+                        } else {
+                            slide.classList.remove('opacity-100');
+                            slide.classList.add('opacity-0');
+                            slide.style.zIndex = '1';
+                        }
+                    });
+
+                    // Update dots
+                    dots.forEach((dot, i) => {
+                        if (i === index) {
+                            dot.classList.remove('bg-white/50');
+                            dot.classList.add('bg-white');
+                        } else {
+                            dot.classList.remove('bg-white');
+                            dot.classList.add('bg-white/50');
+                        }
+                    });
+
+                    currentSlide = index;
+                }
+
+                function nextSlide() {
+                    currentSlide = (currentSlide + 1) % programSlides.length;
+                    showSlide(currentSlide);
+                }
+
+                function prevSlide() {
+                    currentSlide = (currentSlide - 1 + programSlides.length) % programSlides.length;
+                    showSlide(currentSlide);
+                }
+
+                function startAutoPlay() {
+                    autoPlayInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+                }
+
+                function stopAutoPlay() {
+                    clearInterval(autoPlayInterval);
+                }
+
+                function restartAutoPlay() {
+                    stopAutoPlay();
+                    startAutoPlay();
+                }
+
+                // Event listeners for navigation buttons
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        prevSlide();
+                        restartAutoPlay();
+                    });
+                }
+
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        nextSlide();
+                        restartAutoPlay();
+                    });
+                }
+
+                // Event listeners for dots
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        showSlide(index);
+                        restartAutoPlay();
+                    });
+                });
+
+                // Pause on hover, resume on mouse leave
+                const sliderContainer = document.querySelector('.program-slider');
+                if (sliderContainer) {
+                    sliderContainer.addEventListener('mouseenter', stopAutoPlay);
+                    sliderContainer.addEventListener('mouseleave', startAutoPlay);
+                }
+
+                // Initialize
+                showSlide(0);
+                startAutoPlay();
+
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') {
+                        prevSlide();
+                        restartAutoPlay();
+                    } else if (e.key === 'ArrowRight') {
+                        nextSlide();
+                        restartAutoPlay();
+                    }
+                });
+            })();
+
+            // Newsletter subscription success message
+            function showNewsletterSuccess() {
+                const successMsg = document.getElementById('newsletter-success');
+                const form = successMsg.previousElementSibling;
+
+                successMsg.classList.remove('hidden');
+                form.reset();
+
+                setTimeout(() => {
+                    successMsg.classList.add('hidden');
+                }, 5000);
+            }
+
+            // Scroll-triggered animations with Intersection Observer
+            (function() {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.15
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                        }
+                    });
+                }, observerOptions);
+
+                // Observe all scroll-reveal elements
+                document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-scale').forEach(el => {
+                    observer.observe(el);
+                });
+            })();
+
+            // Progressive image loading
+            (function() {
+                const images = document.querySelectorAll('img[src]');
+
+                images.forEach(img => {
+                    // Add loading class
+                    img.classList.add('image-loading');
+
+                    // When loaded, remove loading class and fade in
+                    img.addEventListener('load', () => {
+                        img.classList.remove('image-loading');
+                        img.style.animation = 'fadeIn 0.5s ease-in';
+                    });
+                });
+            })();
+
+            // Debounce utility for scroll handling
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+    </script>
+</body>
+</html>
